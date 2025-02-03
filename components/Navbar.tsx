@@ -2,9 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import NavbarLinks from "../constants/navbar";
-import { SquareMenu } from "lucide-react";
+import Drawer from "./Drawer";
+
 
 const Navbar = () => {
+
   return (
     <div className="sticky top-0 px-5">
       <div className="flex items-center justify-between container mx-auto bg-white rounded-full my-4 px-5 py-4">
@@ -25,7 +27,8 @@ const Navbar = () => {
               Sign Up
             </li>
           </ul>
-          <SquareMenu className="md:hidden cursor-pointer" size={30} />
+
+          <div className="md:hidden pt-1"><Drawer /></div>
         </div>
       </div>
     </div>
