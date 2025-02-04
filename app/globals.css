@@ -76,6 +76,14 @@ body {
   .container {
     @apply max-w-[1800px] mx-auto w-full !important;
   }
+
+  h1{
+    @apply lg:text-6xl md:text-5xl text-4xl font-bold font-black;
+  }
+
+  p{
+    @apply text-base lg:text-lg;
+  }
 }
 
 
