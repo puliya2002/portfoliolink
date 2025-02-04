@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 px-5">
-      <div className="flex items-center justify-between container mx-auto bg-white rounded-full my-4 px-5 py-4">
+      <div className="flex items-center justify-between container mx-auto bg-white rounded-full my-4 px-8 py-4">
         <div>
           <Link href="/">
             <Image src="/logo.png" alt="logo" width={150} height={100}></Image>

@@ -6,13 +6,14 @@ import hero from "../public/heroimg.png";
 const Hero = () => {
   return (
     <div className="px-5">
-      <div className="container mx-auto bg-white  rounded-[30px] flex flex-col md:flex-row px-8 pt-8 gap-5">
-        <div className="md:w-3/5 justify-center flex flex-col">
+      <div className="container mx-auto bg-white  rounded-[30px] flex flex-col md:flex-row px-8 lg:px-12 pt-8 gap-5">
+        <div className="md:w-3/5 justify-center flex flex-col lg:pr-20">
           <h3 className="md:text-xl text-lg font-bold font-black ">
             Create. Customize. Share.
           </h3>
           <h1 className="lg:text-6xl md:text-4xl text-5xl font-bold font-black">
-            Your Gateway<br /> to a Professional Online Presence
+            Your Gateway
+            <br /> to a Professional Online Presence
             <span className="text-[--primary]">.</span>
           </h1>
           <p className="pt-4  text-lg">
@@ -27,7 +28,7 @@ const Hero = () => {
           </button>
         </div>
         <div className="md:w-2/5  flex justify-bottom">
-          <Image src={hero} alt="hero" width={600} height={600}></Image>
+          <Image src={hero} alt="hero" width={560} height={560}></Image>
         </div>
       </div>
     </div>
