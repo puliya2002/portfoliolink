@@ -24,9 +24,9 @@ const Navbar = () => {
               </li>
             ))}
             <Link href="/login">
-              <li className="bg-black text-white rounded-full px-7 py-2">
+              <button className="bg-black text-white rounded-full px-7 py-2 hover:bg-[--primary] hover:text-black" >
               Sign Up
-            </li>
+            </button>
             </Link>
           </ul>
 
