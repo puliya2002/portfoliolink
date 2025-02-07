@@ -74,7 +74,7 @@ body {
   }
 
   .container {
-    @apply max-w-[1800px] mx-auto w-full !important;
+    @apply max-w-[1800px] mx-auto w-full bg-white rounded-[30px] px-7 md:px-8 lg:px-12 !important;
   }
 
   h1{
@@ -84,6 +84,12 @@ body {
   p{
     @apply text-base lg:text-lg;
   }
+
+  h2{
+    @apply text-2xl md:text-3xl font-bold;
+  }
 }
+
+
 
 

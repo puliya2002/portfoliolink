@@ -2,7 +2,7 @@ const exp = require("constants");
 
 const navbarLinks = [
     {
-        id: "home",
+        id: "/",
         title: "Home",
     },
     {

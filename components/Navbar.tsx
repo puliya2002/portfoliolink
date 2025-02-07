@@ -23,9 +23,11 @@ const Navbar = () => {
                 <Link href={`/${link.id}`}>{link.title}</Link>
               </li>
             ))}
-            <li className="bg-black text-white rounded-full px-7 py-2">
+            <Link href="/login">
+              <li className="bg-black text-white rounded-full px-7 py-2">
               Sign Up
             </li>
+            </Link>
           </ul>
 
           <div className="md:hidden pt-1"><Drawer /></div>
