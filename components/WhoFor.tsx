@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import hero from "../public/heroimg.png";
 import Who from "../public/whoimg.jpg";
+import Button from "./Button";
 
 const WhoFor = () => {
   return (
@@ -18,7 +19,10 @@ const WhoFor = () => {
         </div>
         <div className="md:w-3/5 justify-center flex flex-col lg:pr-20">
           <h2 className="pb-3">Who is it for?</h2>
-          <ul style={{ listStyle: "disc" }} className="text-base lg:text-lg pl-5 ">
+          <ul
+            style={{ listStyle: "disc" }}
+            className="text-base lg:text-lg pl-5 pb-4 "
+          >
             <li>
               Professionals looking for a way to showcase their work and skills.
             </li>
@@ -30,6 +34,7 @@ const WhoFor = () => {
               Jobb Seekers and Entrepreneurs looking for a way to stand out.
             </li>
           </ul>
+          <Button type="button" text="Create My Portfolio" />
         </div>
       </div>
     </div>

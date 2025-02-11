@@ -10,7 +10,7 @@ const WhyUsCard = (props: { heading: string , description: string , numder: stri
         {props.heading}<br />
         {props.heading2}
       </h3>
-      <p className="text-base xl:text-lg">{props.description}</p>
+      <p className="text-base xl:text-md">{props.description}</p>
     </div>
   );
 };

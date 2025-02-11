@@ -21,6 +21,7 @@ const navbarLinks = [
     id: "contact",
     title: "Contact",
   },
+  
 ];
 
 export default navbarLinks;
