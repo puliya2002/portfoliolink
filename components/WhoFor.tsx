@@ -18,7 +18,7 @@ const WhoFor = () => {
         </div>
         <div className="md:w-3/5 justify-center flex flex-col lg:pr-20">
           <h2 className="pb-3">Who is it for?</h2>
-          <ul style={{ listStyle: "disc" }} className="text-base lg:text-lg pl-5">
+          <ul style={{ listStyle: "disc" }} className="text-base lg:text-lg pl-5 ">
             <li>
               Professionals looking for a way to showcase their work and skills.
             </li>

@@ -10,11 +10,11 @@ import WhoFor from "@/components/WhoFor";
 export default function Home() {
   return (
     <div>
-      <Navbar />
+
       <Hero />
       <WhyUs />
       <WhoFor />
-      <Footer />
+
       
     </div>
   );
