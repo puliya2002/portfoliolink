@@ -1,10 +1,8 @@
-import React from "react";
-
+import React from 'react'
 import Image from "next/image";
 import hero from "../public/heroimg.png";
-import Button from "./Button";
 
-const Hero = () => {
+const PortfolioList = () => {
   return (
     <div className="px-5">
       <div className="container mx-auto  flex flex-col md:flex-row  pt-8 gap-5">
@@ -23,7 +21,7 @@ const Hero = () => {
             and small businesses to showcase their skills and accomplishments
             with an affordable, user-friendly platform.
           </p>
-          <Button type="button" text="Create my Portfolio Now" />
+
         </div>
         <div className="md:w-2/5  flex items-end">
           <Image src={hero} alt="hero" width={560} height={560}></Image>
@@ -31,6 +29,6 @@ const Hero = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Hero;
+export default PortfolioList

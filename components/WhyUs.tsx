@@ -41,7 +41,7 @@ Hosting, templates, and mobile app access are all in-cluded."
             description="Add & update latest projects on the go with our seamless mobile app."
           />
           <div className="bg-gray-100 p-5 rounded-[30px] text-center justify-center flex items-center lg:col-span-3">
-            <Button text="Sign Up Now" />
+            <Button type="button" text="Sign Up Now" />
           </div>
         </div>
       </div>

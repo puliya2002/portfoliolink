@@ -17,9 +17,9 @@ const Navbar = () => {
         </div>
 
         <div>
-          <ul className="flex gap-6 items-center text-lg hidden md:flex">
+          <ul className="flex gap-6 items-center text-lg hidden md:flex ">
             {NavbarLinks.map((link) => (
-              <li key={link.id}>
+              <li key={link.id} className="cursor-pointer hover:border-b hover:border-b-black">
                 <Link href={`/${link.id}`}>{link.title}</Link>
               </li>
             ))}
