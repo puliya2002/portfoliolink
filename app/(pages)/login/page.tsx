@@ -1,11 +1,15 @@
 "use client";
-import React from "react";
+
+import React, { use, useEffect, useState } from "react";
 import Image from "next/image";
 import Button from "@/components/Button";
 import TextField from "@/components/TextField";
 import Link from "next/link";
 import Logo from "@/public/logo.png";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation"; // For App Router (use next/router for Pages Router)
+
 
 interface IFormInput {
   email: string;
@@ -16,19 +20,53 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<IFormInput>();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  
+
+  const router = useRouter();
+  const [error, setError] = useState("");
+    const password = watch("password");
+  const email = watch("email");
+  
+  useEffect(() => { 
+    setError("");
+  }, [email, password]);
+
+
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    setError(""); // Reset error message
+    const { email, password } = data;
+
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      console.log("Login Response:", result); // Debugging
+
+      if (result?.error) {
+        setError("Invalid email or password");
+      } else {
+        router.push("/dashboard"); // Redirect on success
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen p-5 ">
-      <div className="max-w-[1200px] mx-auto w-full bg-white rounded-[30px] min-h-fit  ">
+      <div className="max-w-[1200px] mx-auto w-full bg-white rounded-[30px] min-h-fit">
         <div className="flex flex-col md:flex-row">
           <div className="w-1/2 bg-[url('../public/logincover.jpg')] rounded-l-[30px] min-h-fit bg-cover bg-center hidden md:block"></div>
-          <div className="w-full md:w-1/2 flex items-center justify-center py-24 px-5 ">
+          <div className="w-full md:w-1/2 flex items-center justify-center py-24 px-5">
             <form
               className="w-full max-w-[400px]"
               onSubmit={handleSubmit(onSubmit)}
@@ -44,7 +82,7 @@ const Login = () => {
               </Link>
 
               <div className="flex justify-center">
-                <h3 className="text-center  text-lg pb-3 bg-white w-fit max-auto px-2">
+                <h3 className="text-center text-lg pb-3 bg-white w-fit max-auto px-2">
                   Sign In
                 </h3>
               </div>
@@ -72,7 +110,9 @@ const Login = () => {
                 error={errors.password}
                 {...register("password", { required: "Password is required" })}
               />
-
+              {error && (
+                <p className="text-red-500 text-[13px]">{error}</p>
+              )}
               <Button text="Login" type="submit" />
 
               <div className="mt-4 text-center">
