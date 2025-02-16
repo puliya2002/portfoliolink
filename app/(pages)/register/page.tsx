@@ -1,11 +1,13 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import FormButton from "@/components/FormButton";
+import Button from "@/components/Button";
 import TextField from "@/components/TextField";
 import Link from "next/link";
 import Logo from "@/public/logo.png";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, set } from "react-hook-form";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 interface IFormInput {
   name: string;
@@ -23,11 +25,31 @@ const Register = () => {
     watch,
   } = useForm<IFormInput>();
 
-  // Watch the password to compare with confirmPassword
   const password = watch("password");
+  const email = watch("email");
+  const [emailError, setEmailError] = useState("");
+
+  useEffect(() => {
+    // Reset email error whenever the email field changes
+    setEmailError("");
+  }, [email]);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    
+    const { confirmPassword, ...formData } = data; // Exclude confirmPassword
+    
+    axios
+      .post("/api/register", formData)
+      .then((response) => {
+        console.log(response.data);
+        alert("User registered successfully");
+        window.location.href = "/login";
+
+      })
+      .catch((error) => {
+        console.error(error);
+        setEmailError("Email already exists");
+      });
   };
 
   return (
@@ -70,13 +92,14 @@ const Register = () => {
                 type="email"
                 slug="email"
                 placeholder="Enter your email"
+                
                 error={errors.email}
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     message: "Invalid email address",
-                  },
+                  },    
                 })}
               />
 
@@ -107,7 +130,9 @@ const Register = () => {
                 })}
               />
 
-              <FormButton text="Create Account" type="submit" />
+              {emailError && <p className="text-red-500 text-[13px]">{emailError}</p>}
+
+              <Button text="Create Account" type="submit" />
 
               <div className="mt-4 text-center">
                 <p className="text-sm">

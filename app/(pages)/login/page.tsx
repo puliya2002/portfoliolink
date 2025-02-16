@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import FormButton from "@/components/FormButton";
+import Button from "@/components/Button";
 import TextField from "@/components/TextField";
 import Link from "next/link";
 import Logo from "@/public/logo.png";
@@ -73,7 +73,7 @@ const Login = () => {
                 {...register("password", { required: "Password is required" })}
               />
 
-              <FormButton text="Login" type="submit" />
+              <Button text="Login" type="submit" />
 
               <div className="mt-4 text-center">
                 <p className="text-sm">

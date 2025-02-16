@@ -6,7 +6,7 @@ interface TextFieldProps {
   slug: string;
   placeholder: string;
   error?: any;
-  [key: string]: any; // This allows us to pass props like "register" from react-hook-form
+  [key: string]: any; 
 }
 
 const TextField = ({ label, error, ...props }: TextFieldProps) => {
