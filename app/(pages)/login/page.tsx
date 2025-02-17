@@ -8,8 +8,8 @@ import Link from "next/link";
 import Logo from "@/public/logo.png";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation"; 
-
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface IFormInput {
   email: string;
@@ -24,18 +24,22 @@ const Login = () => {
     formState: { errors },
   } = useForm<IFormInput>();
 
-  
-
-  const router = useRouter();
   const [error, setError] = useState("");
-    const password = watch("password");
+  const password = watch("password");
   const email = watch("email");
-  
-  useEffect(() => { 
+  const router = useRouter();
+
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session, router]);
+
+  useEffect(() => {
     setError("");
   }, [email, password]);
-
-
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     setError(""); // Reset error message
@@ -110,9 +114,7 @@ const Login = () => {
                 error={errors.password}
                 {...register("password", { required: "Password is required" })}
               />
-              {error && (
-                <p className="text-red-500 text-[13px]">{error}</p>
-              )}
+              {error && <p className="text-red-500 text-[13px]">{error}</p>}
               <Button text="Login" type="submit" />
 
               <div className="mt-4 text-center">
