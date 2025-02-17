@@ -8,6 +8,8 @@ import Logo from "@/public/logo.png";
 import { useForm, SubmitHandler, set } from "react-hook-form";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface IFormInput {
   name: string;
@@ -28,6 +30,15 @@ const Register = () => {
   const password = watch("password");
   const email = watch("email");
   const [emailError, setEmailError] = useState("");
+
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session , router]);
 
   useEffect(() => {
     // Reset email error whenever the email field changes

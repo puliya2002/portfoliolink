@@ -8,7 +8,7 @@ import Link from "next/link";
 import Logo from "@/public/logo.png";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation"; // For App Router (use next/router for Pages Router)
+import { useRouter } from "next/navigation"; 
 
 
 interface IFormInput {
