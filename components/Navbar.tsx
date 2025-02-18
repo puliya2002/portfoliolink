@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import NavbarLinks from "../constants/navbar";
 import Drawer from "./Drawer";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 
 const Navbar = () => {
@@ -37,6 +37,9 @@ const Navbar = () => {
                 {session ? "Dashboard" : "Sign Up"}
               </button>
             </Link>
+            <button className="text-md" onClick={() => signOut()}>
+              Logout
+            </button>
           </ul>
 
           <div className="md:hidden pt-1">

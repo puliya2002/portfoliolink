@@ -17,9 +17,11 @@ const TextField = ({ label, error, ...props }: TextFieldProps) => {
       </label>
       <input
         {...props}
-        className="text-[15px] w-full p-3 mt-1 border border-gray-300 rounded-lg h-13 focus:outline-none focus:ring-2 focus:ring-[--primary] focus:border-transparent bg-gray-50"
+        className="text-[15px] w-full p-3 mt-1 border border-gray-300 rounded-lg h-13 focus:outline-none focus:ring-[1.3px] focus:ring-[--primary] focus:border-transparent bg-gray-50"
       />
-      {error && <span className="text-red-500 text-[13px]">{error.message}</span>}
+      {error && (
+        <span className="text-red-500 text-[13px]">{error.message}</span>
+      )}
     </div>
   );
 };

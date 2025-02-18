@@ -29,7 +29,12 @@ export const authOptions = {
           throw new Error("Invalid email or password");
         }
 
-        return { id: user._id, name: user.name, email: user.email };
+        return {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          currentstep: user.currentstep,
+        };
       },
     }),
   ],
@@ -39,11 +44,15 @@ export const authOptions = {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
+        token.currentstep = user.currentstep;
       }
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.id;
+      session.user.email = token.email;
+      session.user.name = token.name;
+      session.user.currentstep = token.currentstep;
       return session;
     },
   },
@@ -54,4 +63,4 @@ export const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST }; 
+export { handler as GET, handler as POST };
