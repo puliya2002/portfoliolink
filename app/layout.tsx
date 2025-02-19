@@ -7,7 +7,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Providers from "./providers";
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,13 +23,11 @@ export default function RootLayout({
         <div>
           <div></div>
           {/* Only show Navbar and Footer if it's not the login or register page */}
-          {!isAuthPage && <Navbar />}
-          <main>
-            <Providers>
-              {children}
-            </Providers>
-          </main>
-          {!isAuthPage && <Footer />}
+          <Providers>
+            {!isAuthPage && <Navbar />}
+            <main>{children}</main>
+            {!isAuthPage && <Footer />}
+          </Providers>
         </div>
       </body>
     </html>
