@@ -29,9 +29,9 @@ const ProgressSidebar = ({ currentStep }: { currentStep: any }) => {
             <div className="h-12 border-l-2 border-gray-300  ml-[-25px] pr-[22px] z-1"></div>
 
             <span
-              className={`text-lg ${
+              className={`text-md ${
                 step.id === currentStep
-                  ? "font-bold text-black"
+                  ? "font-bold text-bold"
                   : "text-gray-500"
               }`}
             >
