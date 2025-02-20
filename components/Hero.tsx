@@ -2,7 +2,7 @@ import React from "react";
 
 import Image from "next/image";
 import hero from "../public/heroimg.png";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 const Hero = () => {
   return (

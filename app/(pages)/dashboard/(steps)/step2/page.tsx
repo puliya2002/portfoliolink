@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PortfolioSetupCard from "@/components/portfolioSetupCard";

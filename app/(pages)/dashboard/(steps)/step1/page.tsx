@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -24,8 +24,7 @@ export default function Step1() {
     const timer = setTimeout(async () => {
       try {
         const response = await axios.post(
-          `/api/check-username?username=${username}`,
-          
+          `/api/check-username?username=${username}`
         );
         setUsernameAvailable(response.data.available);
       } catch (error) {
@@ -52,8 +51,6 @@ export default function Step1() {
     };
 
     fetchUser();
-
-   
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -100,7 +97,6 @@ export default function Step1() {
             placeholder="e.g. pulindu_"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-
           />
           <p className="form_discription">
             Set a unique username for your portfolio URL (e.g.,
@@ -132,7 +128,6 @@ export default function Step1() {
             placeholder="e.g. Pulindu Vidmal"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-
           />
 
           <label className="block mt-4 text-gray-700">Bio</label>
@@ -156,11 +151,7 @@ export default function Step1() {
 
         {/* Next Button */}
         <div className="flex justify-end mt-5">
-          <Button
-            type="submit"
-            text="Next"
-            extraClass="px-[100px]"
-          />
+          <Button type="submit" text="Next" extraClass="px-[100px]" />
         </div>
       </form>
     </div>

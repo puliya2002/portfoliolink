@@ -27,7 +27,7 @@ const ProfilePreview = () => {
               <p className="text-sm">Edit</p>
             </div>
           </div>
-          <div className="absolute bottom-0 right-0 z-10  w-full">
+          <div className="absolute bottom-0 right-0 z-10 p-1 w-full">
 
             <Progress value={80} className="" />
           </div>

@@ -2,7 +2,7 @@
 
 import React, { use, useEffect, useState } from "react";
 import Image from "next/image";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import TextField from "@/components/TextField";
 import Link from "next/link";
 import Logo from "@/public/logo.png";

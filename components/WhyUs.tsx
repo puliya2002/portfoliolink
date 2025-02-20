@@ -1,6 +1,6 @@
 import React from "react";
 import WhyUsCard from "./WhyUsCard";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 const WhyUs = () => {
   return (
