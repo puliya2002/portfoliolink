@@ -1,25 +1,38 @@
+
 import React from "react";
 import { Switch } from "@/components/ui/switch";
 
 const PortfolioSetupCard = ({
   heading,
-  slug,
+  value,
   isChecked,
+
   isDisabled,
+  ...props
+
+
 }: {
   heading: string;
-  slug: string;
-  isChecked?: boolean;
-  isDisabled?: boolean;
+    value: string;
+    isChecked?: any;
+
+    isDisabled?: boolean;
+  [key: string]: any;
+
 }) => {
   return (
     <div className="border border-gray-200 p-4 rounded-lg flex justify-between ">
       <p className="text-[15px]">{heading}</p>
       <Switch
-        id={slug}
+        id={value}
         className=""
-        defaultChecked={isChecked || false}
+
+
         disabled={isDisabled || false}
+        {...props}
+        
+ 
+        
       />
     </div>
   );

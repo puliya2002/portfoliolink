@@ -9,9 +9,56 @@ export default function Step2() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const [isProject, setIsProject] = useState<boolean | null>(null);
+  const [isSkills, setIsSkills] = useState<boolean | null>(null);
+  const [isExperience, setIsExperience] = useState<boolean | null>(null);
+  const [isEducation, setIsEducation] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get("/api/step2");
+        console.log("Fetched data:", response.data); // Debugging log
+
+        const { project, skills, experience, education } = response.data;
+
+        setIsProject(() => project);
+        setIsSkills(() => skills);
+        setIsExperience(() => experience);
+        setIsEducation(() => education);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      const res = await axios.post("/api/step2", {
+        project: isProject,
+        skills: isSkills,
+        experience: isExperience,
+        education: isEducation,
+      });
+
+      router.push("/dashboard");
+    } catch (err: any) {
+      console.error("Error:", err.response?.data?.error);
+      setError(err.response?.data?.error || "Something went wrong");
+    }
   };
+
+  if (
+    isProject === null ||
+    isSkills === null ||
+    isExperience === null ||
+    isEducation === null
+  ) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
@@ -23,32 +70,41 @@ export default function Step2() {
         <div className="gap-4 grid grid-cols-1 md:grid-cols-2 pt-5">
           <PortfolioSetupCard
             heading="Profile Section"
-            slug="profile-section"
-            isChecked={true}
-            isDisabled={true}
+            value="profile-section"
+            defaultChecked
+            isChecked
+            isDisabled
           />
           <PortfolioSetupCard
             heading="About Me Section"
-            slug="about-me-section"
-            isChecked={true}
-            isDisabled={true}
+            value="about-me-section"
+            defaultChecked
+            isChecked
+            isDisabled
           />
           <PortfolioSetupCard
             heading="Project Section"
-            slug="project-section"
-            isChecked={true}
-
+            value="project-section"
+            defaultChecked={isProject}
+            onCheckedChange={setIsProject}
           />
-          <PortfolioSetupCard heading="Skills" slug="skills" />
+          <PortfolioSetupCard
+            heading="Skills"
+            value="skills"
+            defaultChecked={isSkills}
+            onCheckedChange={setIsSkills}
+          />
           <PortfolioSetupCard
             heading="Experience"
-            slug="experience"
-
+            value="experience"
+            defaultChecked={isExperience}
+            onCheckedChange={setIsExperience}
           />
           <PortfolioSetupCard
             heading="Education"
-            slug="education"
-
+            value="education"
+            defaultChecked={isEducation}
+            onCheckedChange={setIsEducation}
           />
         </div>
         <div className="flex justify-end mt-5">
@@ -58,6 +114,7 @@ export default function Step2() {
             extraClass="md:px-[50px] lg:px-[100px]"
           />
         </div>
+        {error && <p className="text-red-500 text-[13px]">{error}</p>}
       </form>
     </div>
   );

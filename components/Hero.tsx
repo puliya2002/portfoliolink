@@ -6,7 +6,7 @@ import Button from "./Button";
 
 const Hero = () => {
   return (
-    <div className="px-5">
+    <div className="main_margin">
       <div className="container mx-auto  flex flex-col md:flex-row  pt-8 gap-5">
         <div className="md:w-3/5 justify-center flex flex-col lg:pr-20">
           <h4 className="md:text-xl text-md md:text-lg font-bold font-black ">

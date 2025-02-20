@@ -6,7 +6,7 @@ import Button from "./Button";
 
 const WhoFor = () => {
   return (
-    <div className="px-5">
+    <div className="main_margin">
       <div className="container mx-auto flex flex-col md:flex-row mt-4 py-8 gap-8">
         <div className="md:w-2/5 flex items-start">
           <Image

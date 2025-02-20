@@ -6,11 +6,17 @@ import Drawer from "./Drawer";
 
 const Footer = () => {
   return (
-    <div className="px-5">
+    <div className="main_margin">
       <div className="flex flex-col md:flex-row items-center justify-between container mx-auto bg-white rounded-full my-4 px-8 py-4">
         <div>
           <Link href="/">
-            <Image src="/logo.png" alt="logo" width={100} height={500}></Image>
+            <Image
+              src="/logo.png"
+              alt="logo"
+              width={300}
+              height={200}
+              style={{ width: "auto", height: "23.5px" }}
+            ></Image>
           </Link>
         </div>
 
