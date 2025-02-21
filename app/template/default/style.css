@@ -1,0 +1,31 @@
+h1 {
+    @apply text-6xl font-poppins font-semibold !important;
+}
+
+h2 {
+    @apply text-4xl font-poppins font-medium !important;
+}
+
+body {
+    @apply overflow-x-hidden;
+}
+
+.d_container {
+    @apply w-full max-w-6xl mx-auto px-4 sm:px-6 text-center pt-14 sm:pt-14;
+}
+
+.navbar-card {
+    @apply hover:bg-gradient-to-br hover:from-gray-700/20 hover:to-gray-500/30 transition duration-300 ease-in-out
+}
+
+.hero-card {
+    @apply justify-center items-center flex flex-col bg-gradient-to-br from-gray-500/30 to-gray-500/20 border-white/5 border-2 rounded-xl shadow hover:bg-gradient-to-br hover:from-gray-700/20 hover:to-gray-500/30 transition duration-300 ease-in-out
+}
+
+.project-card {
+    @apply justify-start items-start flex flex-col text-start p-3 bg-gradient-to-br from-gray-500/30 to-gray-500/20 border-white/5 border-2 rounded-xl shadow hover:bg-gradient-to-br hover:from-gray-700/20 hover:to-gray-500/30 transition duration-300 ease-in-out
+}
+
+.click {
+    @apply bg-gradient-to-br from-blue-500/50 to-gray-700/10 to-gray-700/10 hover:bg-gradient-to-br hover:from-blue-500/30 hover:to-blue-500/50 hover:border-gray-700 hover:shadow-lg transition duration-300 ease-in-out
+}
