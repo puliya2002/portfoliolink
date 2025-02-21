@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import TextField from "@/components/TextField";
 import Link from "next/link";
 import Logo from "@/public/logo.png";
@@ -33,12 +33,12 @@ const Register = () => {
 
   const router = useRouter();
   const { data: session, status } = useSession();
-  
+
   useEffect(() => {
     if (session) {
       router.push("/dashboard");
     }
-  }, [session , router]);
+  }, [session, router]);
 
   useEffect(() => {
     // Reset email error whenever the email field changes
@@ -46,16 +46,14 @@ const Register = () => {
   }, [email]);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    
     const { confirmPassword, ...formData } = data; // Exclude confirmPassword
-    
+
     axios
       .post("/api/register", formData)
       .then((response) => {
         console.log(response.data);
         alert("User registered successfully");
         window.location.href = "/login";
-
       })
       .catch((error) => {
         console.error(error);
@@ -103,14 +101,13 @@ const Register = () => {
                 type="email"
                 slug="email"
                 placeholder="Enter your email"
-                
                 error={errors.email}
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     message: "Invalid email address",
-                  },    
+                  },
                 })}
               />
 
@@ -141,7 +138,9 @@ const Register = () => {
                 })}
               />
 
-              {emailError && <p className="text-red-500 text-[13px]">{emailError}</p>}
+              {emailError && (
+                <p className="text-red-500 text-[13px]">{emailError}</p>
+              )}
 
               <Button text="Create Account" type="submit" />
 

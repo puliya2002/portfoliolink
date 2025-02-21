@@ -1,10 +1,10 @@
 import React from "react";
 import WhyUsCard from "./WhyUsCard";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 const WhyUs = () => {
   return (
-    <div className="px-5">
+    <div className="main_margin">
       <div className="container mt-4 py-8">
         <h2 className="">Why Choose PortfoliLink?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-5 min-h-[1100px] md:min-h-[500px]">

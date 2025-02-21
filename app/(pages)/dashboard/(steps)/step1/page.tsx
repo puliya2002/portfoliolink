@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Button from "@/components/Button";
+import Button from "@/components/ui/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -23,7 +23,7 @@ export default function Step1() {
     setIsChecking(true);
     const timer = setTimeout(async () => {
       try {
-        const response = await axios.get(
+        const response = await axios.post(
           `/api/check-username?username=${username}`
         );
         setUsernameAvailable(response.data.available);
@@ -37,11 +37,32 @@ export default function Step1() {
     return () => clearTimeout(timer);
   }, [username]);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get("/api/step1");
+        const { username, displayName, bio } = response.data;
+        setUsername(username);
+        setDisplayName(displayName);
+        setBio(bio);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!usernameAvailable) {
       setError("Username is already taken");
+      return;
+    }
+
+    if (!username || !displayName || !bio) {
+      setError("All fields are required");
       return;
     }
 
@@ -76,7 +97,6 @@ export default function Step1() {
             placeholder="e.g. pulindu_"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
           />
           <p className="form_discription">
             Set a unique username for your portfolio URL (e.g.,
@@ -85,7 +105,7 @@ export default function Step1() {
 
           {username && (
             <p
-              className={`text-[14px] pt-1 ${
+              className={`text-[15px] pt-1 ${
                 isChecking
                   ? "text-gray-500"
                   : usernameAvailable
@@ -108,7 +128,6 @@ export default function Step1() {
             placeholder="e.g. Pulindu Vidmal"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            required
           />
 
           <label className="block mt-4 text-gray-700">Bio</label>
@@ -132,11 +151,7 @@ export default function Step1() {
 
         {/* Next Button */}
         <div className="flex justify-end mt-5">
-          <Button
-            type="submit"
-            text="Next"
-            extraClass="px-[100px]"
-          />
+          <Button type="submit" text="Next" extraClass="px-[100px]" />
         </div>
       </form>
     </div>

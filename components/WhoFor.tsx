@@ -2,11 +2,11 @@ import React from "react";
 import Image from "next/image";
 import hero from "../public/heroimg.png";
 import Who from "../public/whoimg.jpg";
-import Button from "./Button";
+import Button from "./ui/Button";
 
 const WhoFor = () => {
   return (
-    <div className="px-5">
+    <div className="main_margin">
       <div className="container mx-auto flex flex-col md:flex-row mt-4 py-8 gap-8">
         <div className="md:w-2/5 flex items-start">
           <Image

@@ -1,8 +1,10 @@
 "use client";
-
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import ProfilePreview from "@/components/ProfilePreview";
+import profileLink from "@/components/ProfileLink"
+import ProfileLink from "@/components/ProfileLink";
 
 export default function Dashboard() {
   const { data: session } = useSession();
@@ -21,16 +23,21 @@ export default function Dashboard() {
   if (!session) return <p>Loading...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl">Welcome, {session.user?.name}</h1>
-      <p>Email: {session.user?.email}</p>
-      <h1>{session.user.currentstep}</h1>
-      <button
-        className="mt-4 bg-red-500 text-white p-2 rounded"
-        onClick={() => signOut()}
-      >
-        Logout
-      </button>
+    <div className="main_margin">
+      <div className="container min-h-screen mx-auto pt-5">
+        <h2>
+          Dashbaord<span className="text-[--primary]">.</span>
+        </h2>
+        <p className="text-xl">Welcome, {session.user?.name} !!</p>
+        <div className="flex flex-col lg:flex-row  gap-4 pt-5 ">
+          <div className="col w-full lg:w-2/3">
+            <ProfilePreview />
+          </div>
+          <div className="col w-full lg:w-1/3 ">
+            <ProfileLink />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

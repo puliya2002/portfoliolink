@@ -24,13 +24,13 @@ export default function SetupLayout({
   }, [pathname]);
 
   return (
-    <div className="px-5">
+    <div className="main_margin">
       <div className="flex flex-col md:flex-row min-h-screen container mx-auto">
         {/* Sidebar */}
         <ProgressSidebar currentStep={currentStep} />
 
         {/* Main Content */}
-        <div className="flex-1 p-5 pt-10">{children}</div>
+        <div className="flex-1 p-4 pt-10">{children}</div>
       </div>
     </div>
   );

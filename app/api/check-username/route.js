@@ -1,13 +1,24 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import User from "@/lib/models/user";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 
-export async function GET(req) {
+export async function POST(req) {
   try {
     await connectDB(); // Connect to the database
 
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+
+
+
     const { searchParams } = new URL(req.url);
     const username = searchParams.get("username");
+
 
     if (!username) {
       return NextResponse.json(
@@ -18,7 +29,7 @@ export async function GET(req) {
 
     const existingUser = await User.findOne({ "profile.username": username });
 
-    if (existingUser) {
+    if (existingUser && existingUser.email !== session.user.email) {
       return NextResponse.json({ available: false }, { status: 200 });
     } else {
       return NextResponse.json({ available: true }, { status: 200 });

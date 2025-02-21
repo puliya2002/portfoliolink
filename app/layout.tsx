@@ -16,6 +16,7 @@ export default function RootLayout({
 
   // Check if the current path is '/login' or '/register'
   const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isTemplatePage = pathname.startsWith("/template");
 
   return (
     <html lang="en">
@@ -24,9 +25,9 @@ export default function RootLayout({
           <div></div>
           {/* Only show Navbar and Footer if it's not the login or register page */}
           <Providers>
-            {!isAuthPage && <Navbar />}
+            {!isAuthPage && !isTemplatePage && <Navbar />}
             <main>{children}</main>
-            {!isAuthPage && <Footer />}
+            {!isAuthPage && !isTemplatePage && <Footer />}
           </Providers>
         </div>
       </body>
