@@ -13,7 +13,32 @@ import {
   ArrowDownRight,
 } from "lucide-react";
 import Keycard from "@/components/template/KeyCard";
+import SocialMedia from "./SocialMedia";
 
+
+export interface SocialLink {
+  icon: "Linkedin" | "Facebook" | "Instagram" | "Github";
+  link: string;
+}
+
+export const socialLinks: SocialLink[] = [
+  {
+    icon: "Linkedin",
+    link: "https://www.linkedin.com/in/pulindu-vidmal-57a7851a4/",
+  },
+  {
+    icon: "Facebook",
+    link: "https://web.facebook.com/pulindu.vidmal.10",
+  },
+  {
+    icon: "Instagram",
+    link: "https://www.instagram.com/p_u_l_i_y_a_official/",
+  },
+  {
+    icon: "Github",
+    link: "https://github.com/puliya2002",
+  },
+];
 
 const fadeLeft = {
   initial: { opacity: 0, y: -50 },
@@ -35,6 +60,8 @@ const springAnimation = {
     damping: 50,
   },
 };
+
+
 
 const Hero = () => {
   const router = useRouter();
@@ -59,14 +86,16 @@ const Hero = () => {
         >
           Hi, I'm Pulindu
         </motion.h1>
-        <motion.p
-          className="text-3xl mb-10 text-gray-700/70"
+        <motion.div
+          className=""
           initial="initial"
           animate="animate"
           variants={fadeUp}
         >
-          Web Developer | UI/UX Designer | Graphic Designer
-        </motion.p>
+          <p className="text-3xl mb-10 opacity-65">
+            Web Developer | UI/UX Designer | Graphic Designer
+          </p>
+        </motion.div>
         <motion.div
           className="grid grid-col-1 sm:grid-cols-3 gap-3"
           initial="initial"
@@ -97,54 +126,21 @@ const Hero = () => {
             onClick={() => router.push("/contact")}
           >
             <div className="flex-row flex justify-between items-center">
-              <p className="text-2xl sm:text-xl lg:text-2xl">Contact Now</p>
+              <p className="text-2xl sm:text-lg lg:text-2xl">Contact Now</p>
               <div className="ml-2 cursor-pointer size-auto p-1 border-[2px] border-gray-500 rounded-full hover:bg-gradient-to-tr from-gray-700/20 to-gray-500/50">
                 <ArrowRight className="h-5 w-5" />
               </div>
             </div>
           </motion.div>
-          <motion.div variants={springAnimation}>
-            <div className="grid grid-cols-5 gap-3">
-              {[
-                {
-                  icon: Linkedin,
-                  link: "https://www.linkedin.com/in/pulindu-vidmal-57a7851a4/",
-                },
-                {
-                  icon: Facebook,
-                  link: "https://web.facebook.com/pulindu.vidmal.10",
-                },
-                {
-                  icon: Instagram,
-                  link: "https://www.instagram.com/p_u_l_i_y_a_official/",
-                },
-
-                { icon: Github, link: "https://github.com/puliya2002" },
-              ].map(({ icon: Icon, link }, index) => (
-                <a
-                  key={index}
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <motion.div
-                    className="hero-card aspect-square cursor-pointer"
-                    whileHover={{ scale: "0.9" }}
-                  >
-                    <Icon className="h-7 w-7" />
-                  </motion.div>
-                </a>
-              ))}
-            </div>
-          </motion.div>
+          <SocialMedia links={socialLinks} />
           <motion.div
-            className="gap-3 hero-card sm:col-span-2 h-[85px] sm:h-auto cursor-pointer"
+            className="gap-3 hero-card sm:col-span-2 h-[80px] sm:h-auto cursor-pointer"
             variants={springAnimation}
             onClick={handleDownload}
             whileHover={{ scale: "0.95" }}
           >
-            <div className="flex-row flex justify-between items-center">
-              <p className="text-2xl sm:text-xl lg:text-2xl p-3">Download CV</p>
+            <div className="flex-row flex justify-between items-center ">
+              <p className="text-2xl sm:text-lg lg:text-xl p-3">Download CV</p>
               <div className="ml-2 cursor-pointer size-auto p-1 border-[2px] border-gray-600 rounded-full hover:bg-gradient-to-tr from-gray-700/20 to-gray-500/50">
                 <ArrowDownRight className="h-5 w-5" />
               </div>
