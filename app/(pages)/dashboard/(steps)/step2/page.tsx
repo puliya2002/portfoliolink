@@ -44,7 +44,7 @@ export default function Step2() {
         education: isEducation,
       });
 
-      router.push("/dashboard");
+      router.push("/dashboard/step3");
     } catch (err: any) {
       console.error("Error:", err.response?.data?.error);
       setError(err.response?.data?.error || "Something went wrong");

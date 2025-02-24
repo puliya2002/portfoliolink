@@ -12,7 +12,7 @@ export async function POST(request) {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     await connectDB();
-    await User.create({ name, email, password: hashedPassword });
+    await User.create({ name, email, password: hashedPassword, setup:{education:false,experience:false,skills:false,project:true}});
 
     return NextResponse.json(
       { message: "User registered successfully" },

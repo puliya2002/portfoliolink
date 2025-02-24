@@ -25,7 +25,7 @@ export async function POST(req) {
           "setup.skills": skills,
           "setup.experience": experience,
           "setup.education": education,
-              currentstep: 5,
+              currentstep: 3,
           completed: true
         },
       },

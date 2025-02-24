@@ -2,6 +2,8 @@ import React from "react";
 import Hero from "../../../components/template/hero";
 import AboutMe from "../../../components/template/aboutme";
 import "./style.css";
+import Projects from "../../../components/template/Projects";
+import Experience from "../../../components/template/Experience";
 
 interface DefaultTemplateProps {
   userData: {
@@ -20,6 +22,8 @@ export default function DefaultTemplate({ userData }: DefaultTemplateProps) {
       </div>
       <Hero />
       <AboutMe />
+      <Projects />
+      <Experience />
     </div>
   );
 }

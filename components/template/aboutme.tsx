@@ -11,7 +11,7 @@ function AboutMe() {
 
   return (
     <div className="d_container">
-      <motion.h2
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -19,7 +19,7 @@ function AboutMe() {
         transition={{ duration: 1, delay: 0.1 }}
       >
         <h2 className="text-start pb-2">About Me</h2>
-      </motion.h2>
+      </motion.div>
 
       <motion.p
         className="text-3xl text-gray-300/70 mb-4 text-start font-regular"

@@ -41,7 +41,7 @@ export default function Step1() {
     const fetchUser = async () => {
       try {
         const response = await axios.get("/api/step1");
-        const { username, displayName, bio } = response.data;
+        const { username, displayName, bio } = response?.data;
         setUsername(username);
         setDisplayName(displayName);
         setBio(bio);
