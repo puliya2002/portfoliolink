@@ -10,6 +10,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 interface IFormInput {
   name: string;
@@ -45,20 +46,38 @@ const Register = () => {
     setEmailError("");
   }, [email]);
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     const { confirmPassword, ...formData } = data; // Exclude confirmPassword
+    const { email, password } = formData; // Extract email and password for login
 
-    axios
-      .post("/api/register", formData)
-      .then((response) => {
-        console.log(response.data);
-        alert("User registered successfully");
-        window.location.href = "/login";
-      })
-      .catch((error) => {
-        console.error(error);
-        setEmailError("Email already exists");
+    try {
+      // Register the user
+      const response = await axios.post("/api/register", formData);
+      console.log(response.data);
+      console.log("User registered successfully");
+
+      // Login after registration
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
       });
+
+      console.log("Login Response:", result); // Debugging
+
+      if (result?.error) {
+        console.log("Login error:", result.error);
+      } else {
+        router.push("/dashboard"); // Redirect on success
+      }
+    } catch (error: any) {
+      console.error(error);
+
+      // Handle email already exists error
+      if (error.response?.status === 400) {
+        setEmailError("Email already exists");
+      }
+    }
   };
 
   return (
