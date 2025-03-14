@@ -108,11 +108,8 @@ export default function Step2() {
           />
         </div>
         <div className="flex justify-end mt-5">
-          <Button
-            type="submit"
-            text="Next"
-            extraClass="md:px-[50px] lg:px-[100px]"
-          />
+          <Button type="back" text="Back" extraClass="px-[30px] mr-2" />
+          <Button type="submit" text="Next" extraClass="px-[60px]" />
         </div>
         {error && <p className="text-red-500 text-[13px]">{error}</p>}
       </form>

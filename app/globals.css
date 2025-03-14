@@ -73,6 +73,10 @@ body {
     @apply bg-[--background] text-foreground;
   }
 
+    label {
+      @apply text-[15px]   !important;
+    }
+
   .container {
     @apply max-w-[1600px] mx-auto w-full bg-white rounded-[30px] px-5 md:px-8 lg:px-12 !important;
   }
@@ -94,13 +98,16 @@ body {
   }
 
   .form_input{
-    @apply text-[15px] w-full p-3 mt-1 border border-gray-300 rounded-lg h-[47px] focus:outline-none focus:ring-[1.3px] focus:ring-[--primary] focus:border-transparent ;
+    @apply text-[15px] w-full p-3 mt-1 border border-gray-200 rounded-lg h-[47px] focus:outline-none focus:ring-[1.3px] focus:ring-[--primary] focus:border-transparent ;
   }
 
   .form_discription{
     @apply text-gray-600 text-sm font-light my-2;
   }
+
+    
 }
+
 
 
 
