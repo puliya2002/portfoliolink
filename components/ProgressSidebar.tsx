@@ -5,10 +5,11 @@ import React from "react";
 
 
 const steps = [
-  { id: 1, name: "Profile" },
-  { id: 2, name: "Portfolio setup" },
-  { id: 3, name: "Sections" },
-  { id: 4, name: "Appearance" },
+  { id: 1, name: "Username" },
+  { id: 2, name: "Select Sections" },
+  { id: 3, name: "Picture" },
+  { id: 4, name: "Edit Template" },
+  { id: 5, name: "Appearance" },
 ];
 
 const ProgressSidebar = ({ currentStep }: { currentStep: any }) => {

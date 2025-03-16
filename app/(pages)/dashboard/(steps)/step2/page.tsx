@@ -62,7 +62,7 @@ export default function Step2() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Portfolio Setup</h1>
+      <h1 className="text-2xl font-bold">Select Sections</h1>
       <p className="text-gray-500 text-[15px]">Select Portfolio Sections</p>
       <hr className="my-2" />
 
