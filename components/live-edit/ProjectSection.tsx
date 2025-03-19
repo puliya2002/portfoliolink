@@ -18,6 +18,8 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
   const [link, setLink] = useState("");
   const [technologies, setTechnologies] = useState("");
   const [fetchedProjects, setFetchedProjects] = useState([]);
+  const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
+  const [screenshot, setScreenshot] = useState<File | null>(null);
 
   const [message, setMessage] = useState<string | null>(null);
 
@@ -34,32 +36,49 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
 
   console.log("FETCHPROJECTS", fetchedProjects);
 
-  const handleSave = async (e: any) => {
-    e.preventDefault();
-    let splitedtechnologies = technologies
-      .split("|")
-      .map((tech) => tech.trim());
-    console.log("splitedtechnologies", splitedtechnologies);
+const handleSave = async (e: any) => {
+  e.preventDefault();
+  let splitedTechnologies = technologies.split("|").map((tech) => tech.trim());
 
-    await axios
-      .post("/api/projects", {
-        project: [
-          {
-            title: title,
-            description: description,
-            link: link,
-            technologies: splitedtechnologies,
-          },
-        ],
-      })
-      .then((res) => {
-        console.log(res);
-        setEdit(false);
-      })
-      .catch((err) => {
-        console.log({ error: err }, { message: err.message });
-      });
-  };
+  try {
+    let coverPhotoUrl = null;
+    let screenshotUrl = null;
+
+    if (coverPhoto) {
+      const formData = new FormData();
+      formData.append("file", coverPhoto);
+      const coverRes = await axios.post("/api/s3-upload", formData);
+      coverPhotoUrl = coverRes.data.fileUrl;
+    }
+
+    if (screenshot) {
+      const formData = new FormData();
+      formData.append("file", screenshot);
+      const screenshotRes = await axios.post("/api/s3-upload", formData);
+      screenshotUrl = screenshotRes.data.fileUrl;
+    }
+
+    await axios.post("/api/projects", {
+      project: [
+        {
+          title,
+          description,
+          link,
+          technologies: splitedTechnologies,
+          coverPhoto: coverPhotoUrl,
+          screenshot: screenshotUrl,
+        },
+      ],
+    });
+
+    setEdit(false);
+    console.log("Saved");
+    console.log(screenshotUrl);
+    console.log(coverPhotoUrl);
+  } catch (err) {
+
+  }
+};
 
   return (
     <div className="bg-gray-100 p-5 rounded-[20px] mt-5">
@@ -80,8 +99,12 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
             {fetchedProjects.map((project: any, index: number) => (
               <div key={index} className="mb-3">
                 <h1 className="text-lg font-semibold">Title{project.title}</h1>
-                <p className="text-gray-500">Discription{project.description}</p>
+                <p className="text-gray-500">
+                  Discription{project.description}
+                </p>
                 <p className="text-gray-500">Link{project.link}</p>
+                <p>{project.coverPhoto}</p>
+                <p>{project.screenshot}</p>
                 {project.technologies.map((tech: any, index: number) => (
                   <p key={index} className="text-gray-500">
                     {tech}
@@ -89,7 +112,6 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
                 ))}
               </div>
             ))}
-
           </div>
 
           <div className="flex justify-end">
@@ -121,6 +143,18 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
             name="link"
             value={link}
             onChange={(e: any) => setLink(e.target.value)}
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setCoverPhoto(e.target.files?.[0] || null)}
+            className="mb-3"
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setScreenshot(e.target.files?.[0] || null)}
+            className="mb-3"
           />
           <h1 className="text-xl font-normal py-3 mt-6">Project Description</h1>
           <hr className="mb-3" />

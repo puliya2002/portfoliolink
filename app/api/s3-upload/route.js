@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
-
-
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REAGION,
   credentials: {
@@ -11,20 +9,22 @@ const s3Client = new S3Client({
   },
 });
 
-async function uploadFileToS3(fileBuffer, fileName) {
+async function uploadFileToS3(fileBuffer, fileName, contentType) {
+  const uniqueFileName = `${Date.now()}-${fileName}`;
+
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
-    Key: `${Date.now()}-${fileName}`, // Ensure unique filename
+    Key: uniqueFileName,
     Body: fileBuffer,
-    ContentType: "image/jpeg", // Adjust based on the file type
+    ContentType: contentType || "application/octet-stream", // Default if type is missing
   };
 
   const command = new PutObjectCommand(params);
   await s3Client.send(command);
-    
-  return params.Key;
-}
 
+  // Return the full URL for storing in the database
+  return `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_S3_REAGION}.amazonaws.com/${uniqueFileName}`;
+}
 
 export async function POST(req) {
   try {
@@ -37,16 +37,13 @@ export async function POST(req) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = file.name;
+    const contentType = file.type;
 
-    const storedFileName = await uploadFileToS3(buffer, fileName);
+    const fileUrl = await uploadFileToS3(buffer, fileName, contentType);
 
-    return NextResponse.json({ fileName: storedFileName }, { status: 200 });
+    return NextResponse.json({ fileUrl }, { status: 200 });
   } catch (error) {
     console.error("Upload Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
-
-
-
