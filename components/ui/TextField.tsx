@@ -8,6 +8,7 @@ const TextField = ({
   onChange,
   discription,
   className,
+  name,
 }: {
   type?: string;
   label?: string;
@@ -15,7 +16,8 @@ const TextField = ({
   value?: string;
   onChange: any;
   discription?: string;
-  className?: string;
+    className?: string;
+  name?: string;
 }) => {
   return (
     <div className={label ? "pt-1" : "pt-0"}>
