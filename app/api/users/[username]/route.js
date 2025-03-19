@@ -1,33 +1,36 @@
-// app/api/users/[username]/route.js
-
+import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import User from "@/lib/models/user";
 
-export async function GET(req, { params }) {
-  const { username } = params;
-
+export async function GET(request, context) {
   try {
     await connectDB();
+
+    // Explicitly await the params object before accessing
+    const { username } = await context.params;
+
+    if (!username) {
+      return NextResponse.json(
+        { error: "Username is required" },
+        { status: 400 }
+      );
+    }
 
     // Find the user by username
     const user = await User.findOne(
       { "profile.username": username },
-      "profile.username email"
+      "profile stats social"
     ).lean();
 
     if (!user) {
-      return new Response(JSON.stringify({ error: "User not found" }), {
-        status: 404,
-      });
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return new Response(
-      JSON.stringify({ username: user.profile.username, email: user.email }),
+    return NextResponse.json(
+      { user: user.profile, stats: user.stats, social: user.social },
       { status: 200 }
     );
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-    });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

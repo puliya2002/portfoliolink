@@ -2,18 +2,6 @@ import React from "react";
 import { Facebook, Github, Linkedin, Instagram } from "lucide-react";
 import { motion } from "framer-motion";
 
-interface IconMap {
-  [key: string]: React.ComponentType<any>;
-}
-
-const iconMap: IconMap = {
-  Linkedin: Linkedin,
-  Facebook: Facebook,
-  Instagram: Instagram,
-  Github: Github,
-};
-
-
 const springAnimation = {
   initial: { scale: 0.5, y: 50, opacity: 0 },
   animate: { scale: 1, y: 0, opacity: 1 },
@@ -25,34 +13,70 @@ const springAnimation = {
   },
 };
 
-const SocialMedia = ({ links }: { links: any }) => {
-
+const SocialMedia = ({ social }: { social: any }) => {
   return (
-    <motion.div variants={springAnimation}>
-      <div className="flex flex-cols-5 gap-3 sm:gap-1 md:gap-2 lg:gap-3  items-center justify-center">
-        {links.map(
-          ({ icon, link }: { icon: string; link: string }, index: number) => {
-            const IconComponent = iconMap[icon]; // Get the icon component dynamically
-            return (
-              <a
-                key={index}
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
+    <div className="flex gap-3 sm:gap-1 md:gap-2 lg:gap-3  items-center justify-center flex-row gap-5">
+      {social.linkedin && (
+        <motion.div variants={springAnimation}>
+          <div className="flex flex-cols-5 gap-3 sm:gap-1 md:gap-2 lg:gap-3  items-center justify-center">
+            <a href={social.linkedin} target="_blank" rel="noopener noreferrer">
+              <motion.div
+                className="hero-card aspect-square cursor-pointer p-4 sm:p-3 lg:p-4"
+                whileHover={{ scale: "0.9" }}
               >
-                <motion.div
-                  className="hero-card aspect-square cursor-pointer p-4 sm:p-3 lg:p-4" 
-                  whileHover={{ scale: "0.9" }}
-                >
-                  <IconComponent className="h-7 w-7" />
-                </motion.div>
-              </a>
-            );
-          }
-        )}
-      </div>
-    </motion.div>
-  );
-};
+                <Linkedin />
+              </motion.div>
+            </a>
+          </div>
+        </motion.div>
+      )}
+      {social.github && (
+        <motion.div variants={springAnimation}>
+          <div className="flex flex-cols-5 gap-3 sm:gap-1 md:gap-2 lg:gap-3  items-center justify-center">
+            <a href={social.github} target="_blank" rel="noopener noreferrer">
+              <motion.div
+                className="hero-card aspect-square cursor-pointer p-4 sm:p-3 lg:p-4"
+                whileHover={{ scale: "0.9" }}
+              >
+                <Github />
+              </motion.div>
+            </a>
+          </div>
+        </motion.div>
+      )}
+      {social.facebook && (
+        <motion.div variants={springAnimation}>
+          <div className="">
+            <a href={social.facebook} target="_blank" rel="noopener noreferrer">
+              <motion.div
+                className="hero-card aspect-square cursor-pointer p-4 sm:p-3 lg:p-4"
+                whileHover={{ scale: "0.9" }}
+              >
+                <Facebook />
+              </motion.div>
+            </a>
+          </div>
+        </motion.div>
+      )}
+      {social.instagram && (
+        <motion.div variants={springAnimation}>
+          <div className="flex flex-cols-5 gap-3 sm:gap-1 md:gap-2 lg:gap-3  items-center justify-center">
+            <a
+              href={social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <motion.div
+                className="hero-card aspect-square cursor-pointer p-4 sm:p-3 lg:p-4"
+                whileHover={{ scale: "0.9" }}
+              >
+                <Instagram />
+              </motion.div>
+            </a>
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );};
 
 export default SocialMedia;

@@ -5,23 +5,14 @@ import "./style.css";
 import Projects from "../../../components/template/Projects";
 import Experience from "../../../components/template/Experience";
 
-interface DefaultTemplateProps {
-  userData: {
-    username: string;
-    displayName: string;
-    bio: string;
 
-  };
-}
 
-export default function DefaultTemplate({ userData }: DefaultTemplateProps) {
+export default function DefaultTemplate({ user, stats, social}: { user: any, stats: any, social: any }) {
   return (
     <div>
-      <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-
-      </div>
-      <Hero />
-      <AboutMe />
+      <div style={{ padding: "20px", fontFamily: "Arial, sans-serif", }}></div>
+      <Hero user={user} stats={stats} social={social} />
+      <AboutMe user={user} />
       <Projects />
       <Experience />
     </div>

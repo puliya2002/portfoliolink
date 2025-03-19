@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion,  } from "framer-motion";
 import { useRouter } from "next/navigation";
 import {
   Facebook,
@@ -21,24 +21,7 @@ export interface SocialLink {
   link: string;
 }
 
-export const socialLinks: SocialLink[] = [
-  {
-    icon: "Linkedin",
-    link: "https://www.linkedin.com/in/pulindu-vidmal-57a7851a4/",
-  },
-  {
-    icon: "Facebook",
-    link: "https://web.facebook.com/pulindu.vidmal.10",
-  },
-  {
-    icon: "Instagram",
-    link: "https://www.instagram.com/p_u_l_i_y_a_official/",
-  },
-  {
-    icon: "Github",
-    link: "https://github.com/puliya2002",
-  },
-];
+
 
 const fadeLeft = {
   initial: { opacity: 0, y: -50 },
@@ -63,28 +46,28 @@ const springAnimation = {
 
 
 
-const Hero = () => {
+const Hero = ({ user, stats, social }: { user: any, stats: any, social: any }) => {
   const router = useRouter();
 
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = "/pulindu_vidmal_software_engineer_resume.pdf";
-    link.download = "pulindu_vidmal_software_engineer_resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleDownload = () => {
+  //   const link = document.createElement("a");
+  //   link.href = "/pulindu_vidmal_software_engineer_resume.pdf";
+  //   link.download = "pulindu_vidmal_software_engineer_resume.pdf";
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   return (
-    <section className="min-h-screen flex items-center">
+    <section className=" flex items-center">
       <div className="d_container z-10">
         <motion.h1
-          className="mb-3 mt-[80px]"
+          className="mb-3 "
           initial="initial"
           animate="animate"
           variants={fadeLeft}
         >
-          Hi, I'm Pulindu
+          {`Hi, I am ${user.displayName}`}
         </motion.h1>
         <motion.div
           className=""
@@ -92,9 +75,7 @@ const Hero = () => {
           animate="animate"
           variants={fadeUp}
         >
-          <p className="text-3xl mb-10 opacity-65">
-            Web Developer | UI/UX Designer | Graphic Designer
-          </p>
+          <p className="text-3xl mb-10 opacity-65">{user.tagline}</p>
         </motion.div>
         <motion.div
           className="grid grid-col-1 sm:grid-cols-3 gap-3"
@@ -108,22 +89,24 @@ const Hero = () => {
           >
             <Image
               className="object-cover sm:max-h-100 w-full p-6 rounded-[35px]"
-              src="/me.webp"
+              src={user.picture}
               alt="profile"
               width={500}
               height={500}
               priority
             />
           </motion.div>
-          <Keycard heading="500+" discription="Years of Experience" />
-          <Keycard heading="7+" discription="Projects Completed" />
-          <Keycard heading="3+" discription="Years of Freelancing" />
+          {stats.map((stat: any, index: number) => (
+            <div key={index}>
+              <Keycard heading={stat.value} discription={stat.title} />
+            </div>
+          ))}
 
           <motion.div
             className="h-40 sm:h-auto hero-card click cursor-pointer"
             whileHover={{ scale: "0.9" }}
             variants={springAnimation}
-            onClick={() => router.push("/contact")}
+            // onClick={() => router.push("/contact")}
           >
             <div className="flex-row flex justify-between items-center">
               <p className="text-2xl sm:text-lg lg:text-2xl">Contact Now</p>
@@ -132,11 +115,12 @@ const Hero = () => {
               </div>
             </div>
           </motion.div>
-          <SocialMedia links={socialLinks} />
+            <SocialMedia social={social} />
+
           <motion.div
             className="gap-3 hero-card sm:col-span-2 h-[80px] sm:h-auto cursor-pointer"
             variants={springAnimation}
-            onClick={handleDownload}
+            // onClick={handleDownload}
             whileHover={{ scale: "0.95" }}
           >
             <div className="flex-row flex justify-between items-center ">
