@@ -78,24 +78,23 @@ const Picture = ({ onChange }: { onChange: () => void }) => {
           </button>
         </div>
       </div>
-      <hr className="mb-3" />
 
-
-        {edit ? (
-          <div className="p-7 border rounded-xl shadow-sm max-w-sm">
-            <input type="file" onChange={handleFileChange} className="mb-2" />
-            <button
-              onClick={handleUpload}
-              disabled={uploading}
-              className="bg-[--primary] text-black px-4 py-2 rounded-full disabled:bg-gray-400"
-            >
-              {uploading ? "Uploading..." : "Upload & Save"}
-            </button>
-            {message && <p className="mt-2 text-sm text-gray-700">{message}</p>}
-          </div>
-        ) : (
-          <div className="rounded-lg overflow-hidden mt-4">
-            {/* {!loading ? (
+      {edit ? (
+        <div className="p-7 border rounded-xl shadow-sm max-w-sm">
+          <hr className="mb-3" />
+          <input type="file" onChange={handleFileChange} className="mb-2" />
+          <button
+            onClick={handleUpload}
+            disabled={uploading}
+            className="bg-[--primary] text-black px-4 py-2 rounded-full disabled:bg-gray-400"
+          >
+            {uploading ? "Uploading..." : "Upload & Save"}
+          </button>
+          {message && <p className="mt-2 text-sm text-gray-700">{message}</p>}
+        </div>
+      ) : (
+        <div className="rounded-lg overflow-hidden mt-4">
+          {/* {!loading ? (
               <Image
                 className="w-[100px] h-[100px] object-center object-cover"
                 src={url}
@@ -106,10 +105,9 @@ const Picture = ({ onChange }: { onChange: () => void }) => {
             ) : (
               <p>Loading.....</p>
             )} */}
-          </div>
-        )}
-      </div>
-
+        </div>
+      )}
+    </div>
   );
 };
 

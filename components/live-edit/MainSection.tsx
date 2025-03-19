@@ -96,10 +96,9 @@ const MainSection = ({ onChange }: { onChange: () => void }) => {
         <form>
           {/* Personal Information start*/}
 
-          <hr className="mb-3" />
-
           {edit && (
             <div>
+              <hr className="mb-3" />
               <div className="flex justify-end">
                 <button
                   className="bg-[--primary] px-4 py-1 rounded-full "
