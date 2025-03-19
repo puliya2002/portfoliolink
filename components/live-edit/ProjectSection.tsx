@@ -20,6 +20,7 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
   const [fetchedProjects, setFetchedProjects] = useState([]);
   const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
   const [screenshot, setScreenshot] = useState<File | null>(null);
+  const [saving, setSaving] = useState(false);
 
   const [message, setMessage] = useState<string | null>(null);
 
@@ -34,9 +35,10 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
       });
   }, []);
 
-  console.log("FETCHPROJECTS", fetchedProjects);
 
-const handleSave = async (e: any) => {
+
+  const handleSave = async (e: any) => {
+  setSaving(true);
   e.preventDefault();
   let splitedTechnologies = technologies.split("|").map((tech) => tech.trim());
 
@@ -73,9 +75,11 @@ const handleSave = async (e: any) => {
 
     setEdit(false);
     console.log("Saved");
-    console.log(screenshotUrl);
-    console.log(coverPhotoUrl);
+    setSaving(false);
+    onChange();
   } catch (err) {
+    console.log(err);
+    setSaving(false);
 
   }
 };
@@ -112,15 +116,6 @@ const handleSave = async (e: any) => {
                 ))}
               </div>
             ))}
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="bg-[--primary] px-4 py-1 rounded-full"
-            >
-              Save Changes
-            </button>
           </div>
 
           <TextField
@@ -165,6 +160,14 @@ const handleSave = async (e: any) => {
             value={description}
             onChange={(e: any) => setDescription(e.target.value)}
           ></textarea>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-[--primary] px-4 py-1 rounded-full"
+            >
+              {saving ? "Saving....." : "Save"}
+            </button>
+          </div>
           {error && <p className="text-red-500 text-[13px]">{error}</p>}
         </form>
       )}
