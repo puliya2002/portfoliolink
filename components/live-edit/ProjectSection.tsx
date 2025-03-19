@@ -1,10 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Button from "@/components/ui/Button";
 import TextField from "@/components/ui/TextField";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Pencil } from "lucide-react";
+import { set } from "mongoose";
 
 const ProjectSection = ({ onChange }: { onChange: () => void }) => {
   const router = useRouter();
@@ -16,32 +17,48 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const [technologies, setTechnologies] = useState("");
+  const [fetchedProjects, setFetchedProjects] = useState([]);
 
   const [message, setMessage] = useState<string | null>(null);
-  const [url, setUrl] = useState("");
 
+  useEffect(() => {
+    axios
+      .get("/api/projects")
+      .then((res) => {
+        setFetchedProjects(res.data.project);
+      })
+      .catch((err) => {
+        console.log({ error: err }, { message: err.message });
+      });
+  }, []);
 
-  const handleSave = async (e: React.FormEvent) => {
+  console.log("FETCHPROJECTS", fetchedProjects);
+
+  const handleSave = async (e: any) => {
     e.preventDefault();
-    try {
-      const res = await axios.post("/api/projects", {
+    let splitedtechnologies = technologies
+      .split("|")
+      .map((tech) => tech.trim());
+    console.log("splitedtechnologies", splitedtechnologies);
+
+    await axios
+      .post("/api/projects", {
         project: [
           {
-            title,
-            description,
-            link,
-            technologies: technologies.split("|").map((tech) => tech.trim()),
+            title: title,
+            description: description,
+            link: link,
+            technologies: splitedtechnologies,
           },
         ],
+      })
+      .then((res) => {
+        console.log(res);
+        setEdit(false);
+      })
+      .catch((err) => {
+        console.log({ error: err }, { message: err.message });
       });
-      console.log("Response:", res.data);
-
-    } catch (err: any) {
-      console.error("Error:", err.response?.data?.error);
-      setError(err.response?.data?.error || "Something went wrong");
-    }
-
-     
   };
 
   return (
@@ -59,9 +76,25 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
       {edit && (
         <form onSubmit={handleSave}>
           <hr className="mb-3" />
+          <div className="py-3">
+            {fetchedProjects.map((project: any, index: number) => (
+              <div key={index} className="mb-3">
+                <h1 className="text-lg font-semibold">Title{project.title}</h1>
+                <p className="text-gray-500">Discription{project.description}</p>
+                <p className="text-gray-500">Link{project.link}</p>
+                {project.technologies.map((tech: any, index: number) => (
+                  <p key={index} className="text-gray-500">
+                    {tech}
+                  </p>
+                ))}
+              </div>
+            ))}
+
+          </div>
+
           <div className="flex justify-end">
             <button
-              type="button"
+              type="submit"
               className="bg-[--primary] px-4 py-1 rounded-full"
             >
               Save Changes
