@@ -11,14 +11,14 @@ export default function Dashboard() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (
-      session?.user?.currentstep !== undefined &&
-      session.user.currentstep < 4
-    ) {
-      router.push(`/dashboard/step${session.user.currentstep}`);
-    }
-  }, [session, router]);
+  // useEffect(() => {
+  //   if (
+  //     session?.user?.currentstep !== undefined &&
+  //     session.user.currentstep < 5
+  //   ) {
+  //     router.push(`/dashboard/step${session.user.currentstep}`);
+  //   }
+  // }, [session, router]);
 
   if (!session) return <p>Loading...</p>;
 

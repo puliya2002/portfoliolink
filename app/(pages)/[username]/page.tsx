@@ -1,38 +1,53 @@
-// app/users/[username]/page.tsx
 "use client";
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-// Define the types for the user data
-interface User {
-  username: string;
-  email: string;
-}
+import DefaultTemplate from "@/app/template/default/page";
 
 const UserPage = ({ params }: { params: { username: string } }) => {
-  const { username } = params;
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [stats, setStats] = useState<any[]>([]);
+  const [social, setSocial] = useState<any>({});
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`/api/users/${username}`);
-        setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/users/${params.username}`
+        );
+        setUser(res.data.user);
+        setStats(res.data.stats || []);
+        setSocial(res.data.social || {});
+      } catch (err) {
+        setError("User not found");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUserData();
-  }, [username]);
+  }, [params.username]);
 
-  if (!user) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-xl">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-xl">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h1>{user.username}</h1>
-      <p>Email: {user.email}</p>
+      <DefaultTemplate user={user} stats={stats} social={social} />
     </div>
   );
 };

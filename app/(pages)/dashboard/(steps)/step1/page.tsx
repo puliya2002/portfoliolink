@@ -6,8 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function Step1() {
   const [username, setUsername] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [bio, setBio] = useState("");
+
   const [error, setError] = useState("");
   const [isChecking, setIsChecking] = useState(false);
   const [usernameAvailable, setUsernameAvailable] = useState(true);
@@ -41,10 +40,8 @@ export default function Step1() {
     const fetchUser = async () => {
       try {
         const response = await axios.get("/api/step1");
-        const { username, displayName, bio } = response?.data;
+        const {username} = response?.data;
         setUsername(username);
-        setDisplayName(displayName);
-        setBio(bio);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -61,7 +58,7 @@ export default function Step1() {
       return;
     }
 
-    if (!username || !displayName || !bio) {
+    if (!username) {
       setError("All fields are required");
       return;
     }
@@ -69,8 +66,6 @@ export default function Step1() {
     try {
       const response = await axios.post("/api/step1", {
         username,
-        displayName,
-        bio,
       });
       console.log("Response:", response.data);
       router.push("/dashboard/step2");
@@ -82,7 +77,7 @@ export default function Step1() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Profile</h1>
+      <h1 className="text-2xl font-bold">Username</h1>
       <p className="text-gray-500 text-[15px]">
         This is how others will see you on the site.
       </p>
@@ -121,22 +116,8 @@ export default function Step1() {
             </p>
           )}
 
-          <label className="block mt-4 text-gray-700">Display Name</label>
-          <input
-            type="text"
-            className="form_input"
-            placeholder="e.g. Pulindu Vidmal"
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-          />
 
-          <label className="block mt-4 text-gray-700">Bio</label>
-          <textarea
-            className="form_input h-32"
-            placeholder="Write a brief bio for your 'About Me' section."
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-          ></textarea>
+
 
           <label className="block mt-4 text-gray-700">URL</label>
           <input
