@@ -19,7 +19,7 @@ export async function GET(request, context) {
     // Find the user by username
     const user = await User.findOne(
       { "profile.username": username },
-      "profile stats social"
+      "profile stats social project setup"
     ).lean();
 
     if (!user) {
@@ -27,7 +27,7 @@ export async function GET(request, context) {
     }
 
     return NextResponse.json(
-      { user: user.profile, stats: user.stats, social: user.social },
+      { user: user.profile, stats: user.stats, social: user.social, project: user.project, setup: user.setup },
       { status: 200 }
     );
   } catch (error) {

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion,  } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Profile from "@/public/profile_.png"
 import {
   Facebook,
   Github,
@@ -89,7 +90,7 @@ const Hero = ({ user, stats, social }: { user: any, stats: any, social: any }) =
           >
             <Image
               className="object-cover sm:max-h-100 w-full p-6 rounded-[35px]"
-              src={user.picture}
+              src={user.picture || Profile}
               alt="profile"
               width={500}
               height={500}
@@ -115,7 +116,7 @@ const Hero = ({ user, stats, social }: { user: any, stats: any, social: any }) =
               </div>
             </div>
           </motion.div>
-            <SocialMedia social={social} />
+          <SocialMedia social={social} />
 
           <motion.div
             className="gap-3 hero-card sm:col-span-2 h-[80px] sm:h-auto cursor-pointer"

@@ -17,6 +17,8 @@ async function getUserData(username: string) {
     ...data.user,
     stats: data.stats,
     social: data.social,
+    project: data.project,
+    setup : data.setup
   };
 }
 
@@ -30,6 +32,12 @@ export default async function UserPage({
 
   const stats = user?.stats || [];
   const social = user?.social || {};
+  const project = user?.project || [];
+  const setup = user?.setup || {};
+
+
+
+ 
 
   if (!user) {
     return (
@@ -43,7 +51,8 @@ export default async function UserPage({
   return (
 
     <div>
-      <DefaultTemplate user={user} stats={stats} social={social} />
+
+      <DefaultTemplate user={user} stats={stats} social={social} project={project} setup={setup} />
     </div>
   );
 }

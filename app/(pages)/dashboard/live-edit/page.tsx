@@ -3,9 +3,28 @@ import React, { useState, useEffect } from "react";
 import MainSection from "@/components/live-edit/MainSection";
 import Picture from "@/components/live-edit/Picture";
 import ProjectSection from "@/components/live-edit/ProjectSection";
+import axios from "axios";
+import Link from "next/link";
+import { Eye } from "lucide-react";
 
 function Page() {
   const [refreshIframe, setRefreshIframe] = useState(false);
+      const [profile, setProfile] = useState({
+        username: "",
+ 
+      });
+
+      useEffect(() => {
+        axios
+          .get("/api/dashboard")
+          .then((response) => {
+
+            setProfile(response.data.profile);
+          })
+          .catch((error) => {
+            console.error("Error:", error.response?.data?.error);
+          });
+      }, []);
 
   const handleChange = () => {
     // When state in MainSection changes, trigger iframe refresh
@@ -18,8 +37,19 @@ function Page() {
 
   return (
     <div>
-      <div className="flex flex-row bg-white">
-        <div className="w-2/5 p-5 min-h-screen max-h-screen overflow-y-scroll">
+      <div className="flex flex-col lg:flex-row bg-white">
+        <div className="w-full lg:w-2/5 p-5 min-h-screen max-h-screen overflow-y-scroll">
+          <div className="absolute top-0 right-0 z-10 p-4 ">
+            <Link
+              target="_blank"
+              href={`http://localhost:3000/${profile.username}`}
+            >
+              <div className="flex w-fit gap-2 items-center rounded-full bg-[--primary] border border-white text-black px-5 py-2 hover:bg-gray-800 hover:text-white cursor-pointer">
+                <Eye />
+                <p className="text-sm">View Portfolio</p>
+              </div>
+            </Link>
+          </div>
           <h1 className="text-xl font-bold">Live Edit</h1>
           <p className="text-gray-500 text-[13px]">
             These sections include all the information about you.
@@ -28,9 +58,9 @@ function Page() {
           <Picture onChange={handleChange} />
           <ProjectSection onChange={handleChange} />
         </div>
-        <div className="w-3/5">
+        <div className="w-full lg:w-3/5">
           <iframe
-            src="http://localhost:3000/minu"
+            src={`http://localhost:3000/${profile.username}`}
             key={refreshIframe ? Date.now() : ""}
             scrolling="yes"
             loading="lazy"
