@@ -84,8 +84,8 @@ const MainSection = ({ onChange }: { onChange: () => void }) => {
   return (
     <div className="bg-gray-100 p-5 rounded-[20px] mt-5 ">
       <div className="">
-        <h1 className="text-xl font-semibold">Main Section & About</h1>
-        <div className="flex justify-end">
+        <div className="flex justify-between">
+          <h1 className="text-xl font-semibold">Main Section & About</h1>
           <div className="flex gap-1  px-4 py-1 rounded-full ">
             {!edit && <Pencil className="w-5 h-5" />}
             <button onClick={() => setEdit(!edit)}>
@@ -99,14 +99,7 @@ const MainSection = ({ onChange }: { onChange: () => void }) => {
           {edit && (
             <div>
               <hr className="mb-3" />
-              <div className="flex justify-end">
-                <button
-                  className="bg-[--primary] px-4 py-1 rounded-full "
-                  onClick={handleSave}
-                >
-                  Save Changes
-                </button>
-              </div>
+
               <div>
                 <TextField
                   label="Full Name"
@@ -151,7 +144,7 @@ const MainSection = ({ onChange }: { onChange: () => void }) => {
               {/* Personal Information end*/}
 
               {/* Custom Statistics start*/}
-              <h1 className="text-xl font-normal py-3 mt-14">
+              <h1 className="text-xl font-normal py-3 mt-6">
                 Custom Statistics
               </h1>
               <hr className="mb-3" />
@@ -218,7 +211,7 @@ const MainSection = ({ onChange }: { onChange: () => void }) => {
               {/* Custom Statistics end*/}
 
               {/* About me start*/}
-              <h1 className="text-xl font-normal py-3 mt-14">About Me</h1>
+              <h1 className="text-xl font-normal py-3 mt-6">About Me</h1>
               <hr className="mb-3" />
               <textarea
                 className="form_input h-32 bg-gray-50"
@@ -226,6 +219,14 @@ const MainSection = ({ onChange }: { onChange: () => void }) => {
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
               ></textarea>
+              <div className="flex justify-end pt-3">
+                <button
+                  className="bg-[--primary] px-4 py-1 rounded-full "
+                  onClick={handleSave}
+                >
+                  Save Changes
+                </button>
+              </div>
             </div>
           )}
         </form>

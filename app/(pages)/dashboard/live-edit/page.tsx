@@ -6,6 +6,7 @@ import ProjectSection from "@/components/live-edit/ProjectSection";
 import axios from "axios";
 import Link from "next/link";
 import { Eye } from "lucide-react";
+import SelectSections from "@/components/live-edit/SelectSections";
 
 function Page() {
   const [refreshIframe, setRefreshIframe] = useState(false);
@@ -54,6 +55,7 @@ function Page() {
           <p className="text-gray-500 text-[13px]">
             These sections include all the information about you.
           </p>
+          <SelectSections onChange={handleChange} />
           <MainSection onChange={handleChange} />
           <Picture onChange={handleChange} />
           <ProjectSection onChange={handleChange} />

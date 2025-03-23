@@ -16,7 +16,7 @@ export async function POST(req) {
     const updatedUser = await User.findOneAndUpdate(
       { email: session.user.email },
       {
-        $push: { project: project}, // Set both in one object
+        $push: { project: project },
       },
       { new: true }
     );
@@ -24,10 +24,11 @@ export async function POST(req) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     return NextResponse.json(
-      { message: "Profile updated", user: updatedUser.project },
+      { message: "Project added", user: updatedUser.project },
       { status: 200 }
     );
   } catch (error) {
+    console.error("Add project error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -50,6 +51,7 @@ export async function GET(req) {
       { status: 200 }
     );
   } catch (error) {
+    console.error("Fetch projects error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

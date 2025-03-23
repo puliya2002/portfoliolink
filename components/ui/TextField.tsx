@@ -6,22 +6,24 @@ const TextField = ({
   placeholder,
   value,
   onChange,
-  discription,
+  description,
   className,
   name,
+  required,
 }: {
   type?: string;
   label?: string;
   placeholder?: string;
   value?: string;
   onChange: any;
-  discription?: string;
-    className?: string;
+  description?: string;
+  className?: string;
   name?: string;
+  required?: boolean;
 }) => {
   return (
     <div className={label ? "pt-1" : "pt-0"}>
-      <label className="block ">{label}</label>
+      {label && <label className="block">{label}</label>}
       <input
         type={type || "text"}
         className={`w-full form_input placeholder-gray-400 bg-gray-50 ${
@@ -30,8 +32,10 @@ const TextField = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        name={name}
+        required={required} // Add required attribute
       />
-      <p className="form_discription">{discription}</p>
+      {description && <p className="form_description">{description}</p>}
     </div>
   );
 };

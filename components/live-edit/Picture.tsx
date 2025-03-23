@@ -68,9 +68,8 @@ const Picture = ({ onChange }: { onChange: () => void }) => {
 
   return (
     <div className="bg-gray-100 p-5 rounded-[20px] mt-5">
-      <h1 className="text-xl font-semibold">Picture</h1>
-      <div className="flex justify-end"></div>
-      <div className="flex justify-end ">
+      <div className="flex justify-between mb-[-12px]">
+        <h1 className="text-xl font-semibold">Picture</h1>
         <div className="flex gap-1 px-4 py-1 rounded-full">
           {!edit && <Pencil className="w-5 h-5" />}
           <button onClick={() => setEdit(!edit)}>
@@ -80,7 +79,7 @@ const Picture = ({ onChange }: { onChange: () => void }) => {
       </div>
 
       {edit ? (
-        <div className="p-7 border rounded-xl shadow-sm max-w-sm">
+        <div className="p-7 mt-4 border rounded-xl shadow-sm max-w-sm">
           <hr className="mb-3" />
           <input type="file" onChange={handleFileChange} className="mb-2" />
           <button

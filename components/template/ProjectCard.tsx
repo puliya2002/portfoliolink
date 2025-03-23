@@ -33,7 +33,7 @@ function ProjectCard({
         </div>
 
         <div className="flex flex-row flex-wrap gap-[6px]">
-          {skills.map((skill, index) => (
+          {skills?.map((skill, index) => (
             <div
               key={index}
               className="h-min w-auto bg-black/20 border-gray-500/70 border rounded-md px-2 py-[2px] text-gray-400"
