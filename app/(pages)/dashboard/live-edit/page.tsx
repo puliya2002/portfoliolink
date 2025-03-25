@@ -7,29 +7,40 @@ import axios from "axios";
 import Link from "next/link";
 import { Eye } from "lucide-react";
 import SelectSections from "@/components/live-edit/SelectSections";
+import ExperienceSection from "@/components/live-edit/Experience";
+import EducationSection from "@/components/live-edit/EducationSection";
+import SkillsSection from "@/components/live-edit/SkillsSection";
+import { set } from "mongoose";
 
 function Page() {
   const [refreshIframe, setRefreshIframe] = useState(false);
-      const [profile, setProfile] = useState({
-        username: "",
- 
+
+  const [profile, setProfile] = useState({
+    username: "",
+  });
+  const [setup, setSetup] = useState({
+    project: true,
+    experience: true,
+    education: true,
+    skills: true,
+  });
+
+  useEffect(() => {
+    axios
+      .get("/api/dashboard")
+      .then((response) => {
+        setProfile(response.data.profile);
+        setSetup(response.data.setup);
+      })
+      .catch((error) => {
+        console.error("Error:", error.response?.data?.error);
       });
-
-      useEffect(() => {
-        axios
-          .get("/api/dashboard")
-          .then((response) => {
-
-            setProfile(response.data.profile);
-          })
-          .catch((error) => {
-            console.error("Error:", error.response?.data?.error);
-          });
-      }, []);
+  }, [refreshIframe]);
 
   const handleChange = () => {
     // When state in MainSection changes, trigger iframe refresh
     setRefreshIframe((prev) => !prev);
+
   };
 
   useEffect(() => {
@@ -55,10 +66,14 @@ function Page() {
           <p className="text-gray-500 text-[13px]">
             These sections include all the information about you.
           </p>
+
           <SelectSections onChange={handleChange} />
           <MainSection onChange={handleChange} />
           <Picture onChange={handleChange} />
-          <ProjectSection onChange={handleChange} />
+          {setup.project && <ProjectSection onChange={handleChange} />}
+          {setup.experience && <ExperienceSection onChange={handleChange} />}
+          {setup.education && <EducationSection onChange={handleChange} />}
+          {setup.skills && <SkillsSection onChange={handleChange} />}
         </div>
         <div className="w-full lg:w-3/5">
           <iframe

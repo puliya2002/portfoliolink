@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 
-const ProjectSection = ({ onChange }: { onChange: () => void }) => {
+const EducationSection = ({ onChange }: { onChange: () => void }) => {
   const router = useRouter();
 
   const [error, setError] = useState("");
@@ -14,54 +14,42 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [link, setLink] = useState("");
-  const [technologies, setTechnologies] = useState("");
-  const [fetchedProjects, setFetchedProjects] = useState([]);
-  const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
-  const [screenshot, setScreenshot] = useState<File | null>(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [fetchedEducation, setFetchedEducation] = useState([]);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   const [message, setMessage] = useState<string | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<any>(null);
-  const [existingCoverPhoto, setExistingCoverPhoto] = useState<string | null>(
-    null
-  );
-  const [existingScreenshot, setExistingScreenshot] = useState<string | null>(
-    null
-  );
+  const [selectedEducation, setSelectedEducation] = useState<any>(null);
   const [isAddNewMode, setIsAddNewMode] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProjects();
+    fetchEducation();
   }, []);
 
-  const fetchProjects = () => {
+  const fetchEducation = () => {
     setError("");
     axios
-      .get("/api/projects")
+      .get("/api/education")
       .then((res) => {
-        setFetchedProjects(res.data.project || []);
+        setFetchedEducation(res.data.education || []);
       })
       .catch((err) => {
         console.log({ error: err }, { message: err.message });
-        setError("Failed to fetch projects. Please refresh the page.");
+        setError("Failed to fetch education entries. Please refresh the page.");
       });
   };
 
   const resetForm = () => {
     setTitle("");
     setDescription("");
-    setLink("");
-    setTechnologies("");
-    setCoverPhoto(null);
-    setScreenshot(null);
-    setSelectedProject(null);
-    setExistingCoverPhoto(null);
-    setExistingScreenshot(null);
+    setStartDate("");
+    setEndDate("");
+    setSelectedEducation(null);
     setError("");
   };
 
@@ -70,37 +58,14 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
     setSaving(true);
     setError("");
 
-    let splitedTechnologies = technologies
-      .split("|")
-      .map((tech) => tech.trim());
-
     try {
-      let coverPhotoUrl = null;
-      let screenshotUrl = null;
-
-      if (coverPhoto) {
-        const formData = new FormData();
-        formData.append("file", coverPhoto);
-        const coverRes = await axios.post("/api/s3-upload", formData);
-        coverPhotoUrl = coverRes.data.fileUrl;
-      }
-
-      if (screenshot) {
-        const formData = new FormData();
-        formData.append("file", screenshot);
-        const screenshotRes = await axios.post("/api/s3-upload", formData);
-        screenshotUrl = screenshotRes.data.fileUrl;
-      }
-
-      await axios.post("/api/projects", {
-        project: [
+      await axios.post("/api/education", {
+        education: [
           {
             title,
             description,
-            link,
-            technologies: splitedTechnologies,
-            coverPhoto: coverPhotoUrl,
-            screenshot: screenshotUrl,
+            startDate: startDate ? new Date(startDate) : null,
+            endDate: endDate ? new Date(endDate) : null,
           },
         ],
       });
@@ -108,13 +73,13 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
       setEdit(false);
       setIsModalOpen(false);
       resetForm();
-      fetchProjects();
-      setMessage("Project added successfully!");
+      fetchEducation();
+      setMessage("Education entry added successfully!");
       setTimeout(() => setMessage(null), 3000);
       onChange();
     } catch (err) {
       console.log(err);
-      setError("Failed to save project. Please try again.");
+      setError("Failed to save education entry. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -125,82 +90,65 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
     setSaving(true);
     setError("");
 
-    let splitedTechnologies = technologies
-      .split("|")
-      .map((tech) => tech.trim());
-
     try {
-      let coverPhotoUrl = existingCoverPhoto;
-      let screenshotUrl = existingScreenshot;
-
-      if (coverPhoto) {
-        const formData = new FormData();
-        formData.append("file", coverPhoto);
-        const coverRes = await axios.post("/api/s3-upload", formData);
-        coverPhotoUrl = coverRes.data.fileUrl;
-      }
-
-      if (screenshot) {
-        const formData = new FormData();
-        formData.append("file", screenshot);
-        const screenshotRes = await axios.post("/api/s3-upload", formData);
-        screenshotUrl = screenshotRes.data.fileUrl;
-      }
-
-      await axios.put(`/api/projects/${selectedProject._id}`, {
+      await axios.put(`/api/education/${selectedEducation._id}`, {
         title,
         description,
-        link,
-        technologies: splitedTechnologies,
-        coverPhoto: coverPhotoUrl,
-        screenshot: screenshotUrl,
+        startDate: startDate ? new Date(startDate) : null,
+        endDate: endDate ? new Date(endDate) : null,
       });
 
       setIsModalOpen(false);
       resetForm();
-      fetchProjects();
-      setMessage("Project updated successfully!");
+      fetchEducation();
+      setMessage("Education entry updated successfully!");
       setTimeout(() => setMessage(null), 3000);
       onChange();
     } catch (err) {
       console.log(err);
-      setError("Failed to update project. Please try again.");
+      setError("Failed to update education entry. Please try again.");
     } finally {
       setSaving(false);
     }
   };
 
-  const handleDelete = async (projectId: string) => {
-    if (confirmDelete !== projectId) return;
+  const handleDelete = async (educationId: string) => {
+    if (confirmDelete !== educationId) return;
 
     setDeleting(true);
     setError("");
     setIsModalOpen(false);
 
     try {
-      await axios.delete(`/api/projects/${projectId}`);
+      await axios.delete(`/api/education/${educationId}`);
 
       setConfirmDelete(null);
-      fetchProjects();
-      setMessage("Project deleted successfully!");
+      fetchEducation();
+      setMessage("Education entry deleted successfully!");
       setTimeout(() => setMessage(null), 3000);
       onChange();
     } catch (err) {
       console.log(err);
-      setError("Failed to delete project. Please try again.");
+      setError("Failed to delete education entry. Please try again.");
     } finally {
       setDeleting(false);
     }
   };
 
-  const handleEditClick = (project: any) => {
-    setSelectedProject(project);
-    setTitle(project.title);
-    setDescription(project.description);
-    setLink(project.link);
-    setTechnologies(project.technologies.join(" | "));
-    setExistingCoverPhoto(project.coverPhoto);
-    setExistingScreenshot(project.screenshot);
+  const handleEditClick = (education: any) => {
+    setSelectedEducation(education);
+    setTitle(education.title);
+    setDescription(education.description);
+    setStartDate(
+      education.startDate
+        ? new Date(education.startDate).toISOString().split("T")[0]
+        : ""
+    );
+    setEndDate(
+      education.endDate
+        ? new Date(education.endDate).toISOString().split("T")[0]
+        : ""
+    );
     setIsAddNewMode(false);
     setIsModalOpen(true);
   };
@@ -211,10 +159,19 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
     setIsModalOpen(true);
   };
 
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
+  };
+
   return (
     <div className="bg-gray-100 p-5 rounded-[20px] mt-5">
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Project Section</h1>
+        <h1 className="text-xl font-semibold">Education Section</h1>
         <div className="flex gap-3">
           <button
             onClick={handleAddNewClick}
@@ -238,83 +195,48 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
         </div>
       )}
 
-      {/* Modal for Add New or Edit Project */}
+      {/* Modal for Add New or Edit Education */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg w-[500px] max-w-[90%] max-h-[90%] overflow-y-auto shadow-lg">
             <h2 className="text-xl font-semibold mb-4">
-              {isAddNewMode ? "Add New Project" : "Edit Project"}
+              {isAddNewMode ? "Add New Education" : "Edit Education"}
             </h2>
 
             <form onSubmit={isAddNewMode ? handleSave : handleUpdate}>
               <TextField
-                label="Project Title"
-                placeholder="e.g., Portfolio Website"
+                label="Degree/Program Title"
+                placeholder="e.g., Bachelor of Science in Computer Science"
                 value={title}
                 onChange={(e: any) => setTitle(e.target.value)}
                 required
               />
-              <TextField
-                label="Technologies Used"
-                placeholder="e.g., React | Next.js | Tailwind CSS"
-                value={technologies}
-                onChange={(e: any) => setTechnologies(e.target.value)}
-                required
-              />
-              <TextField
-                label="Project Link"
-                placeholder="e.g., https://example.com"
-                value={link}
-                onChange={(e: any) => setLink(e.target.value)}
-                required
-              />
 
-              <div className="flex flex-col mt-3">
-                <label className="mb-1">Cover Photo</label>
-                {existingCoverPhoto && !isAddNewMode && (
-                  <div className="mb-2">
-                    <img
-                      src={existingCoverPhoto}
-                      alt="Current cover"
-                      className="h-20 object-cover rounded mb-1"
-                    />
-                    <p className="text-xs text-gray-500">Current cover photo</p>
-                  </div>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setCoverPhoto(e.target.files?.[0] || null)}
-                  className="mb-3"
-                />
+              <div className="grid grid-cols-2 gap-3 mt-3">
+                <div>
+                  <label className="mb-1 block">Start Date</label>
+                  <input
+                    type="date"
+                    className="form_input bg-gray-50 w-full p-2 border rounded"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block">End Date</label>
+                  <input
+                    type="date"
+                    className="form_input bg-gray-50 w-full p-2 border rounded"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                  />
+                </div>
               </div>
 
-              <div className="flex flex-col mt-1">
-                <label className="mb-1">Screenshot</label>
-                {existingScreenshot && !isAddNewMode && (
-                  <div className="mb-2">
-                    <img
-                      src={existingScreenshot}
-                      alt="Current screenshot"
-                      className="h-20 object-cover rounded mb-1"
-                    />
-                    <p className="text-xs text-gray-500">Current screenshot</p>
-                  </div>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setScreenshot(e.target.files?.[0] || null)}
-                  className="mb-3"
-                />
-              </div>
-
-              <h1 className="text-lg font-normal py-2 mt-2">
-                Project Description
-              </h1>
+              <h1 className="text-lg font-normal py-2 mt-2">Description</h1>
               <textarea
                 className="form_input h-32 bg-gray-50 w-full p-2 border rounded"
-                placeholder="Describe your project here."
+                placeholder="Describe your education, achievements, courses, etc."
                 value={description}
                 onChange={(e: any) => setDescription(e.target.value)}
                 required
@@ -346,18 +268,18 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <button
                     type="button"
-                    onClick={() => setConfirmDelete(selectedProject._id)}
+                    onClick={() => setConfirmDelete(selectedEducation._id)}
                     className="flex items-center text-red-500 hover:text-red-700 transition"
                     disabled={deleting}
                   >
                     <Trash2 className="w-4 h-4 mr-1" />
-                    Delete Project
+                    Delete Education
                   </button>
 
-                  {confirmDelete === selectedProject._id && (
+                  {confirmDelete === selectedEducation._id && (
                     <div className="mt-2 p-2 border border-red-200 bg-red-50 rounded">
                       <p className="text-sm text-red-700 mb-2">
-                        Are you sure you want to delete this project?
+                        Are you sure you want to delete this education entry?
                       </p>
                       <div className="flex gap-2">
                         <button
@@ -369,7 +291,7 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => handleDelete(selectedProject._id)}
+                          onClick={() => handleDelete(selectedEducation._id)}
                           className="px-3 py-1 text-sm bg-red-500 text-white rounded"
                           disabled={deleting}
                         >
@@ -385,38 +307,30 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
         </div>
       )}
 
-      {/* Project Grid */}
+      {/* Education Grid */}
       {edit && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
-          {fetchedProjects.length > 0 ? (
-            fetchedProjects.map((project: any, index: number) => (
+          {fetchedEducation.length > 0 ? (
+            fetchedEducation.map((education: any, index: number) => (
               <div
                 key={index}
                 className="bg-gray-200 p-4 rounded-lg flex justify-between items-start shadow-sm border border-gray-300 hover:shadow-md transition"
               >
                 <div>
                   <h1 className="text-[20px] font-normal pb-1">
-                    {project.title}
+                    {education.title}
                   </h1>
+                  <div className="text-sm text-gray-600 mb-2">
+                    {formatDate(education.startDate)} -{" "}
+                    {formatDate(education.endDate) || "Present"}
+                  </div>
                   <p className="text-gray-500 text-sm line-clamp-2">
-                    {project.description}
+                    {education.description}
                   </p>
-                  {project.technologies && project.technologies.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {project.technologies.map((tech: string, i: number) => (
-                        <span
-                          key={i}
-                          className="text-xs bg-gray-300 px-2 py-1 rounded"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  )}
                 </div>
                 <button
                   type="button"
-                  onClick={() => handleEditClick(project)}
+                  onClick={() => handleEditClick(education)}
                   className="text-gray-500 hover:text-gray-700 transition"
                 >
                   <Pencil className="w-5 h-5" />
@@ -425,7 +339,8 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
             ))
           ) : (
             <div className="col-span-2 p-4 text-center text-gray-500">
-              No projects found. Click "Add New" to create your first project.
+              No education entries found. Click "Add New" to create your first
+              education entry.
             </div>
           )}
         </div>
@@ -434,4 +349,4 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
   );
 };
 
-export default ProjectSection;
+export default EducationSection;

@@ -10,11 +10,12 @@ export default function Projects({ project }: any) {
   };
 
   return (
-    <div className="d_container" key={project.length}>
+    <div className="d_container">
+      {/* Motion applied on the section title */}
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ amount: 0.2 }}
+        viewport={{ once: true, amount: 0.2 }} // Trigger when 20% of the element is in view
         variants={fadeInUp}
         transition={{ duration: 1, delay: 0.1 }}
       >
@@ -22,13 +23,14 @@ export default function Projects({ project }: any) {
       </motion.div>
 
       {project.length > 0 && (
-        <div className="grid grid-col-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* Loop through each project item */}
           {project.map((item: any, index: any) => (
             <motion.div
               key={index}
               initial="hidden"
               whileInView="visible"
-              viewport={{ amount: 0.2 }}
+              viewport={{ once: true, amount: 0.2 }} // Animation triggers only once when fully in view
               variants={fadeInUp}
               transition={{ duration: 1, delay: index * 0.1 }}
             >

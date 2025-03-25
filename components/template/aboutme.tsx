@@ -1,9 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import {  Twitter } from "lucide-react"; // Lucide icons
+import { Twitter } from "lucide-react"; // Lucide icons
 
-function AboutMe({user}: any) {
+function AboutMe({ user }: any) {
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0 },
@@ -14,7 +14,7 @@ function AboutMe({user}: any) {
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.2 }} // Adjusts when the animation starts
         variants={fadeInUp}
         transition={{ duration: 1, delay: 0.1 }}
       >
@@ -22,10 +22,10 @@ function AboutMe({user}: any) {
       </motion.div>
 
       <motion.p
-        className="text-3xl text-gray-300/70 mb-4 text-start font-regular"
+        className="text-3xl text-gray-300/90 mb-4 text-start font-regular"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.2 }} // Ensure element is in view before animation triggers
         variants={fadeInUp}
         transition={{ duration: 1, delay: 0.1 }}
       >

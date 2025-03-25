@@ -13,17 +13,17 @@ export async function GET(req) {
     }
     const user = await User.findOne(
       { email: session.user.email },
-      "currentstep completed profile"
+      "currentstep completed profile setup"
     );
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     return NextResponse.json(
       {
-            currentstep: user.currentstep,
-            completed: user.completed,
-            profile: user.profile,
-   
+        currentstep: user.currentstep,
+        completed: user.completed,
+        profile: user.profile,
+        setup: user.setup,
       },
       { status: 200 }
     );

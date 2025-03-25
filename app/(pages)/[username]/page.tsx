@@ -18,7 +18,10 @@ async function getUserData(username: string) {
     stats: data.stats,
     social: data.social,
     project: data.project,
-    setup : data.setup
+    setup: data.setup,
+    education: data.education,
+    experience: data.experience,
+    skills: data.skills
   };
 }
 
@@ -33,6 +36,9 @@ export default async function UserPage({
   const stats = user?.stats || [];
   const social = user?.social || {};
   const project = user?.project || [];
+  const education = user?.education || [];
+  const experience = user?.experience || [];
+  const skills = user?.skills || [];
   const setup = user?.setup || {};
 
 
@@ -52,7 +58,7 @@ export default async function UserPage({
 
     <div>
 
-      <DefaultTemplate user={user} stats={stats} social={social} project={project} setup={setup} />
+      <DefaultTemplate user={user} stats={stats} social={social} project={project} setup={setup} education={education} experience={experience} skills={skills} />
     </div>
   );
 }

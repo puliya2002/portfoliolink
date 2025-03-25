@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 function ProjectCard({
   id,
@@ -10,18 +11,48 @@ function ProjectCard({
   skills,
   image,
 }: {
-  id: string;
+  id: number;
   name: string;
   skills: string[];
   image: string;
 }) {
   const router = useRouter();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleNavigation = () => router.push(`/${id}`);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.2, // Trigger when 20% of the element is visible
+        rootMargin: "0px 0px -50px 0px", // Adjust this to control when animation triggers
+      }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div
-      className="h-auto project-card cursor-pointer"
+      ref={cardRef}
+      className={`h-auto project-card cursor-pointer transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
       onClick={handleNavigation}
     >
       <div>
@@ -43,7 +74,7 @@ function ProjectCard({
           ))}
         </div>
         <Image
-          src={image||"/placeholder.png"}
+          src={image || "/placeholder.png"}
           className="object-cover p-1 rounded-[15px] mt-3 h-[240px] sm:h-[270px] w-screen"
           alt="project"
           loading="lazy"
