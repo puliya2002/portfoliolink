@@ -54,12 +54,12 @@ const Timeline = ({experience}:any) => {
                     <span
                       className={`absolute top-5 max-sm:-left-5  ${
                         index % 2 === 0 ? "-left-3" : "-right-3"
-                      } w-6 h-6 bg-gray-700 rounded-full border-4 border-gray-900`}
+                      } w-6 h-6 bg-gray-700 rounded-full border-4 border-gray-800`}
                     ></span>
 
                     {/* Event Content */}
                     <p
-                      className={`text-gray-400 italic text-md max-sm:text-left ${
+                      className={`opacity-60 italic text-md max-sm:text-left ${
                         index % 2 === 0 ? "text-left" : "text-right"
                       }`}
                     >
@@ -67,14 +67,14 @@ const Timeline = ({experience}:any) => {
                       {formatDate(event.endDate)}
                     </p>
                     <h3
-                      className={`text-xl font-semibold text-white max-sm:text-left ${
+                      className={`text-xl font-[500]   max-sm:text-left ${
                         index % 2 === 0 ? "text-left" : "text-right"
                       }`}
                     >
                       {event.title}
                     </h3>
                     <p
-                      className={`text-gray-300 text-md mt-2 max-sm:text-left ${
+                      className={` text-md mt-2 max-sm:text-left ${
                         index % 2 === 0 ? "text-left" : "text-right"
                       }`}
                     >

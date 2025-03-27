@@ -19,7 +19,27 @@ p{
 }
 
 body {
-    @apply overflow-x-hidden bg-black text-white ;
+    @apply overflow-x-hidden;
+}
+
+body.light {
+    background-color: white;
+    color: black;
+}
+
+/* dark-theme.css */
+body.dark {
+    background-color: black;
+    color: white;
+}
+
+body.light .bg_color {
+    background-color: white !important;
+}
+
+/* dark-theme.css */
+body.dark .bg_color {
+    background-color: black !important;
 }
 
 .d_container {

@@ -21,7 +21,8 @@ async function getUserData(username: string) {
     setup: data.setup,
     education: data.education,
     experience: data.experience,
-    skills: data.skills
+    skills: data.skills,
+    theme: data.theme
   };
 }
 
@@ -40,6 +41,7 @@ export default async function UserPage({
   const experience = user?.experience || [];
   const skills = user?.skills || [];
   const setup = user?.setup || {};
+  const theme = user?.theme || {};
 
 
 
@@ -58,7 +60,7 @@ export default async function UserPage({
 
     <div>
 
-      <DefaultTemplate user={user} stats={stats} social={social} project={project} setup={setup} education={education} experience={experience} skills={skills} />
+      <DefaultTemplate user={user} stats={stats} social={social} project={project} setup={setup} education={education} experience={experience} skills={skills} theme={theme} />
     </div>
   );
 }

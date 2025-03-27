@@ -10,17 +10,28 @@ function ProjectCard({
   name,
   skills,
   image,
+  username, // Pass the username
 }: {
   id: number;
   name: string;
   skills: string[];
   image: string;
+  username: string;
 }) {
   const router = useRouter();
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const handleNavigation = () => router.push(`/${id}`);
+  const handleNavigation = () => {
+    // Store selected project details in localStorage
+    localStorage.setItem(
+      "selectedProject",
+      JSON.stringify({ id, name, image, skills, username })
+    );
+
+    // Redirect to the project details page with the username
+    router.push(`/${username}/projects/${id}`);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,10 +41,7 @@ function ProjectCard({
           observer.unobserve(entry.target);
         }
       },
-      {
-        threshold: 0.2, // Trigger when 20% of the element is visible
-        rootMargin: "0px 0px -50px 0px", // Adjust this to control when animation triggers
-      }
+      { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
     );
 
     if (cardRef.current) {
@@ -67,7 +75,7 @@ function ProjectCard({
           {skills?.map((skill, index) => (
             <div
               key={index}
-              className="h-min w-auto bg-black/20 border-gray-500/70 border rounded-md px-2 py-[2px] text-gray-400"
+              className="h-min w-auto bg-gray/20 border-gray-500/55 border rounded-md px-2 py-[2px] "
             >
               <p className="text-[16px]">{skill}</p>
             </div>

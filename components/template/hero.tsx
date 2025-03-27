@@ -53,8 +53,8 @@ const Hero = ({
   const router = useRouter();
 
   return (
-    <section className="flex items-center">
-      <div className="d_container z-10">
+    <section className="flex items-center pt-24">
+      <div className="d_container z-10 ">
         <motion.h1
           className="mb-3"
           initial="initial"
@@ -73,7 +73,7 @@ const Hero = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <p className="text-3xl mb-10 opacity-65">{user.tagline}</p>
+          <p className="text-3xl mb-10 opacity-70">{user.tagline}</p>
         </motion.div>
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-3 gap-3"

@@ -1,13 +1,20 @@
 "use client";
 import React from "react";
 import ProjectCard from "./ProjectCard";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 
-export default function Projects({ project }: any) {
+export default function Projects({ project, user }: any) {
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0 },
   };
+
+  useEffect(() => {
+    if (project.length > 0) {
+      localStorage.setItem("projects", JSON.stringify(project));
+    }
+  }, [project]);
 
   return (
     <div className="d_container">
@@ -39,6 +46,7 @@ export default function Projects({ project }: any) {
                 name={item.title}
                 image={item.coverPhoto}
                 skills={item.technologies}
+                username={user.username}
               />
             </motion.div>
           ))}

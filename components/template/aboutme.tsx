@@ -21,16 +21,18 @@ function AboutMe({ user }: any) {
         <h2 className="text-start pb-2">About Me</h2>
       </motion.div>
 
-      <motion.p
-        className="text-3xl text-gray-300/90 mb-4 text-start font-regular"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }} // Ensure element is in view before animation triggers
-        variants={fadeInUp}
-        transition={{ duration: 1, delay: 0.1 }}
-      >
-        {user.about}
-      </motion.p>
+      <div className="opacity-65">
+        <motion.p
+          className="text-2xl lg:text-3xl mb-4 text-start font-regular"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }} // Ensure element is in view before animation triggers
+          variants={fadeInUp}
+          transition={{ duration: 1, delay: 0.1 }}
+        >
+          {user.about}
+        </motion.p>
+      </div>
 
       {/* Example of using Image and icons */}
     </div>

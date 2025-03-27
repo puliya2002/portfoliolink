@@ -11,6 +11,7 @@ import ExperienceSection from "@/components/live-edit/Experience";
 import EducationSection from "@/components/live-edit/EducationSection";
 import SkillsSection from "@/components/live-edit/SkillsSection";
 import { set } from "mongoose";
+import Theme from "@/components/live-edit/Theme";
 
 function Page() {
   const [refreshIframe, setRefreshIframe] = useState(false);
@@ -70,10 +71,12 @@ function Page() {
           <SelectSections onChange={handleChange} />
           <MainSection onChange={handleChange} />
           <Picture onChange={handleChange} />
+
           {setup.project && <ProjectSection onChange={handleChange} />}
           {setup.experience && <ExperienceSection onChange={handleChange} />}
           {setup.education && <EducationSection onChange={handleChange} />}
           {setup.skills && <SkillsSection onChange={handleChange} />}
+          <Theme onChange={handleChange} />
         </div>
         <div className="w-full lg:w-3/5">
           <iframe
