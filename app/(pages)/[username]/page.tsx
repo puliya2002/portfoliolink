@@ -1,4 +1,6 @@
 import DefaultTemplate from "@/app/template/default/page";
+import Link from "next/link";
+import { CheckCircle, AlertCircle } from "lucide-react";
 
 async function getUserData(username: string) {
   const res = await fetch(
@@ -22,7 +24,8 @@ async function getUserData(username: string) {
     education: data.education,
     experience: data.experience,
     skills: data.skills,
-    theme: data.theme
+    theme: data.theme,
+    hasAccess : data.hasAccess
   };
 }
 
@@ -42,6 +45,7 @@ export default async function UserPage({
   const skills = user?.skills || [];
   const setup = user?.setup || {};
   const theme = user?.theme || {};
+  const hasAccess = user?.hasAccess || false
 
 
 
@@ -57,10 +61,34 @@ export default async function UserPage({
 
 
   return (
-
     <div>
+      {!hasAccess && (
+        <div className="bg-gradient-to-r from-red-500 to-orange-500 h-fit p-4 mb-4 flex items-center justify-between border border-orange-400 shadow-md transition-all hover:shadow-lg cursor-pointer">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="text-white" size={24} />
+            <p className="text-[20px] font-medium text-white">
+              Activate Premium
+            </p>
+          </div>
+          <Link href="/pricing">
+            <span className="bg-white text-orange-600 text-xs font-bold px-3 py-1 rounded-full animate-pulse">
+              UPGRADE
+            </span>
+          </Link>
+        </div>
+      )}
 
-      <DefaultTemplate user={user} stats={stats} social={social} project={project} setup={setup} education={education} experience={experience} skills={skills} theme={theme} />
+      <DefaultTemplate
+        user={user}
+        stats={stats}
+        social={social}
+        project={project}
+        setup={setup}
+        education={education}
+        experience={experience}
+        skills={skills}
+        theme={theme}
+      />
     </div>
   );
 }

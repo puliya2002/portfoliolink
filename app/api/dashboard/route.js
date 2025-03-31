@@ -13,7 +13,7 @@ export async function GET(req) {
     }
     const user = await User.findOne(
       { email: session.user.email },
-      "currentstep completed profile setup"
+      "currentstep completed profile setup hasAccess"
     );
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -24,6 +24,7 @@ export async function GET(req) {
         completed: user.completed,
         profile: user.profile,
         setup: user.setup,
+        hasAccess: user.hasAccess
       },
       { status: 200 }
     );

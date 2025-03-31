@@ -26,7 +26,7 @@ const ProfileLink = ({ username }: { username: string }) => {
   };
 
   return (
-    <div className="bg-gray-100 h-fit rounded-[30px] p-5 ">
+    <div className="bg-gray-100 h-fit rounded-[20px] p-5 ">
       <h2 className="text-lg font-medium text-left pb-3">
         Your Portfolio Link
       </h2>

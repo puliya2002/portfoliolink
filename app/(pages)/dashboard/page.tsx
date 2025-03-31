@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 import ProfilePreview from "@/components/ProfilePreview";
 import ProfileLink from "@/components/ProfileLink";
 import axios from "axios";
+import { CheckCircle, AlertCircle } from "lucide-react";
+import Link from "next/link";
+import PortalButton from "@/components/PortalButton";
+
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -17,6 +21,7 @@ export default function Dashboard() {
     about: "",
     tagline: "",
   });
+  const[hasAccess, setHasAccess] = useState(false);
 
   useEffect(() => {
     axios
@@ -25,6 +30,7 @@ export default function Dashboard() {
         setCurrentStep(response.data.currentstep);
         setCompleted(response.data.completed);
         setProfile(response.data.profile);
+        setHasAccess(response.data.hasAccess);
         
       })
       .catch((error) => {
@@ -69,6 +75,35 @@ export default function Dashboard() {
             <ProfilePreview profile={profile || { username: "" }} />
           </div>
           <div className="col w-full lg:w-1/3">
+            {hasAccess ? (
+              <div className="bg-emerald-500 h-fit rounded-xl p-4 mb-4 flex items-center justify-between border-2 border-emerald-400 shadow-md transition-all hover:shadow-lg">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="text-white" size={24} />
+                  <h2 className="text-lg font-medium text-white">
+                    Premium Activated
+                  </h2>
+                </div>
+                <span className="bg-white text-emerald-600 text-xs font-bold px-2 py-1 rounded-full">
+                  ACTIVE
+                </span>
+              </div>
+            ) : (
+              <div className="bg-gradient-to-r from-red-500 to-orange-500 h-fit rounded-xl p-4 mb-4 flex items-center justify-between border border-orange-400 shadow-md transition-all hover:shadow-lg cursor-pointer">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="text-white" size={24} />
+                  <h2 className="text-lg font-medium text-white">
+                    Activate Premium
+                  </h2>
+                </div>
+                <Link href="/pricing">
+                  <span className="bg-white text-orange-600 text-xs font-bold px-3 py-1 rounded-full animate-pulse">
+                    UPGRADE
+                  </span>
+                </Link>
+              </div>
+            )}
+            <PortalButton />
+
             <ProfileLink username={profile?.username} />
           </div>
         </div>
