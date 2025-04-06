@@ -11,16 +11,11 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
 
   const [error, setError] = useState("");
   const [edit, setEdit] = useState(false);
-
   const [name, setName] = useState("");
-  const [proficiency, setProficiency] = useState(75); // Default to 75%
-  const [category, setCategory] = useState("technical"); // Default category
   const [fetchedSkills, setFetchedSkills] = useState([]);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
-
   const [message, setMessage] = useState<string | null>(null);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<any>(null);
   const [isAddNewMode, setIsAddNewMode] = useState(false);
@@ -45,8 +40,6 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
 
   const resetForm = () => {
     setName("");
-    setProficiency(75);
-    setCategory("technical");
     setSelectedSkill(null);
     setError("");
   };
@@ -61,8 +54,6 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
         skills: [
           {
             name,
-            proficiency,
-            category,
           },
         ],
       });
@@ -90,8 +81,6 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
     try {
       await axios.put(`/api/skills/${selectedSkill._id}`, {
         name,
-        proficiency,
-        category,
       });
 
       setIsModalOpen(false);
@@ -134,8 +123,6 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
   const handleEditClick = (skill: any) => {
     setSelectedSkill(skill);
     setName(skill.name);
-    setProficiency(skill.proficiency);
-    setCategory(skill.category);
     setIsAddNewMode(false);
     setIsModalOpen(true);
   };
@@ -145,16 +132,6 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
     setIsAddNewMode(true);
     setIsModalOpen(true);
   };
-
-  // Group skills by category
-  const groupedSkills = fetchedSkills.reduce((acc: any, skill: any) => {
-    const category = skill.category || "Other";
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(skill);
-    return acc;
-  }, {});
 
   return (
     <div className="bg-gray-100 p-5 rounded-[20px] mt-5">
@@ -199,42 +176,6 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
                 onChange={(e: any) => setName(e.target.value)}
                 required
               />
-
-              <div className="mt-3">
-                <label className="block mb-1">Skill Category</label>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="form_input bg-gray-50 w-full p-2 border rounded"
-                  required
-                >
-                  <option value="technical">Technical</option>
-                  <option value="soft">Soft Skills</option>
-                  <option value="language">Languages</option>
-                  <option value="tool">Tools</option>
-                  <option value="framework">Frameworks</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              <div className="mt-3">
-                <label className="block mb-1">
-                  Proficiency: {proficiency}%
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={proficiency}
-                  onChange={(e) => setProficiency(parseInt(e.target.value))}
-                  className="w-full"
-                />
-                <div className="flex justify-between text-xs text-gray-500">
-                  <span>Beginner</span>
-                  <span>Intermediate</span>
-                  <span>Expert</span>
-                </div>
-              </div>
 
               {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
@@ -304,40 +245,26 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
       {/* Skills Display */}
       {edit ? (
         <div className="py-4">
-          {Object.keys(groupedSkills).length > 0 ? (
-            Object.entries(groupedSkills).map(([category, skills]: [string, any]) => (
-              <div key={category} className="mb-4">
-                <h2 className="text-lg font-medium mb-2 capitalize">{category}</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {skills.map((skill: any, index: number) => (
-                    <div
-                      key={index}
-                      className="bg-gray-200 p-3 rounded-lg flex justify-between items-center shadow-sm border border-gray-300"
-                    >
-                      <div className="flex-1">
-                        <div className="flex justify-between items-center mb-1">
-                          <h3 className="font-medium">{skill.name}</h3>
-                          <span className="text-sm text-gray-600">{skill.proficiency}%</span>
-                        </div>
-                        <div className="w-full bg-gray-300 rounded-full h-2.5">
-                          <div
-                            className="bg-blue-600 h-2.5 rounded-full"
-                            style={{ width: `${skill.proficiency}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => handleEditClick(skill)}
-                        className="ml-3 text-gray-500 hover:text-gray-700 transition"
-                      >
-                        <Pencil className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
+          {fetchedSkills.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {fetchedSkills.map((skill: any, index: number) => (
+                <div
+                  key={index}
+                  className="bg-gray-200 p-3 rounded-lg flex justify-between items-center shadow-sm border border-gray-300"
+                >
+                  <div className="flex-1">
+                    <h3 className="font-medium">{skill.name}</h3>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleEditClick(skill)}
+                    className="ml-3 text-gray-500 hover:text-gray-700 transition"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           ) : (
             <div className="p-4 text-center text-gray-500">
               No skills found. Click "Add New" to create your first skill.
@@ -346,7 +273,7 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
         </div>
       ) : (
         <div className="py-4">
-          {Object.keys(groupedSkills).length > 0 ? (
+          {fetchedSkills.length > 0 ? (
             <div className="flex flex-wrap gap-2">
               {fetchedSkills.map((skill: any, index: number) => (
                 <div

@@ -10,6 +10,7 @@ import Education from "../../../components/template/education";
 import NavBar from "@/components/template/Navbar";
 import Footer from "@/components/template/Footer";
 import "./style.css";
+import Skills from '@/components/template/Skills';
 
 
 
@@ -70,8 +71,10 @@ export default function DefaultTemplate({
         </section>
       )}
       {setup.skills && (
-        <section id="skills"> {/* Add skills component here */} </section>
+        <section id="skills"><Skills skills={skills} /> </section>
       )}
+      
+      
       <Footer setup={setup} />
     </div>
   );
