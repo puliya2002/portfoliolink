@@ -6,7 +6,7 @@ import Drawer from "./Drawers";
 
 
 
-const navbar = ({user, setup}:any) => {
+const TemplateNav = ({user, setup}:any) => {
     const [open, setOpen] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [scrollingUp, setScrollingUp] = useState(true);
@@ -53,4 +53,4 @@ const navbar = ({user, setup}:any) => {
   );
 }
 
-export default navbar
+export default TemplateNav;

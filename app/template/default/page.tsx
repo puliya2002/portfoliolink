@@ -7,7 +7,7 @@ import AboutMe from "../../../components/template/aboutme";
 import Projects from "../../../components/template/Projects";
 import Experience from "../../../components/template/Experience";
 import Education from "../../../components/template/education";
-import Navbar from '@/components/template/Navbar';
+import TemplateNav from "@/components/template/Navbar";
 import Footer from "@/components/template/Footer";
 import "./style.css";
 import Skills from '@/components/template/Skills';
@@ -46,7 +46,7 @@ export default function DefaultTemplate({
 
   return (
     <div>
-      <Navbar user={user} setup={setup} />
+      <TemplateNav user={user} setup={setup} />
 
       <section id="home">
         <Hero user={user} stats={stats} social={social} />
