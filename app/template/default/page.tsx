@@ -7,7 +7,7 @@ import AboutMe from "../../../components/template/aboutme";
 import Projects from "../../../components/template/Projects";
 import Experience from "../../../components/template/Experience";
 import Education from "../../../components/template/education";
-import TemplateNav from "@/components/template/Navbar";
+import TemplateNav from "@/components/template/templatenav";
 import Footer from "@/components/template/Footer";
 import "./style.css";
 import Skills from '@/components/template/Skills';
