@@ -45,9 +45,10 @@ export default function Step2() {
       });
 
       router.push("/dashboard/step3");
-    } catch (err: any) {
-      console.error("Error:", err.response?.data?.error);
-      setError(err.response?.data?.error || "Something went wrong");
+    } catch (err) {
+      const error = err as { response?: { data?: { error?: string } } };
+      console.error("Error:", error.response?.data?.error);
+      setError(error.response?.data?.error || "Something went wrong");
     }
   };
 
