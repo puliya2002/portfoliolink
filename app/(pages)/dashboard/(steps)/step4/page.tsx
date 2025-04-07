@@ -83,9 +83,9 @@ const updatePortfolio = () => {
 
   return (
     <div>
-      <h1 className="text-xl font-bold">Edit Template</h1>
+      <h1 className="text-xl font-bold">Edit Main Sections</h1>
       <p className="text-gray-500 text-[13px]">
-        These sections includes all the information about you.
+        These sections includes all nessary information about you.
       </p>
       <form onSubmit={handleSubmit}>
         {/* Personal Information start*/}

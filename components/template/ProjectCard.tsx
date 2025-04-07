@@ -3,25 +3,64 @@
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 function ProjectCard({
   id,
   name,
   skills,
   image,
+  username, // Pass the username
 }: {
-  id: string;
+  id: number;
   name: string;
   skills: string[];
   image: string;
+  username: string;
 }) {
   const router = useRouter();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const handleNavigation = () => router.push(`/${id}`);
+  const handleNavigation = () => {
+    // Store selected project details in localStorage
+    localStorage.setItem(
+      "selectedProject",
+      JSON.stringify({ id, name, image, skills, username })
+    );
+
+    // Redirect to the project details page with the username
+    router.push(`/${username}/projects/${id}`);
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div
-      className="h-auto project-card cursor-pointer"
+      ref={cardRef}
+      className={`h-auto project-card cursor-pointer transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
       onClick={handleNavigation}
     >
       <div>
@@ -33,17 +72,17 @@ function ProjectCard({
         </div>
 
         <div className="flex flex-row flex-wrap gap-[6px]">
-          {skills.map((skill, index) => (
+          {skills?.map((skill, index) => (
             <div
               key={index}
-              className="h-min w-auto bg-black/20 border-gray-500/70 border rounded-md px-2 py-[2px] text-gray-400"
+              className="h-min w-auto bg-gray/20 border-gray-500/55 border rounded-md px-2 py-[2px] "
             >
               <p className="text-[16px]">{skill}</p>
             </div>
           ))}
         </div>
         <Image
-          src={image}
+          src={image || "/placeholder.png"}
           className="object-cover p-1 rounded-[15px] mt-3 h-[240px] sm:h-[270px] w-screen"
           alt="project"
           loading="lazy"

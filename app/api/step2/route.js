@@ -4,7 +4,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 
-
 export async function POST(req) {
   try {
     await connectDB();
@@ -15,8 +14,6 @@ export async function POST(req) {
 
     const { project, skills, experience, education } = await req.json();
 
-
-
     const updatedUser = await User.findOneAndUpdate(
       { email: session.user.email },
       {
@@ -25,8 +22,7 @@ export async function POST(req) {
           "setup.skills": skills,
           "setup.experience": experience,
           "setup.education": education,
-              currentstep: 3,
-          completed: true
+          currentstep: 3,
         },
       },
       { new: true }

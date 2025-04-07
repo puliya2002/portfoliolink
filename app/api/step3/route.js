@@ -39,7 +39,8 @@ async function uploadFileToS3(fileBuffer, fileName) {
       { email: session.user.email },
       {
         $set: {
-          "profile.picture": s3Url, // Store the full URL in the database
+          "profile.picture": s3Url,
+          currentstep: 4, 
         },
       },
       { new: true }

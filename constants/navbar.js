@@ -14,8 +14,8 @@ const navbarLinks = [
     title: "About",
   },
   {
-    id: "works",
-    title: "Works",
+    id: "pricing",
+    title: "Pricing",
   },
   {
     id: "contact",

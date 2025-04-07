@@ -37,7 +37,7 @@ export default function Step2() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/step2", {
+      await axios.post("/api/step2", {
         project: isProject,
         skills: isSkills,
         experience: isExperience,
@@ -45,9 +45,10 @@ export default function Step2() {
       });
 
       router.push("/dashboard/step3");
-    } catch (err: any) {
-      console.error("Error:", err.response?.data?.error);
-      setError(err.response?.data?.error || "Something went wrong");
+    } catch (err) {
+      const error = err as { response?: { data?: { error?: string } } };
+      console.error("Error:", error.response?.data?.error);
+      setError(error.response?.data?.error || "Something went wrong");
     }
   };
 
