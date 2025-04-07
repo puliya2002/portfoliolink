@@ -37,7 +37,7 @@ export default function Step2() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/step2", {
+      await axios.post("/api/step2", {
         project: isProject,
         skills: isSkills,
         experience: isExperience,
