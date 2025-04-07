@@ -4,9 +4,9 @@ import Button from "@/components/ui/Button";
 import TextField from "@/components/ui/TextField";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import FileUpload from "@/components/Fileupload";
 
-const updatePortfolio = () => {
+
+const UpdatePortfolio = () => {
   const router = useRouter();
   const [displayName, setDisplayName] = useState("");
   const [tagline, setTagline] = useState("");
@@ -222,4 +222,4 @@ const updatePortfolio = () => {
   );
 };
 
-export default updatePortfolio;
+export default UpdatePortfolio;

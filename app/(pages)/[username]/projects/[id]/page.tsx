@@ -44,6 +44,8 @@ function ProjectDetails() {
             src={project.image || "/placeholder.png"}
             alt={project.name}
             className="rounded-lg"
+            width="100%"
+            height="100%"
           />
           <div className="flex pt-5 content-center justify-center gap-2">
             {project.skills?.map((skill: string, index: number) => (
