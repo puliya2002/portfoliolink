@@ -70,7 +70,7 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
     setSaving(true);
     setError("");
 
-    let splitedTechnologies = technologies
+    const splitedTechnologies = technologies
       .split("|")
       .map((tech) => tech.trim());
 
@@ -125,7 +125,7 @@ const ProjectSection = ({ onChange }: { onChange: () => void }) => {
     setSaving(true);
     setError("");
 
-    let splitedTechnologies = technologies
+    const splitedTechnologies = technologies
       .split("|")
       .map((tech) => tech.trim());
 
