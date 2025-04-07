@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import TextField from "@/components/TextField";
@@ -29,7 +29,7 @@ const Login = () => {
   const email = watch("email");
   const router = useRouter();
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (session) {
@@ -119,7 +119,7 @@ const Login = () => {
 
               <div className="mt-4 text-center">
                 <p className="text-sm">
-                  Don't have an account?{" "}
+                  Don't have an account?
                   <Link
                     href="/register"
                     className="text-blue-600 hover:underline"

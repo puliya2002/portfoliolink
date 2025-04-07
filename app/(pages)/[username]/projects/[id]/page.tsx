@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -40,12 +40,13 @@ function ProjectDetails() {
               this with actual project details.
             </p>
           </div>
-          <img
+          <Image
             src={project.image || "/placeholder.png"}
             alt={project.name}
-            className="rounded-lg"
-            width="100%"
-            height="100%"
+            className="rounded-lg w-full h-auto" 
+            width={1500}
+            height={1500}
+            
           />
           <div className="flex pt-5 content-center justify-center gap-2">
             {project.skills?.map((skill: string, index: number) => (

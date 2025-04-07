@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import TextField from "@/components/TextField";
 import Link from "next/link";
 import Logo from "@/public/logo.png";
-import { useForm, SubmitHandler, set } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -33,7 +33,7 @@ const Register = () => {
   const [emailError, setEmailError] = useState("");
 
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (session) {
@@ -47,7 +47,7 @@ const Register = () => {
   }, [email]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    const { confirmPassword, ...formData } = data; // Exclude confirmPassword
+    const { ...formData } = data; // Exclude confirmPassword
     const { email, password } = formData; // Extract email and password for login
 
     try {

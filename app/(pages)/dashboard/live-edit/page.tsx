@@ -10,7 +10,6 @@ import SelectSections from "@/components/live-edit/SelectSections";
 import ExperienceSection from "@/components/live-edit/Experience";
 import EducationSection from "@/components/live-edit/EducationSection";
 import SkillsSection from "@/components/live-edit/SkillsSection";
-import { set } from "mongoose";
 import Theme from "@/components/live-edit/Theme";
 
 function Page() {

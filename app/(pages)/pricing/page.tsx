@@ -5,7 +5,7 @@ import Pricing from "@/components/Pricing";
 import axios from "axios";
 
 
-function page() {
+function Priceing() {
 
   const [name, setName] = React.useState("");
   useEffect(() => {
@@ -27,4 +27,4 @@ function page() {
   );
 }
 
-export default page;
+export default Priceing;

@@ -59,7 +59,7 @@ const UpdatePortfolio = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("/api/step4", {
+      await axios.post("/api/step4", {
         displayName: displayName,
         tagline: tagline,
         about: about,
