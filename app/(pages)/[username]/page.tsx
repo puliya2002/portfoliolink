@@ -1,6 +1,6 @@
 import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
-import { CheckCircle, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 
 async function getUserData(username: string) {
   const res = await fetch(
