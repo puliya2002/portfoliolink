@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Drawer from "./Drawers";
 
 const TemplateNav = ({ user, setup }: any) => {
-  const [open, setOpen] = useState(false);
+
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrollingUp, setScrollingUp] = useState(true);
 
@@ -38,7 +38,7 @@ const TemplateNav = ({ user, setup }: any) => {
           <p className="text-2xl font-medium">{user.displayName}</p>
         </a>
         <motion.div
-          className={`${open ? "opacity-0" : "flex"}`}
+
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
