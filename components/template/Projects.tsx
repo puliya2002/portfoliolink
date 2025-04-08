@@ -1,10 +1,9 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import ProjectCard from "./ProjectCard";
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 
-export default function Projects({ project, user }: any) {
+const Projects = ({ project, user }: { project?: any; user?: any }) => {
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0 },
@@ -16,9 +15,12 @@ export default function Projects({ project, user }: any) {
     }
   }, [project]);
 
+  if (!project || !Array.isArray(project)) {
+    return <p>No projects available.</p>;
+  }
+
   return (
     <div className="d_container">
-      {/* Motion applied on the section title */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -29,30 +31,28 @@ export default function Projects({ project, user }: any) {
         <h2 className="pb-7">Projects</h2>
       </motion.div>
 
-      {project && Array.isArray(project) && project.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {project.map((item: Record<string, any>, index: number) => (
-            <motion.div
-              key={index}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={fadeInUp}
-              transition={{ duration: 1, delay: index * 0.1 }}
-            >
-              <ProjectCard
-                id={index}
-                name={item.title}
-                image={item.coverPhoto}
-                skills={item.technologies || []}
-                username={user?.username}
-              />
-            </motion.div>
-          ))}
-        </div>
-      ) : (
-        <p>No projects available.</p>
-      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {project.map((item: Record<string, any>, index: number) => (
+          <motion.div
+            key={index}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={fadeInUp}
+            transition={{ duration: 1, delay: index * 0.1 }}
+          >
+            <ProjectCard
+              id={index}
+              name={item.title}
+              image={item.coverPhoto}
+              skills={item.technologies || []}
+              username={user?.username}
+            />
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
-}
+};
+
+export default Projects;
