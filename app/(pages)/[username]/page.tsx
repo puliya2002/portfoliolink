@@ -2,6 +2,13 @@ import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
+// Type definition for PageProps
+type PageProps = {
+  params: {
+    username: string;
+  };
+};
+
 async function getUserData(username: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`,
@@ -25,16 +32,13 @@ async function getUserData(username: string) {
     experience: data.experience,
     skills: data.skills,
     theme: data.theme,
-    hasAccess : data.hasAccess
+    hasAccess: data.hasAccess,
   };
 }
 
-export default async function UserPage({
-  params,
-}: {
-  params: { username: string };
-}) {
-  const username = params.username;
+// Updated function signature with the correct PageProps type
+export default async function UserPage({ params }: PageProps) {
+  const { username } = params; // Access the username from params
 
   const user = await getUserData(username);
 
@@ -51,7 +55,7 @@ export default async function UserPage({
   if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-xl"> User not found</p>
+        <p className="text-xl">User not found</p>
       </div>
     );
   }
@@ -88,4 +92,3 @@ export default async function UserPage({
     </div>
   );
 }
-
