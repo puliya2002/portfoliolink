@@ -1,3 +1,4 @@
+"use client"
 import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
@@ -18,16 +19,16 @@ async function getUserData(username: string) {
 
   const data = await res.json();
   return {
-    ...data.user,
-    stats: data.stats,
-    social: data.social,
-    project: data.project,
-    setup: data.setup,
-    education: data.education,
-    experience: data.experience,
-    skills: data.skills,
-    theme: data.theme,
-    hasAccess: data.hasAccess,
+    ...data?.user,
+    stats: data?.stats,
+    social: data?.social,
+    project: data?.project,
+    setup: data?.setup,
+    education: data?.education,
+    experience: data?.experience,
+    skills: data?.skills,
+    theme: data?.theme,
+    hasAccess: data?.hasAccess,
   };
 }
 
