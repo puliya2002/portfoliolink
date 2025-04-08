@@ -26,14 +26,13 @@ const Timeline = ({experience}:any) => {
         <div className="absolute max-sm:left-4 left-1/2 w-0.5 bg-gray-600 transform -translate-x-1/2 top-12 bottom-16" />
 
         <div className="relative">
-          {experience &&
+          {Array.isArray(experience) &&
             experience.map((event: any, index: number) => {
               // Format the date to 'MMM DD, YYYY' (e.g., Mar 28, 2025)
               const formatDate = (dateString: string) => {
                 return new Date(dateString).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "short",
-
                 });
               };
 
@@ -84,6 +83,11 @@ const Timeline = ({experience}:any) => {
                 </motion.div>
               );
             })}
+          {!Array.isArray(experience) && experience != null && (
+            <p>
+              No experience data available or data is in an unexpected format.
+            </p>
+          )}
         </div>
       </div>
     </div>

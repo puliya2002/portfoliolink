@@ -18,8 +18,8 @@ const Skills = ({ skills }: any) => {
         <h2 className="pb-7">Skills</h2>
       </motion.div>
       <ul className="flex gap-5 justify-center flex-wrap">
-        {skills &&
-          skills.map((skill: any, index: any) => (
+        {Array.isArray(skills) &&
+          skills.map((skill: any, index: number) => (
             <li
               key={index}
               className="p-2 px-8 bg-gray-600/30 rounded border border-gray-600/60 hover:bg-gradient-to-tr from-gray-700/20 to-gray-500/50"
@@ -27,9 +27,12 @@ const Skills = ({ skills }: any) => {
               {skill.name}
             </li>
           ))}
+        {!Array.isArray(skills) && skills != null && (
+          <p>
+            No experience data available or data is in an unexpected format.
+          </p>
+        )}
       </ul>
-
-
     </div>
   );
 };

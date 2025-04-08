@@ -1,5 +1,5 @@
 
-import DefaultTemplateClient from "@/app/template/default/DefaultTemplateClient";
+import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
@@ -74,7 +74,7 @@ export default async function UserPage(props: any) {
         </div>
       )}
 
-      <DefaultTemplateClient
+      <DefaultTemplate
         user={user}
         stats={stats}
         social={social}

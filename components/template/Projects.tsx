@@ -29,7 +29,7 @@ export default function Projects({ project, user }: any) {
         <h2 className="pb-7">Projects</h2>
       </motion.div>
 
-      {project.length > 0 && (
+      {Array.isArray(project) && project.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Loop through each project item */}
           {project.map((item: Record<string, any>, index: number) => (

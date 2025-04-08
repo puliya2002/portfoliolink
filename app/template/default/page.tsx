@@ -1,109 +1,78 @@
-// app/template/default/page.tsx
-import { Suspense } from "react";
-import DefaultTemplateClient from "./DefaultTemplateClient";
 
-// This is your page component that Next.js will use
-export default async function DefaultTemplatePage() {
-  try {
-    // Fetch your data and provide fallback default values
-    const user = (await fetchUser()) || {};
-    const stats = (await fetchStats()) || {};
-    const social = (await fetchSocial()) || {};
-    const project = (await fetchProjects()) || { projects: [] }; // Ensure projects array exists
-    const setup = (await fetchSetup()) || {};
-    const education = (await fetchEducation()) || { educations: [] }; // Ensure educations array exists
-    const experience = (await fetchExperience()) || { experiences: [] }; // Ensure experiences array exists
-    const skills = (await fetchSkills()) || {
-      technicalSkills: [],
-      softSkills: [],
-      languages: [],
-    }; // Ensure skills arrays exist
+"use client";
 
-    // Default theme or you could get it from user preferences
-    const theme = "light";
+import { useEffect } from "react";
+import React from "react";
+import Hero from "../../../components/template/hero";
+import AboutMe from "../../../components/template/aboutme";
+import Projects from "../../../components/template/Projects";
+import Experience from "../../../components/template/Experience";
+import Education from "../../../components/template/education";
+import TemplateNav from "@/components/template/templatenav";
+import Footer from "@/components/template/Footer";
+import Skills from "@/components/template/Skills";
+import "./style.css";
 
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <DefaultTemplateClient
-          user={user}
-          stats={stats}
-          social={social}
-          project={project}
-          setup={setup}
-          education={education}
-          experience={experience}
-          skills={skills}
-          theme={theme}
-        />
-      </Suspense>
-    );
-  } catch (error) {
-    console.error("Error in DefaultTemplatePage:", error);
-    // Return a fallback UI in case of errors
-    return (
-      <div>
-        Something went wrong loading your profile. Please try again later.
-      </div>
-    );
-  }
+interface DefaultTemplateProps {
+  user: Record<string, any>;
+  stats: Record<string, any>;
+  social: Record<string, any>;
+  project: Record<string, any>;
+  setup: Record<string, any>;
+  education: Record<string, any>;
+  experience: Record<string, any>;
+  skills: Record<string, any>;
+  theme: "dark" | "light";
 }
 
-// These are placeholder functions - replace with your actual data fetching logic
-// Make sure each function returns data with the expected structure
-async function fetchUser() {
-  // Return a basic user object with required fields
-  return {
-    name: "Default User",
-    bio: "This is a default bio",
-    // Add other required user fields
-  };
-}
+const DefaultTemplateClient: React.FC<DefaultTemplateProps> = ({
+  user,
+  stats,
+  social,
+  project,
+  setup,
+  education,
+  experience,
+  skills,
+  theme,
+}) => {
+  useEffect(() => {
+    document.body.classList.remove("light", "dark");
+    document.body.classList.add(theme);
+  }, [theme]);
 
-async function fetchStats() {
-  return {};
-}
+  return (
+    <div>
+      <TemplateNav user={user} setup={setup} />
+      <section id="home">
+        <Hero user={user} stats={stats} social={social} />
+      </section>
+      <section id="about">
+        <AboutMe user={user} />
+      </section>
+      {setup?.project && (
+        <section id="projects">
+          <Projects project={project} user={user} />
+        </section>
+      )}
+      {setup?.experience && (
+        <section id="experience">
+          <Experience experience={experience} />
+        </section>
+      )}
+      {setup?.education && (
+        <section id="education">
+          <Education education={education} />
+        </section>
+      )}
+      {setup?.skills && (
+        <section id="skills">
+          <Skills skills={skills} />
+        </section>
+      )}
+      <Footer setup={setup} />
+    </div>
+  );
+};
 
-async function fetchSocial() {
-  return {};
-}
-
-async function fetchProjects() {
-  // Make sure to return an object with a projects array
-  return {
-    projects: [],
-  };
-}
-
-async function fetchSetup() {
-  // Include all flags needed by the template
-  return {
-    project: true,
-    experience: true,
-    education: true,
-    skills: true,
-  };
-}
-
-async function fetchEducation() {
-  // Return an object with an educations array
-  return {
-    educations: [],
-  };
-}
-
-async function fetchExperience() {
-  // Return an object with an experiences array
-  return {
-    experiences: [],
-  };
-}
-
-async function fetchSkills() {
-  // Return an object with all needed skills arrays
-  return {
-    technicalSkills: [],
-    softSkills: [],
-    languages: [],
-  };
-}
-  
+export default DefaultTemplateClient;
