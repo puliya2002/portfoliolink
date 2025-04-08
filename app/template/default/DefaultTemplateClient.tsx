@@ -26,20 +26,31 @@ interface DefaultTemplateProps {
 }
 
 const DefaultTemplateClient: React.FC<DefaultTemplateProps> = ({
-  user,
-  stats,
-  social,
-  project,
-  setup,
-  education,
-  experience,
-  skills,
-  theme,
+  user = {},
+  stats = {},
+  social = {},
+  project = { projects: [] },
+  setup = {},
+  education = { educations: [] },
+  experience = { experiences: [] },
+  skills = { technicalSkills: [], softSkills: [], languages: [] },
+  theme = "light",
 }) => {
   useEffect(() => {
     document.body.classList.remove("light", "dark");
     document.body.classList.add(theme);
   }, [theme]);
+
+  // Safety check - ensure properties exist before accessing them
+  const hasProjects = setup?.project && Array.isArray(project?.projects);
+  const hasExperience =
+    setup?.experience && Array.isArray(experience?.experiences);
+  const hasEducation = setup?.education && Array.isArray(education?.educations);
+  const hasSkills =
+    setup?.skills &&
+    (Array.isArray(skills?.technicalSkills) ||
+      Array.isArray(skills?.softSkills) ||
+      Array.isArray(skills?.languages));
 
   return (
     <div>
@@ -50,22 +61,22 @@ const DefaultTemplateClient: React.FC<DefaultTemplateProps> = ({
       <section id="about">
         <AboutMe user={user} />
       </section>
-      {setup?.project && (
+      {hasProjects && (
         <section id="projects">
           <Projects project={project} user={user} />
         </section>
       )}
-      {setup?.experience && (
+      {hasExperience && (
         <section id="experience">
           <Experience experience={experience} />
         </section>
       )}
-      {setup?.education && (
+      {hasEducation && (
         <section id="education">
           <Education education={education} />
         </section>
       )}
-      {setup?.skills && (
+      {hasSkills && (
         <section id="skills">
           <Skills skills={skills} />
         </section>
