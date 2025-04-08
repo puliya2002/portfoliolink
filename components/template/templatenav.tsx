@@ -34,9 +34,9 @@ const TemplateNav = ({ user, setup }: any) => {
       }`}
     >
       <div className=" max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href={`/${user.username}`} className="flex items-center">
+
           <p className="text-2xl font-medium">{user.displayName}</p>
-        </a>
+
         <motion.div
 
           whileHover={{ scale: 1.1 }}
