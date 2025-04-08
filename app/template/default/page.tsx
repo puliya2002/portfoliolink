@@ -51,22 +51,22 @@ export default function DefaultTemplate({
       <section id="about">
         <AboutMe user={user} />
       </section>
-      {setup.project && (
+      {setup?.project && (
         <section id="projects">
           <Projects project={project} user={user} />
         </section>
       )}
-      {setup.experience && (
+      {setup?.experience && (
         <section id="experience">
           <Experience experience={experience} />
         </section>
       )}
-      {setup.education && (
+      {setup?.education && (
         <section id="education">
           <Education education={education} />
         </section>
       )}
-      {setup.skills && (
+      {setup?.skills && (
         <section id="skills">
           <Skills skills={skills} />{" "}
         </section>

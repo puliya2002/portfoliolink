@@ -32,7 +32,7 @@ export default function Projects({ project, user }: any) {
       {project.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Loop through each project item */}
-          {project.map((item: any, index: any) => (
+          {project.map((item: Record<string, any>, index: number) => (
             <motion.div
               key={index}
               initial="hidden"
