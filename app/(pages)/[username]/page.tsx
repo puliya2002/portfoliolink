@@ -1,55 +1,50 @@
+"use client";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "next/navigation";
 import DefaultTemplate from "@/app/template/default/page";
-import Link from "next/link";
 import { AlertCircle } from "lucide-react";
+import Link from "next/link";
 
-// Remove all custom type definitions related to PageProps
+export default function UserPage() {
+  const { username } = useParams();
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-async function getUserData(username: string) {
-  if (!username) {
-    return null;
+  useEffect(() => {
+    if (!username) return;
+
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(
+          `api/users/${username}`
+        );
+        setUser(
+          res.data?.user
+            ? {
+                ...res.data.user,
+                ...res.data,
+              }
+            : null
+        );
+      } catch (err) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [username]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-xl">Loading...</p>
+      </div>
+    );
   }
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`,
-    {
-      cache: "no-store", // Ensures fresh data
-    }
-  );
-
-  if (!res.ok) {
-    return null;
-  }
-
-  const data = await res.json();
-  return {
-    ...data?.user,
-    stats: data?.stats,
-    social: data?.social,
-    project: data?.project,
-    setup: data?.setup,
-    education: data?.education,
-    experience: data?.experience,
-    skills: data?.skills,
-    theme: data?.theme,
-    hasAccess: data?.hasAccess,
-  };
-}
-
-// Let Next.js infer the types completely
-export default async function UserPage(props: any) {
-  const { username } = await props.params || {};
-
-  const user = await getUserData(username);
-
-  const stats = user?.stats || [];
-  const social = user?.social || {};
-  const project = user?.project || [];
-  const education = user?.education || [];
-  const experience = user?.experience || [];
-  const skills = user?.skills || [];
-  const setup = user?.setup || {};
-  const theme = user?.theme || {};
-  const hasAccess = user?.hasAccess || false;
 
   if (!user) {
     return (
@@ -58,12 +53,23 @@ export default async function UserPage(props: any) {
       </div>
     );
   }
-  
+
+  const {
+    stats,
+    social,
+    project,
+    setup,
+    education,
+    experience,
+    skills,
+    theme,
+    hasAccess,
+  } = user;
 
   return (
     <div>
       {!hasAccess && (
-        <div className="bg-gradient-to-r from-red-500 to-orange-500 h-fit p-4 mb-4 flex items-center justify-between border border-orange-400 shadow-md transition-all hover:shadow-lg cursor-pointer">
+        <div className="bg-gradient-to-r from-red-500 to-orange-500 p-4 mb-4 flex items-center justify-between border border-orange-400 shadow-md hover:shadow-lg">
           <div className="flex items-center gap-2">
             <AlertCircle className="text-white" size={24} />
             <p className="text-[20px] font-medium text-white">
