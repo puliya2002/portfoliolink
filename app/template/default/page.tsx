@@ -14,15 +14,15 @@ import Skills from "@/components/template/Skills";
 import "./style.css";
 
 interface DefaultTemplateProps {
-  user: Record<string, any> | null | undefined;
-  stats: Record<string, any> | null | undefined;
-  social: Record<string, any> | null | undefined;
-  project: Record<string, any> | null | undefined;
-  setup: Record<string, any> | null | undefined;
-  education: Record<string, any> | null | undefined;
-  experience: Record<string, any> | null | undefined;
-  skills: Record<string, any> | null | undefined;
-  theme: "dark" | "light";
+  user: any; // Replace 'any' with a more specific type if you have one
+  stats: any; // Replace 'any' with a more specific type
+  social: any; // Replace 'any' with a more specific type
+  project: any; // Replace 'any' with a more specific type
+  setup: any; // Replace 'any' with a more specific type
+  education: any; // Replace 'any' with a more specific type
+  experience: any; // Replace 'any' with a more specific type
+  skills: any; // Replace 'any' with a more specific type
+  theme: any; // Replace 'any' with a more specific type
 }
 
 const DefaultTemplate: React.FC<DefaultTemplateProps> = ({
