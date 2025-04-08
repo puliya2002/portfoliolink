@@ -1,55 +1,79 @@
+"use client";
 
 import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-// Remove all custom type definitions related to PageProps
-
-async function getUserData(username: string) {
-  if (!username) {
-    return null;
-  }
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`,
-    {
-      cache: "no-store", // Ensures fresh data
-    }
-  );
-
-  if (!res.ok) {
-    return null;
-  }
-
-  const data = await res.json();
-  return {
-    ...data?.user,
-    stats: data?.stats,
-    social: data?.social,
-    project: data?.project,
-    setup: data?.setup,
-    education: data?.education,
-    experience: data?.experience,
-    skills: data?.skills,
-    theme: data?.theme,
-    hasAccess: data?.hasAccess,
-  };
+interface UserData {
+  stats?: any[];
+  social?: Record<string, string>;
+  project?: any[];
+  setup?: Record<string, any>;
+  education?: any[];
+  experience?: any[];
+  skills?: any[];
+  theme?: boolean;
+  hasAccess?: boolean;
+  [key: string]: any; // To accommodate other user properties
 }
 
-// Let Next.js infer the types completely
-export default async function UserPage(props: any) {
-  const { username } = await props.params || {};
+export default function UserPage({ params }: { params: { username: string } }) {
+  const [user, setUser] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { username } = params;
 
-  const user = await getUserData(username);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!username) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`
+        );
+        setUser({
+          ...res.data?.user,
+          stats: res.data?.stats,
+          social: res.data?.social,
+          project: res.data?.project,
+          setup: res.data?.setup,
+          education: res.data?.education,
+          experience: res.data?.experience,
+          skills: res.data?.skills,
+          theme: res.data?.theme,
+          hasAccess: res.data?.hasAccess,
+        });
+      } catch (err: any) {
+        setError("Failed to load user data.");
+        console.error("Error fetching user data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const stats = user?.stats || [];
-  const social = user?.social || {};
-  const project = user?.project || [];
-  const education = user?.education || [];
-  const experience = user?.experience || [];
-  const skills = user?.skills || [];
-  const setup = user?.setup || {};
-  const theme = user?.theme || {};
-  const hasAccess = user?.hasAccess || false;
+    fetchUserData();
+  }, [username]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-xl">Loading user data...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-xl text-red-500">{error}</p>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
@@ -58,9 +82,20 @@ export default async function UserPage(props: any) {
       </div>
     );
   }
-  if (!project) {
-  return <div>Project not found</div>;
-}
+
+  if (!user.project) {
+    return <div>Project not found</div>;
+  }
+
+  const stats = user.stats || [];
+  const social = user.social || {};
+  const project = user.project || [];
+  const education = user.education || [];
+  const experience = user.experience || [];
+  const skills = user.skills || [];
+  const setup = user.setup || {};
+  const theme = "dark" ;
+  const hasAccess = user.hasAccess || false;
 
   return (
     <div>
