@@ -34,7 +34,8 @@ export default async function UserPage({
 }: {
   params: { username: string };
 }) {
-  const { username } = params;
+  const username = params.username;
+
   const user = await getUserData(username);
 
   const stats = user?.stats || [];
@@ -45,11 +46,7 @@ export default async function UserPage({
   const skills = user?.skills || [];
   const setup = user?.setup || {};
   const theme = user?.theme || {};
-  const hasAccess = user?.hasAccess || false
-
-
-
- 
+  const hasAccess = user?.hasAccess || false;
 
   if (!user) {
     return (
@@ -58,7 +55,6 @@ export default async function UserPage({
       </div>
     );
   }
-
 
   return (
     <div>
