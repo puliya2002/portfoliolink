@@ -1,126 +1,64 @@
-"use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import DefaultTemplate from "@/app/template/default/page"; // make sure this is a default export
+import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
-// Define types for each data structure
-interface UserBasicData {
-  username?: string;
-  [key: string]: any;
-}
+// Remove all custom type definitions related to PageProps
 
-interface ThemeData {
-  primaryColor?: string;
-  secondaryColor?: string;
-  fontFamily?: string;
-  layout?: string;
-  [key: string]: any;
-}
-
-interface DefaultTemplateProps {
-  user: UserBasicData;
-  stats: any[];
-  social: Record<string, any>;
-  project: any[];
-  setup: Record<string, any>;
-  education: any[];
-  experience: any[];
-  skills: any[];
-  theme: string | ThemeData;
-}
-
-export default function UserPage() {
-  const params = useParams();
-  const username = params?.username as string;
-
-  const [user, setUser] = useState<UserBasicData>({});
-  const [stats, setStats] = useState<any[]>([]);
-  const [social, setSocial] = useState<Record<string, any>>({});
-  const [project, setProject] = useState<any[]>([]);
-  const [setup, setSetup] = useState<Record<string, any>>({});
-  const [education, setEducation] = useState<any[]>([]);
-  const [experience, setExperience] = useState<any[]>([]);
-  const [skills, setSkills] = useState<any[]>([]);
-  const [theme, setTheme] = useState<ThemeData>({
-    primaryColor: "#4A90E2",
-    secondaryColor: "#F5A623",
-    fontFamily: "Inter",
-    layout: "default",
-  });
-
-  const [hasAccess, setHasAccess] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchAllUserData() {
-      if (!username) {
-        setLoading(false);
-        setError("No username provided");
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`,
-          {
-            cache: "no-store",
-          }
-        );
-
-        if (!res.ok) {
-          throw new Error(`Failed to fetch user data: ${res.status}`);
-        }
-
-        const data = await res.json();
-
-        setUser(data?.user || {});
-        setStats(data?.stats || []);
-        setSocial(data?.social || {});
-        setProject(data?.project || []);
-        setSetup(data?.setup || {});
-        setEducation(data?.education || []);
-        setExperience(data?.experience || []);
-        setSkills(data?.skills || []);
-        setTheme(
-          data?.theme || {
-            primaryColor: "#4A90E2",
-            secondaryColor: "#F5A623",
-            fontFamily: "Inter",
-            layout: "default",
-          }
-        );
-        setHasAccess(data?.hasAccess || false);
-      } catch (err) {
-        console.error("Error fetching user data:", err);
-        setError("Failed to load user data");
-      } finally {
-        setLoading(false);
-      }
+async function getUserData(username: string) {
+  if (!username) {
+    return null;
+  }
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`,
+    {
+      cache: "no-store", // Ensures fresh data
     }
+  );
 
-    fetchAllUserData();
-  }, [username]);
+  if (!res.ok) {
+    return null;
+  }
 
-  if (loading) {
+  const data = await res.json();
+  return {
+    ...data?.user,
+    stats: data?.stats,
+    social: data?.social,
+    project: data?.project,
+    setup: data?.setup,
+    education: data?.education,
+    experience: data?.experience,
+    skills: data?.skills,
+    theme: data?.theme,
+    hasAccess: data?.hasAccess,
+  };
+}
+
+// Let Next.js infer the types completely
+export default async function UserPage(props: any) {
+  const { username } = await props.params || {};
+
+  const user = await getUserData(username);
+
+  const stats = user?.stats || [];
+  const social = user?.social || {};
+  const project = user?.project || [];
+  const education = user?.education || [];
+  const experience = user?.experience || [];
+  const skills = user?.skills || [];
+  const setup = user?.setup || {};
+  const theme = user?.theme || {};
+  const hasAccess = user?.hasAccess || false;
+
+  if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-xl">Loading user profile...</p>
+        <p className="text-xl">User not found</p>
       </div>
     );
   }
-
-  if (error || !user || Object.keys(user).length === 0) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-xl">{error || "User not found"}</p>
-      </div>
-    );
-  }
+  
 
   return (
     <div>
@@ -149,7 +87,7 @@ export default function UserPage() {
         education={education}
         experience={experience}
         skills={skills}
-        theme="dark"
+        theme={theme}
       />
     </div>
   );
