@@ -54,7 +54,7 @@ function Page() {
           <div className="absolute top-0 right-0 z-10 p-4 ">
             <Link
               target="_blank"
-              href={`http://localhost:3000/${profile.username}`}
+              href={`http://${process.env.NEXT_PUBLIC_API_URL}/${profile.username}`}
             >
               <div className="flex w-fit gap-2 items-center rounded-full bg-[--primary] border border-white text-black px-5 py-2 hover:bg-gray-800 hover:text-white cursor-pointer">
                 <Eye />

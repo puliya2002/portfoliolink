@@ -19,7 +19,7 @@ const ProfilePreview = ({ profile }: { profile: any }) => {
           <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/75 rounded-[15px]">
             <Link
               target="_blank"
-              href={`http://localhost:3000/${profile.username}`}
+              href={`${process.env.NEXT_PUBLIC_API_URL}/${profile.username}`}
             >
               <div className="flex gap-2 items-center rounded-full bg-gray-900 border border-white text-white px-5 py-2 hover:bg-[--primary] hover:text-black cursor-pointer">
                 <Eye />
