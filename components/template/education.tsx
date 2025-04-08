@@ -3,26 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const Timeline = ({education}:any) => {
-  const events = [
-    {
-      year: "2015",
-      title: "High School Graduation",
-      description:
-        "Completed high school with a focus on science and mathematics, laying the foundation for a future in technology and engineering.",
-    },
-    {
-      year: "2019",
-      title: "Bachelor's in Software Engineering",
-      description:
-        "Earned a Bachelor's degree in Software Engineering from Plymouth University, gaining expertise in programming, data structures, and software development methodologies.",
-    },
-    {
-      year: "2023",
-      title: "Master's in Computer Science (Ongoing)",
-      description:
-        "Currently pursuing a Master's degree, focusing on advanced computing concepts, AI, and cloud technologies.",
-    },
-  ];
+
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },

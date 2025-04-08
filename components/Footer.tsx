@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import NavbarLinks from "../constants/navbar";
-import Drawer from "./Drawer";
+
 
 const Footer = () => {
   return (

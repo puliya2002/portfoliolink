@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import PortfolioSetupCard from "@/components/portfolioSetupCard";
 import axios from "axios";
 import { Pencil } from "lucide-react";
-import { useRouter } from "next/navigation";
+
 
 const SelectSections = ({ onChange }: { onChange: () => void }) => {
-  const router = useRouter();
+
   const [error, setError] = useState("");
 
   const [edit, setEdit] = useState(false);

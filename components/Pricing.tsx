@@ -1,55 +1,53 @@
 "use client";
-import Button from "@/components/ui/Button";
-import React, { useState } from "react";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 
-export const plans = [
+import { useSession } from "next-auth/react";
+
+const plans = [
   {
-    link:
-      process.env.NODE_ENV === "development"
-        ? "https://buy.stripe.com/test_4gw9CZfLvfnn5I4dQR"
-        : "",
     priceId:
       process.env.NODE_ENV === "development"
         ? "price_1NfNc0F2kVprice_1R7swtCROFDtLkqB4FJqcAhu"
         : "",
-    price: 19,
+    link:
+      process.env.NODE_ENV === "development"
+        ? "https://buy.stripe.com/test_4gw9CZfLvfnn5I4dQR"
+        : "",
+    price: 2,
     duration: "/month",
+    features: [
+      "NextJS boilerplate",
+      "User oauth",
+      "Database",
+      "Emails",
+      "1 year of updates",
+      "24/7 support",
+    ],
   },
 ];
 
 function Pricing() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const plan = plans[0];
 
-  const [plan, setPlan] = useState(plans[0]);
   return (
     <div className="main_margin">
-      <div className="container mx-auto justify-center flex flex-col md:flex-row  py-20 gap-5  min-h-full items-center ">
-        <div className="py-8 px-8 max-w-5xl mx-auto border border-gray-300 h-full rounded-2xl w-[500px] max-w-full">
-          <div className="flex flex-col text-center w-full mb-20 w-full">
-            <p className="font-medium text-primary mb-5">Pricing</p>
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-center py-20 gap-5">
+        <div className="border border-gray-300 rounded-2xl w-full max-w-[500px] px-8 py-8">
+          <div className="text-center mb-10">
+            <p className="font-medium text-primary mb-2">Pricing</p>
             <h2 className="font-bold text-5xl tracking-tight">
-              $2<span className="text-lg  font-normal"> / Month</span>
+              ${plan.price}
+              <span className="text-lg font-normal"> {plan.duration}</span>
             </h2>
           </div>
-          <ul className="space-y-2.5 leading-relaxed text-base flex-1">
-            {[
-              {
-                name: "NextJS boilerplate",
-              },
-              { name: "User oauth" },
-              { name: "Database" },
-              { name: "Emails" },
-              { name: "1 year of updates" },
-              { name: "24/7 support" },
-            ].map((feature, i) => (
+
+          <ul className="space-y-2.5 text-base leading-relaxed mb-8">
+            {plan.features.map((feature, i) => (
               <li key={i} className="flex items-center gap-2">
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
                   className="w-[18px] h-[18px] opacity-80 shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
                 >
                   <path
                     fillRule="evenodd"
@@ -57,27 +55,23 @@ function Pricing() {
                     clipRule="evenodd"
                   />
                 </svg>
-
-                <span>{feature.name} </span>
+                <span>{feature}</span>
               </li>
             ))}
           </ul>
 
-          <div className="space-y-2 ">
-            <a
-              className="btn btn-primary btn-block "
-              target="_blank"
-              href={plan.link + "?prefilled_email=" + session?.user?.email}
+          <a
+            href={plan.link + "?prefilled_email=" + session?.user?.email}
+            target="_blank"
+            className="block"
+          >
+            <button
+              type="button"
+              className="bg-[--primary] w-full py-2 px-6 rounded-full text-md md:text-lg font-medium hover:bg-black hover:text-white hover:scale-105 transition-all duration-200 ease-in-out"
             >
-              <button
-                type="button"
-                className="bg-[--primary] flex w-full justify-center text-md md:text-lg gap-2  py-2 px-6 rounded-full mt-5 mb-5 items-center 
-      hover:bg-black hover:text-white hover:scale-105 transition-all duration-200 ease-in-out"
-              >
-                <p className="text-[16px] font-medium">Get Started</p>
-              </button>
-            </a>
-          </div>
+              Get Started
+            </button>
+          </a>
         </div>
       </div>
     </div>

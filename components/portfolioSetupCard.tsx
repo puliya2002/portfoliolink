@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 const PortfolioSetupCard = ({
   heading,
   value,
-  isChecked,
+
 
   isDisabled,
   ...props
@@ -14,7 +14,7 @@ const PortfolioSetupCard = ({
 }: {
   heading: string;
     value: string;
-    isChecked?: any;
+
 
     isDisabled?: boolean;
   [key: string]: any;

@@ -1,7 +1,7 @@
 import React from "react";
-import Image from "next/image";
+
 import { Eye } from "lucide-react";
-import PorfileSS from "@/public/profilesstemp.png";
+
 import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import { Pencil } from "lucide-react";
@@ -36,7 +36,7 @@ const ProfilePreview = ({ profile }: { profile: any }) => {
             </Link>
           </div>
           <div className="absolute bottom-0 right-0 z-10 p-1 w-full">
-            <Progress value={80} className="" />
+            <Progress value={progress} className="" />
           </div>
           <iframe
             src={`http://localhost:3000/${profile.username}`}

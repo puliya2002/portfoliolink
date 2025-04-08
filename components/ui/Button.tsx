@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { MoveRight, MoveLeft } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -10,6 +10,7 @@ const Button = (props: {
   type: "button" | "submit" | "reset" | "back" | undefined;
   link?: string;
 }) => {
+  const router = useRouter();
   if (props.type === "submit") {
     return (
       <button
@@ -22,14 +23,12 @@ const Button = (props: {
     );
   }
   if (props.type === "back") {
-    const router = useRouter();
     return (
       <button
-        onClick={()=>router.back()}
+        onClick={() => router.back()}
         type="submit"
         className={`border-2 flex w-fit text-md gap-2 py-2 rounded-full mt-6 mb-5 items-center hover:bg-black hover:text-white hover:scale-105 transition-all duration-200 ease-in-out ${props.extraClass}`}
       >
-
         <p className="text-[15px]">{props.text}</p>
       </button>
     );

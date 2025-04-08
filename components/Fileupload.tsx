@@ -44,6 +44,7 @@ const FileUpload = ({ onFileSelect }: FileUploadProps) => {
       }
     } catch (error) {
       setMessage("Upload failed. Please try again.");
+      console.error("Error uploading file:", error);
     } finally {
       setUploading(false);
     }

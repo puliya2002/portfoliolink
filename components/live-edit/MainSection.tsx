@@ -1,14 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Button from "@/components/ui/Button";
+
 import TextField from "@/components/ui/TextField";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+
 import { Pencil } from "lucide-react";
 
 
+
 const MainSection = ({ onChange }: { onChange: () => void }) => {
-  const router = useRouter();
+
   const [displayName, setDisplayName] = useState("");
   const [tagline, setTagline] = useState("");
   const [about, setAbout] = useState("");
@@ -79,6 +80,7 @@ const MainSection = ({ onChange }: { onChange: () => void }) => {
       console.error("Error:", err.response?.data?.error);
       setError(err.response?.data?.error || "Something went wrong");
     }
+    onChange();
   };
 
   return (

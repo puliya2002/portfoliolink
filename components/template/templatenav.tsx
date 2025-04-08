@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
+
 import Drawer from "./Drawers";
 
 const TemplateNav = ({ user, setup }: any) => {
@@ -9,8 +9,7 @@ const TemplateNav = ({ user, setup }: any) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrollingUp, setScrollingUp] = useState(true);
 
-  const openDrawer = () => setOpen(true);
-  const closeDrawer = () => setOpen(false);
+
 
   const handleScroll = () => {
     const currentScrollY = window.scrollY;

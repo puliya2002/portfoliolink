@@ -1,16 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Pencil } from "lucide-react";
+
 import Image from "next/image";
 import ThemeLight from "@/public/themelight.png";
 import ThemeDark from "@/public/themedark.png";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+
 
 const SelectSections = ({ onChange }: { onChange: () => void }) => {
   const [selectedTheme, setSelectedTheme] = useState("dark");
   const [error, setError] = useState("");
-  const router = useRouter();
+
 
   useEffect(() => {
     const fetchTheme = async () => {
@@ -27,7 +27,7 @@ const SelectSections = ({ onChange }: { onChange: () => void }) => {
 
   const handleThemeUpdate = async (theme: string) => {
     try {
-      const response = await axios.post("/api/step5", {
+      await axios.post("/api/step5", {
         theme: theme,
       });
 

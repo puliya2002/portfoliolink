@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { Twitter } from "lucide-react"; // Lucide icons
+
+
 
 function AboutMe({ user }: any) {
   const fadeInUp = {

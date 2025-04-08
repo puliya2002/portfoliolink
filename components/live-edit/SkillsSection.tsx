@@ -1,13 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Button from "@/components/ui/Button";
+
 import TextField from "@/components/ui/TextField";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { Pencil, Plus, Trash2, X } from "lucide-react";
+
+import { Pencil, Plus, Trash2 } from "lucide-react";
 
 const SkillsSection = ({ onChange }: { onChange: () => void }) => {
-  const router = useRouter();
+
 
   const [error, setError] = useState("");
   const [edit, setEdit] = useState(false);
@@ -267,7 +267,8 @@ const SkillsSection = ({ onChange }: { onChange: () => void }) => {
             </div>
           ) : (
             <div className="p-4 text-center text-gray-500">
-              No skills found. Click "Add New" to create your first skill.
+              No skills found. Click &quot;Add New&quot; to create your first
+              skill.
             </div>
           )}
         </div>

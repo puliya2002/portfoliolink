@@ -9,16 +9,16 @@ const Picture = ({ onChange }: { onChange: () => void }) => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [url, setUrl] = useState("");
-  const [loading, setLoading] = useState(true);
+  
+
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     axios
       .get("/api/step3")
       .then((res) => {
-        setUrl(res.data.picture);
-        setLoading(false);
+        console.log(res.data.picture);
+
       })
       .catch((err) => {
         console.log({ error: err }, { message: err.message });
@@ -53,9 +53,8 @@ const Picture = ({ onChange }: { onChange: () => void }) => {
 
       if (response.ok) {
         setMessage(`File uploaded successfully: ${result.fileName}`);
-          setUrl(result.fileUrl); // Update URL after successful upload
-                setEdit(false);
-                onChange();
+        onChange();
+
       } else {
         setMessage(`Error: ${result.error}`);
       }
@@ -93,17 +92,7 @@ const Picture = ({ onChange }: { onChange: () => void }) => {
         </div>
       ) : (
         <div className="rounded-lg overflow-hidden mt-4">
-          {/* {!loading ? (
-              <Image
-                className="w-[100px] h-[100px] object-center object-cover"
-                src={url}
-                alt="Uploaded Image"
-                width={100}
-                height={100}
-              />
-            ) : (
-              <p>Loading.....</p>
-            )} */}
+
         </div>
       )}
     </div>

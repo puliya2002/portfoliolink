@@ -5,10 +5,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Profile from "@/public/profile_.png";
 import {
-  Facebook,
-  Github,
-  Linkedin,
-  Instagram,
+
   ArrowRight,
   ArrowDownRight,
 } from "lucide-react";
