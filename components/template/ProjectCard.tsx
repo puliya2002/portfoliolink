@@ -30,7 +30,7 @@ function ProjectCard({
     );
 
     // Redirect to the project details page with the username
-    router.push(`/${username}/projects/${id}`);
+    // router.push(`/${username}/projects/${id}`);
   };
 
   useEffect(() => {

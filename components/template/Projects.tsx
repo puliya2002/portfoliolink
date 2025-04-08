@@ -4,8 +4,6 @@ import ProjectCard from "./ProjectCard";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 
-// components/template/Projects.tsx
-
 export default function Projects({ project, user }: any) {
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
@@ -13,7 +11,7 @@ export default function Projects({ project, user }: any) {
   };
 
   useEffect(() => {
-    if (project && Array.isArray(project) && project.length > 0) { // Add checks here
+    if (project && Array.isArray(project) && project.length > 0) {
       localStorage.setItem("projects", JSON.stringify(project));
     }
   }, [project]);
@@ -31,7 +29,7 @@ export default function Projects({ project, user }: any) {
         <h2 className="pb-7">Projects</h2>
       </motion.div>
 
-      {project && Array.isArray(project) && project.length > 0 ? ( // Check before rendering the grid
+      {project && Array.isArray(project) && project.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {project.map((item: Record<string, any>, index: number) => (
             <motion.div
@@ -46,14 +44,14 @@ export default function Projects({ project, user }: any) {
                 id={index}
                 name={item.title}
                 image={item.coverPhoto}
-                skills={item.technologies}
-                username={user?.username} // Add a check here as well
+                skills={item.technologies || []}
+                username={user?.username}
               />
             </motion.div>
           ))}
         </div>
       ) : (
-        <p>No projects available.</p> // Or some other fallback UI
+        <p>No projects available.</p>
       )}
     </div>
   );
