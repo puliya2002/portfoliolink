@@ -35,7 +35,7 @@ const TemplateNav = ({ user, setup }: any) => {
     >
       <div className=" max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
 
-          <p className="text-2xl font-medium">{user.displayName}</p>
+          <p className="text-2xl font-medium">{user?.displayName || ""} </p>
 
         <motion.div
 

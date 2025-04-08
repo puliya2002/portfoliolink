@@ -60,7 +60,7 @@ const Hero = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} // Ensures it only animates once when in view
         >
-          {`Hi, I am ${user.displayName}`}
+          {`Hi, I am ${user?.displayName || "Your Name"}`}
         </motion.h1>
         <motion.div
           className=""

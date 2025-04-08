@@ -37,7 +37,7 @@ async function getUserData(username: string) {
 
 // Let Next.js infer the types completely
 export default async function UserPage(props: any) {
-  const { username } = props.params || {};
+  const { username } = await props.params || {};
 
   const user = await getUserData(username);
 
