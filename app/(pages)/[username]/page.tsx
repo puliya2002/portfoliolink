@@ -6,6 +6,9 @@ import { AlertCircle } from "lucide-react";
 // Remove all custom type definitions related to PageProps
 
 async function getUserData(username: string) {
+  if (!username) {
+    return null;
+  }
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`,
     {

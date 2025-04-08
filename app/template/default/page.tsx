@@ -14,18 +14,18 @@ import Skills from "@/components/template/Skills";
 import "./style.css";
 
 interface DefaultTemplateProps {
-  user: Record<string, any>;
-  stats: Record<string, any>;
-  social: Record<string, any>;
-  project: Record<string, any>;
-  setup: Record<string, any>;
-  education: Record<string, any>;
-  experience: Record<string, any>;
-  skills: Record<string, any>;
+  user: Record<string, any> | null | undefined;
+  stats: Record<string, any> | null | undefined;
+  social: Record<string, any> | null | undefined;
+  project: Record<string, any> | null | undefined;
+  setup: Record<string, any> | null | undefined;
+  education: Record<string, any> | null | undefined;
+  experience: Record<string, any> | null | undefined;
+  skills: Record<string, any> | null | undefined;
   theme: "dark" | "light";
 }
 
-const DefaultTemplateClient: React.FC<DefaultTemplateProps> = ({
+const DefaultTemplate: React.FC<DefaultTemplateProps> = ({
   user,
   stats,
   social,
@@ -75,4 +75,4 @@ const DefaultTemplateClient: React.FC<DefaultTemplateProps> = ({
   );
 };
 
-export default DefaultTemplateClient;
+export default DefaultTemplate;
