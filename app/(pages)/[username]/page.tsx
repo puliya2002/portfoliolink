@@ -1,3 +1,4 @@
+// app/[username]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -18,16 +19,9 @@ export default function UserPage() {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `api/users/${username}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`
         );
-        setUser(
-          res.data?.user
-            ? {
-                ...res.data.user,
-                ...res.data,
-              }
-            : null
-        );
+        setUser(res.data?.user ? { ...res.data.user, ...res.data } : null);
       } catch (err) {
         setUser(null);
       } finally {
