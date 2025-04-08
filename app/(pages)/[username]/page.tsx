@@ -34,7 +34,7 @@ export default async function UserPage({
 }: {
   params: { username: string };
 }) {
-  const { username } = await params;
+  const { username } = params;
   const user = await getUserData(username);
 
   const stats = user?.stats || [];
