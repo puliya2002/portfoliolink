@@ -1,62 +1,45 @@
-"use client";
 
-import { useEffect, useState } from "react";
-import axios from "axios";
 import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
-// Axios-based data fetch
+// Remove all custom type definitions related to PageProps
+
 async function getUserData(username: string) {
-  if (!username) return null;
-
-  try {
-    const res = await axios.get(
-      `api/users/${username}`,
-      {
-        headers: { "Cache-Control": "no-store" },
-      }
-    );
-
-    const data = res.data;
-
-    return {
-      ...data?.user,
-      stats: data?.stats,
-      social: data?.social,
-      project: data?.project,
-      setup: data?.setup,
-      education: data?.education,
-      experience: data?.experience,
-      skills: data?.skills,
-      theme: data?.theme,
-      hasAccess: data?.hasAccess,
-    };
-  } catch (error) {
-    console.error("Failed to fetch user data:", error);
+  if (!username) {
     return null;
   }
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`,
+    {
+      cache: "no-store", // Ensures fresh data
+    }
+  );
+
+  if (!res.ok) {
+    return null;
+  }
+
+  const data = await res.json();
+  return {
+    ...data?.user,
+    stats: data?.stats,
+    social: data?.social,
+    project: data?.project,
+    setup: data?.setup,
+    education: data?.education,
+    experience: data?.experience,
+    skills: data?.skills,
+    theme: data?.theme,
+    hasAccess: data?.hasAccess,
+  };
 }
 
-// Client-side component using Axios
-export default function UserPage(props: any) {
-  const username = props.params?.username;
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+// Let Next.js infer the types completely
+export default async function UserPage(props: any) {
+  const { username } = await props.params || {};
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const fetchedUser = await getUserData(username);
-      setUser(fetchedUser);
-      setLoading(false);
-    };
-
-    if (username) {
-      fetchUser();
-    } else {
-      setLoading(false);
-    }
-  }, [username]);
+  const user = await getUserData(username);
 
   const stats = user?.stats || [];
   const social = user?.social || {};
@@ -68,14 +51,6 @@ export default function UserPage(props: any) {
   const theme = user?.theme || {};
   const hasAccess = user?.hasAccess || false;
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-xl">Loading...</p>
-      </div>
-    );
-  }
-
   if (!user) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -83,10 +58,9 @@ export default function UserPage(props: any) {
       </div>
     );
   }
-
   if (!project) {
-    return <div>Project not found</div>;
-  }
+  return <div>Project not found</div>;
+}
 
   return (
     <div>
