@@ -25,7 +25,7 @@ async function getUserData(username: string) {
     ...data?.user,
     stats: data?.stats,
     social: data?.social,
-    project: data?.project,
+    // project: data?.project,
     setup: data?.setup,
     education: data?.education,
     experience: data?.experience,
@@ -43,7 +43,7 @@ export default async function UserPage(props: any) {
 
   const stats = user?.stats || [];
   const social = user?.social || {};
-  const project = user?.project || [];
+  // const project = user?.project || [];
   const education = user?.education || [];
   const experience = user?.experience || [];
   const skills = user?.skills || [];
@@ -81,7 +81,7 @@ export default async function UserPage(props: any) {
         user={user}
         stats={stats}
         social={social}
-        project={project}
+        // project={project}
         setup={setup}
         education={education}
         experience={experience}
