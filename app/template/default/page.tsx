@@ -3,29 +3,27 @@ import { useEffect } from "react";
 import React from "react";
 import Hero from "../../../components/template/hero";
 import AboutMe from "../../../components/template/aboutme";
-
 import Projects from "../../../components/template/Projects";
 import Experience from "../../../components/template/Experience";
 import Education from "../../../components/template/education";
 import TemplateNav from "@/components/template/templatenav";
 import Footer from "@/components/template/Footer";
-import "./style.css";
 import Skills from "@/components/template/Skills";
-
+import "./style.css";
 
 interface DefaultTemplateProps {
-  user: Record<string, any>; // Accepts an object with any properties
-  stats: Record<string, any>; // Accepts an object with any properties
-  social: Record<string, any>; // Accepts an object with any properties
-  project: Record<string, any>; // Accepts an object with any properties
-  setup: Record<string, any>; // Accepts an object with any properties
-  education: Record<string, any>; // Accepts an object with any properties
-  experience: Record<string, any>; // Accepts an object with any properties
-  skills: Record<string, any>; // Accepts an object with any properties
-  theme: "dark" | "light"; // Either dark or light theme
+  user: Record<string, any>;
+  stats: Record<string, any>;
+  social: Record<string, any>;
+  project: Record<string, any>;
+  setup: Record<string, any>;
+  education: Record<string, any>;
+  experience: Record<string, any>;
+  skills: Record<string, any>;
+  theme: "dark" | "light";
 }
 
-export default function DefaultTemplate({
+const DefaultTemplate: React.FC<DefaultTemplateProps> = ({
   user,
   stats,
   social,
@@ -35,7 +33,7 @@ export default function DefaultTemplate({
   experience,
   skills,
   theme,
-}: DefaultTemplateProps) {
+}) => {
   useEffect(() => {
     document.body.classList.remove("light", "dark");
     document.body.classList.add(theme);
@@ -44,7 +42,6 @@ export default function DefaultTemplate({
   return (
     <div>
       <TemplateNav user={user} setup={setup} />
-
       <section id="home">
         <Hero user={user} stats={stats} social={social} />
       </section>
@@ -68,11 +65,12 @@ export default function DefaultTemplate({
       )}
       {setup?.skills && (
         <section id="skills">
-          <Skills skills={skills} />{" "}
+          <Skills skills={skills} />
         </section>
       )}
-
       <Footer setup={setup} />
     </div>
   );
-}
+};
+
+export default DefaultTemplate;
