@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@lib/authOptions";
 import User from "@/lib/models/user";
 import connectDB from "@/lib/mongodb";
 

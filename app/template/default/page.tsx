@@ -4,7 +4,7 @@ import React from "react";
 import Hero from "../../../components/template/hero";
 import AboutMe from "../../../components/template/aboutme";
 
-import Projects from "../../../components/template/Projects";
+
 import Experience from "../../../components/template/Experience";
 import Education from "../../../components/template/education";
 import TemplateNav from "@/components/template/templatenav";
@@ -18,7 +18,7 @@ export default function DefaultTemplate({
   user,
   stats,
   social,
-  project,
+
   setup,
   education,
   experience,
@@ -28,7 +28,7 @@ export default function DefaultTemplate({
   user: any;
   stats: any;
   social: any;
-  project: any;
+
   setup: any;
   education: any;
   experience: any;
@@ -54,11 +54,11 @@ export default function DefaultTemplate({
       <section id="about">
         <AboutMe user={user} />
       </section>
-      {setup.project && (
+      {/* {setup.project && (
         <section id="projects">
           <Projects project={project} user={user} />
         </section>
-      )}
+      )} */}
       {setup.experience && (
         <section id="experience">
           <Experience experience={experience} />
