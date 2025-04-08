@@ -5,6 +5,8 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 function ProjectCard({
   id,
   name,
@@ -22,6 +24,8 @@ function ProjectCard({
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  const router = useRouter();
+
   const handleNavigation = () => {
     // Store selected project details in localStorage
     localStorage.setItem(
@@ -30,7 +34,7 @@ function ProjectCard({
     );
 
     // Redirect to the project details page with the username
-    // router.push(`/${username}/projects/${id}`);
+    router.push(`/${username}/projects/${id}`);
   };
 
   useEffect(() => {
