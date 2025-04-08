@@ -2,13 +2,7 @@ import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
-// Use Next.js generated type from the app directory
-type PageProps = {
-  params: {
-    username: string;
-  };
-  searchParams: Record<string, string | string[] | undefined>;
-};
+// Remove all custom type definitions related to PageProps
 
 async function getUserData(username: string) {
   const res = await fetch(
@@ -37,8 +31,9 @@ async function getUserData(username: string) {
   };
 }
 
-export default async function UserPage({ params }: PageProps) {
-  const { username } = await params; // No need for await here
+// Let Next.js infer the types completely
+export default async function UserPage(props: any) {
+  const { username } = props.params;
 
   const user = await getUserData(username);
 
