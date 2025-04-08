@@ -18,7 +18,7 @@ const Skills = ({ skills }: any) => {
         <h2 className="pb-7">Skills</h2>
       </motion.div>
       <ul className="flex gap-5 justify-center flex-wrap">
-        {Array.isArray(skills) &&
+        {skills && Array.isArray(skills) &&
           skills.map((skill: any, index: number) => (
             <li
               key={index}

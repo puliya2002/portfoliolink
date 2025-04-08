@@ -26,7 +26,7 @@ const Timeline = ({experience}:any) => {
         <div className="absolute max-sm:left-4 left-1/2 w-0.5 bg-gray-600 transform -translate-x-1/2 top-12 bottom-16" />
 
         <div className="relative">
-          {Array.isArray(experience) &&
+          { experience && Array.isArray(experience) &&
             experience.map((event: any, index: number) => {
               // Format the date to 'MMM DD, YYYY' (e.g., Mar 28, 2025)
               const formatDate = (dateString: string) => {
