@@ -37,7 +37,7 @@ async function getUserData(username: string) {
   };
 }
 
-export default async function UserPage({ params, searchParams }: PageProps) {
+export default async function UserPage({ params }: PageProps) {
   const { username } = await params; // No need for await here
 
   const user = await getUserData(username);
