@@ -1,55 +1,89 @@
+"use client";
 
 import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
-// Remove all custom type definitions related to PageProps
-
-async function getUserData(username: string) {
-  if (!username) {
-    return null;
-  }
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`,
-    {
-      cache: "no-store", // Ensures fresh data
-    }
-  );
-
-  if (!res.ok) {
-    return null;
-  }
-
-  const data = await res.json();
-  return {
-    ...data?.user,
-    stats: data?.stats,
-    social: data?.social,
-    project: data?.project,
-    setup: data?.setup,
-    education: data?.education,
-    experience: data?.experience,
-    skills: data?.skills,
-    theme: data?.theme,
-    hasAccess: data?.hasAccess,
-  };
+interface UserData {
+  // Define the structure of your user data here
+  stats?: any[];
+  social?: Record<string, string>;
+  project?: any[];
+  education?: any[];
+  experience?: any[];
+  skills?: any[];
+  setup?: Record<string, any>;
+  theme?: "dark" | "light" | undefined; 
+  hasAccess?: boolean;
+  [key: string]: any; // To allow other properties
 }
 
-// Let Next.js infer the types completely
-export default async function UserPage(props: any) {
-  const { username } = await props.params || {};
+export default function UserPage(props: { params: { username: string } }) {
+  const { username } = props.params || {};
+  const [user, setUser] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const user = await getUserData(username);
+  useEffect(() => {
+    async function fetchUserData(username: string) {
+      if (!username) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/users/${username}`
+        );
 
-  const stats = user?.stats || [];
-  const social = user?.social || {};
-  const project = user?.project || [];
-  const education = user?.education || [];
-  const experience = user?.experience || [];
-  const skills = user?.skills || [];
-  const setup = user?.setup || {};
-  const theme = user?.theme || {};
-  const hasAccess = user?.hasAccess || false;
+        if (!res.ok) {
+          const errorData = await res.json();
+          setError(
+            errorData?.message ||
+              `Failed to fetch user data (status: ${res.status})`
+          );
+          setUser(null);
+        } else {
+          const data = await res.json();
+          setUser({
+            ...data?.user,
+            stats: data?.stats,
+            social: data?.social,
+            project: data?.project,
+            setup: data?.setup,
+            education: data?.education,
+            experience: data?.experience,
+            skills: data?.skills,
+            theme: data?.theme,
+            hasAccess: data?.hasAccess,
+          });
+          setError(null);
+        }
+      } catch (e: any) {
+        setError(
+          e.message || "An unexpected error occurred while fetching user data."
+        );
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchUserData(username);
+  }, [username]);
+
+  if (loading) {
+    return <div>Loading user data...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-xl text-red-500">Error: {error}</p>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
@@ -58,9 +92,18 @@ export default async function UserPage(props: any) {
       </div>
     );
   }
-  if (!project) {
-    return <div>Project not found</div>;
-  }
+
+  const {
+    stats = [],
+    social = {},
+    project = [],
+    education = [],
+    experience = [],
+    skills = [],
+    setup = {},
+    theme = "dark" ,
+    hasAccess = false,
+  } = user;
 
   return (
     <div>
