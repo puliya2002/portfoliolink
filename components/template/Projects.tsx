@@ -19,6 +19,10 @@ const Projects = ({ project, user }: { project?: any; user?: any }) => {
     return <p>No projects available.</p>;
   }
 
+
+   if (!project) {
+     return <div>Project not found</div>;
+   }
   return (
     <div className="d_container">
       <motion.div

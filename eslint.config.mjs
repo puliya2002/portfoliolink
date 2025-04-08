@@ -13,9 +13,11 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   // Add this to override rules
   {
+    extends: ["next/core-web-vitals", "next/typescript"],
     files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
+      "react/no-unescaped-entities": "off",
     },
   },
   // Add this to override rules

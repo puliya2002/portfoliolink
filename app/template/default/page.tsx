@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import React from "react";
 import Hero from "../../../components/template/hero";
 import AboutMe from "../../../components/template/aboutme";
-// import Projects from "../../../components/template/Projects";
+import Projects from "../../../components/template/Projects";
 import Experience from "../../../components/template/Experience";
 import Education from "../../../components/template/education";
 import TemplateNav from "@/components/template/templatenav";
@@ -17,7 +17,7 @@ interface DefaultTemplateProps {
   user: Record<string, any> | null | undefined;
   stats: Record<string, any> | null | undefined;
   social: Record<string, any> | null | undefined;
-  // project: Record<string, any> | null | undefined;
+  project: Record<string, any> | null | undefined;
   setup: Record<string, any> | null | undefined;
   education: Record<string, any> | null | undefined;
   experience: Record<string, any> | null | undefined;
@@ -29,7 +29,7 @@ const DefaultTemplate: React.FC<DefaultTemplateProps> = ({
   user,
   stats,
   social,
-  // project,
+  project,
   setup,
   education,
   experience,
@@ -41,6 +41,10 @@ const DefaultTemplate: React.FC<DefaultTemplateProps> = ({
     document.body.classList.add(theme);
   }, [theme]);
 
+   if (!project) {
+     return <div>Project not found</div>;
+   }
+
   return (
     <div>
       <TemplateNav user={user} setup={setup} />
@@ -50,11 +54,11 @@ const DefaultTemplate: React.FC<DefaultTemplateProps> = ({
       <section id="about">
         <AboutMe user={user} />
       </section>
-      {/* {setup?.project && (
+      {setup?.project && (
         <section id="projects">
           <Projects project={project} user={user} />
         </section>
-      )} */}
+      )}
       {setup?.experience && (
         <section id="experience">
           <Experience experience={experience} />
