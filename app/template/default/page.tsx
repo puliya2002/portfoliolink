@@ -1,76 +1,61 @@
-"use client";
-import { useEffect } from "react";
-import React from "react";
-import Hero from "../../../components/template/hero";
-import AboutMe from "../../../components/template/aboutme";
-import Projects from "../../../components/template/Projects";
-import Experience from "../../../components/template/Experience";
-import Education from "../../../components/template/education";
-import TemplateNav from "@/components/template/templatenav";
-import Footer from "@/components/template/Footer";
-import Skills from "@/components/template/Skills";
-import "./style.css";
+// app/template/default/page.tsx
+import { Suspense } from "react";
+import DefaultTemplateClient from "./DefaultTemplateClient";
 
-interface DefaultTemplateProps {
-  user: Record<string, any>;
-  stats: Record<string, any>;
-  social: Record<string, any>;
-  project: Record<string, any>;
-  setup: Record<string, any>;
-  education: Record<string, any>;
-  experience: Record<string, any>;
-  skills: Record<string, any>;
-  theme: "dark" | "light";
-}
+// This is your page component that Next.js will use
+export default async function DefaultTemplatePage() {
+  // Here you would fetch your data from your API or other sources
+  const user = await fetchUser();
+  const stats = await fetchStats();
+  const social = await fetchSocial();
+  const project = await fetchProjects();
+  const setup = await fetchSetup();
+  const education = await fetchEducation();
+  const experience = await fetchExperience();
+  const skills = await fetchSkills();
 
-const DefaultTemplate: React.FC<DefaultTemplateProps> = ({
-  user,
-  stats,
-  social,
-  project,
-  setup,
-  education,
-  experience,
-  skills,
-  theme,
-}) => {
-  useEffect(() => {
-    document.body.classList.remove("light", "dark");
-    document.body.classList.add(theme);
-  }, [theme]);
+  // Default theme or you could get it from user preferences
+  const theme = "light";
 
   return (
-    <div>
-      <TemplateNav user={user} setup={setup} />
-      <section id="home">
-        <Hero user={user} stats={stats} social={social} />
-      </section>
-      <section id="about">
-        <AboutMe user={user} />
-      </section>
-      {setup?.project && (
-        <section id="projects">
-          <Projects project={project} user={user} />
-        </section>
-      )}
-      {setup?.experience && (
-        <section id="experience">
-          <Experience experience={experience} />
-        </section>
-      )}
-      {setup?.education && (
-        <section id="education">
-          <Education education={education} />
-        </section>
-      )}
-      {setup?.skills && (
-        <section id="skills">
-          <Skills skills={skills} />
-        </section>
-      )}
-      <Footer setup={setup} />
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <DefaultTemplateClient
+        user={user}
+        stats={stats}
+        social={social}
+        project={project}
+        setup={setup}
+        education={education}
+        experience={experience}
+        skills={skills}
+        theme={theme}
+      />
+    </Suspense>
   );
-};
+}
 
-export default DefaultTemplate;
+// These are placeholder functions - replace with your actual data fetching logic
+async function fetchUser() {
+  return {};
+}
+async function fetchStats() {
+  return {};
+}
+async function fetchSocial() {
+  return {};
+}
+async function fetchProjects() {
+  return {};
+}
+async function fetchSetup() {
+  return {};
+}
+async function fetchEducation() {
+  return {};
+}
+async function fetchExperience() {
+  return {};
+}
+async function fetchSkills() {
+  return {};
+}
