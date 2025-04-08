@@ -2,11 +2,12 @@ import DefaultTemplate from "@/app/template/default/page";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
-// Type definition for PageProps
+// Use Next.js generated type from the app directory
 type PageProps = {
   params: {
     username: string;
   };
+  searchParams: Record<string, string | string[] | undefined>;
 };
 
 async function getUserData(username: string) {
@@ -36,9 +37,8 @@ async function getUserData(username: string) {
   };
 }
 
-// Updated function signature with the correct PageProps type
-export default async function UserPage({ params }: PageProps) {
-  const { username } = params; // Access the username from params
+export default async function UserPage({ params, searchParams }: PageProps) {
+  const { username } = await params; // No need for await here
 
   const user = await getUserData(username);
 
