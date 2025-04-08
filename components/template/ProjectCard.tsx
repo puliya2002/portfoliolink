@@ -30,7 +30,9 @@ function ProjectCard({
     );
 
     // Redirect to the project details page with the username
-    router.push(`/${username}/projects/${id}`);
+    router.push(
+      `${process.env.NEXT_PUBLIC_API_URL}/${username}/projects/${id}`
+    );
   };
 
   useEffect(() => {
