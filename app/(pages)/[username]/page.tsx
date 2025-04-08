@@ -1,9 +1,8 @@
-// pages/[username].tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import DefaultTemplate from "@/app/template/default/page";
+import DefaultTemplate from "@/app/template/default/page"; // make sure this is a default export
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
 
@@ -21,11 +20,22 @@ interface ThemeData {
   [key: string]: any;
 }
 
+interface DefaultTemplateProps {
+  user: UserBasicData;
+  stats: any[];
+  social: Record<string, any>;
+  project: any[];
+  setup: Record<string, any>;
+  education: any[];
+  experience: any[];
+  skills: any[];
+  theme: string | ThemeData;
+}
+
 export default function UserPage() {
   const params = useParams();
   const username = params?.username as string;
 
-  // Separate states for each data type
   const [user, setUser] = useState<UserBasicData>({});
   const [stats, setStats] = useState<any[]>([]);
   const [social, setSocial] = useState<Record<string, any>>({});
@@ -34,13 +44,17 @@ export default function UserPage() {
   const [education, setEducation] = useState<any[]>([]);
   const [experience, setExperience] = useState<any[]>([]);
   const [skills, setSkills] = useState<any[]>([]);
-  const [theme, setTheme] = useState("dark");
-  const [hasAccess, setHasAccess] = useState(false);
+  const [theme, setTheme] = useState<ThemeData>({
+    primaryColor: "#4A90E2",
+    secondaryColor: "#F5A623",
+    fontFamily: "Inter",
+    layout: "default",
+  });
 
+  const [hasAccess, setHasAccess] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch all data at once but update separate states
   useEffect(() => {
     async function fetchAllUserData() {
       if (!username) {
@@ -64,7 +78,6 @@ export default function UserPage() {
 
         const data = await res.json();
 
-        // Update all states with their respective data
         setUser(data?.user || {});
         setStats(data?.stats || []);
         setSocial(data?.social || {});
@@ -73,8 +86,6 @@ export default function UserPage() {
         setEducation(data?.education || []);
         setExperience(data?.experience || []);
         setSkills(data?.skills || []);
-
-        // Special handling for theme to prevent errors
         setTheme(
           data?.theme || {
             primaryColor: "#4A90E2",
@@ -83,7 +94,6 @@ export default function UserPage() {
             layout: "default",
           }
         );
-
         setHasAccess(data?.hasAccess || false);
       } catch (err) {
         console.error("Error fetching user data:", err);
@@ -96,7 +106,6 @@ export default function UserPage() {
     fetchAllUserData();
   }, [username]);
 
-  // Loading state
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -105,7 +114,6 @@ export default function UserPage() {
     );
   }
 
-  // Error state
   if (error || !user || Object.keys(user).length === 0) {
     return (
       <div className="flex items-center justify-center h-screen">
