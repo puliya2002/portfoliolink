@@ -5,7 +5,33 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 
-// Existing GET method would be here...
+export async function GET() {
+  try {
+    await connectDB();
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Fetch user from the database using session email
+    const user = await User.findOne({ email: session.user.email });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Assuming the field storing projects is named "projects"
+    return NextResponse.json(
+      {
+        projects: user.projects || [], // Returns an empty array if no projects exist
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Fetch projects error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
 
 export async function POST(request) {
   try {
