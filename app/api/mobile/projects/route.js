@@ -73,3 +73,58 @@ export async function POST(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function PUT(request) {
+  try {
+    await connectDB();
+
+    // Get request body
+    const updateData = await request.json();
+    const { email, projectId, ...updatedFields } = updateData;
+
+    if (!email) {
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    }
+
+    if (!projectId) {
+      return NextResponse.json(
+        { error: "Project ID is required" },
+        { status: 400 }
+      );
+    }
+
+    // Find the user
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Find the project index in the user's projects array
+    const projectIndex = user.project.findIndex(
+      (p) => p._id.toString() === projectId
+    );
+
+    if (projectIndex === -1) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+    }
+
+    // Update the project with new fields
+    Object.keys(updatedFields).forEach((key) => {
+      user.project[projectIndex][key] = updatedFields[key];
+    });
+
+    await user.save();
+
+    return NextResponse.json(
+      {
+        message: "Project updated successfully",
+        project: user.project[projectIndex],
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Update project error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
