@@ -23,7 +23,7 @@ export async function GET() {
     // Assuming the field storing projects is named "projects"
     return NextResponse.json(
       {
-        projects: user.projects || [], // Returns an empty array if no projects exist
+        projects: user.project || [], // Returns an empty array if no projects exist
       },
       { status: 200 }
     );
