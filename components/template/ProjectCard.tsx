@@ -1,6 +1,5 @@
 "use client";
 
-
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -12,15 +11,16 @@ function ProjectCard({
   name,
   skills,
   image,
-  username, // Pass the username
+  username,
+  discription,
 }: {
   id: number;
   name: string;
   skills: string[];
   image: string;
   username: string;
+  discription: string;
 }) {
- 
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -30,7 +30,7 @@ function ProjectCard({
     // Store selected project details in localStorage
     localStorage.setItem(
       "selectedProject",
-      JSON.stringify({ id, name, image, skills, username })
+      JSON.stringify({ id, name, image, skills, username, discription })
     );
 
     // Redirect to the project details page with the username
@@ -85,6 +85,7 @@ function ProjectCard({
             </div>
           ))}
         </div>
+
         <Image
           src={image || "/placeholder.png"}
           className="object-cover p-1 rounded-[15px] mt-3 h-[240px] sm:h-[270px] w-screen"

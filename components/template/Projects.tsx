@@ -51,6 +51,7 @@ const Projects = ({ project, user }: { project?: any; user?: any }) => {
               image={item.coverPhoto}
               skills={item.technologies || []}
               username={user?.username}
+              discription={item.description}
             />
           </motion.div>
         ))}

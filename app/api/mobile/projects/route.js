@@ -1,29 +1,31 @@
-// app/api/projects/route.js (add POST method to existing file)
+// app/api/mobile/projects/route.js
 import connectDB from "@/lib/mongodb";
 import User from "@/lib/models/user";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
 
-export async function GET() {
+export async function GET(request) {
   try {
     await connectDB();
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    // Get email from query parameters
+    const { searchParams } = new URL(request.url);
+    const email = searchParams.get("email");
+
+    if (!email) {
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    // Fetch user from the database using session email
-    const user = await User.findOne({ email: session.user.email });
+    // Find the user
+    const user = await User.findOne({ email });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Assuming the field storing projects is named "projects"
+    // Return the user's projects
     return NextResponse.json(
       {
-        projects: user.project || [], // Returns an empty array if no projects exist
+        project: user.project || [], // Note the field name matches your database
       },
       { status: 200 }
     );
@@ -41,20 +43,12 @@ export async function POST(request) {
     const projectData = await request.json();
     const { email, ...project } = projectData;
 
-    // Check if we have an email
-    let userEmail = email;
-
-    // If no email in body, try to get from session
-    if (!userEmail) {
-      const session = await getServerSession(authOptions);
-      if (!session) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-      }
-      userEmail = session.user.email;
+    if (!email) {
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
     // Find the user
-    const user = await User.findOne({ email: userEmail });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

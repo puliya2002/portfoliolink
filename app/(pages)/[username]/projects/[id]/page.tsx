@@ -36,17 +36,16 @@ function ProjectDetails() {
           <div className="content-center pb-6">
             <p className="text-2xl font-medium py-2">{project.name}</p>
             <p className="opacity-50">
-              This is a placeholder description for the project. You can modify
-              this with actual project details.
+              {project.discription ||
+                "This is a placeholder description for the project. You can modify this with actual project details."}
             </p>
           </div>
           <Image
             src={project.image || "/placeholder.png"}
             alt={project.name}
-            className="rounded-lg w-full h-auto" 
+            className="rounded-lg w-full h-auto"
             width={1500}
             height={1500}
-            
           />
           <div className="flex pt-5 content-center justify-center gap-2">
             {project.skills?.map((skill: string, index: number) => (
