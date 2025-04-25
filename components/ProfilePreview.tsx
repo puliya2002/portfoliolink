@@ -27,9 +27,15 @@ const ProfilePreview = ({ profile }: { profile: any }) => {
               </div>
             </Link>
           </div>
-          <div className="absolute top-0 right-0 z-10 p-4 ">
-            <Link href="/dashboard/live-edit">
+          <div className="absolute flex gap-2 top-0 right-0 z-10 p-4 ">
+            <Link href="/dashboard/step1">
               <div className="flex gap-2 items-center rounded-full bg-gray-900 border border-white text-white px-5 py-2 hover:bg-[--primary] hover:text-black cursor-pointer">
+                <Pencil size={17} />
+                <p className="text-sm">Main Edit</p>
+              </div>
+            </Link>
+            <Link href="/dashboard/live-edit">
+              <div className="flex gap-2 items-center rounded-full bg-[--primary] border border-white text-black px-5 py-2 hover:bg-black hover:text-white cursor-pointer">
                 <Pencil size={17} />
                 <p className="text-sm">Live Edit</p>
               </div>

@@ -10,6 +10,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import LoginCover from "@/public/logincover.jpg";
 
 interface IFormInput {
   email: string;
@@ -69,7 +70,7 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-screen p-5 ">
       <div className="max-w-[1200px] mx-auto w-full bg-white rounded-[30px] min-h-fit">
         <div className="flex flex-col md:flex-row">
-          <div className="w-1/2 bg-[url('../public/logincover.jpg')] rounded-l-[30px] min-h-fit bg-cover bg-center hidden md:block"></div>
+          <div className="w-1/2 bg-[url('/logincover.jpg')] rounded-l-[30px] min-h-fit bg-cover bg-center hidden md:block"></div>
           <div className="w-full md:w-1/2 flex items-center justify-center py-24 px-5">
             <form
               className="w-full max-w-[400px]"
@@ -119,7 +120,7 @@ const Login = () => {
 
               <div className="mt-4 text-center">
                 <p className="text-sm">
-                  Don&apos;t have an account?
+                  Don&apos;t have an account?&nbsp;
                   <Link
                     href="/register"
                     className="text-blue-600 hover:underline"

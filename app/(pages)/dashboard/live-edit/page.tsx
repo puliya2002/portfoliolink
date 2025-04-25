@@ -62,7 +62,14 @@ function Page() {
               </div>
             </Link>
           </div>
-          <h1 className="text-xl font-bold">Live Edit</h1>
+          <div className="flex flex-row justify-between">
+            <h1 className="text-2xl font-bold">Live Edit</h1>
+            <Link href="/dashboard">
+              <p className="text-gray-800 mt-2 text-[15px] underline cursor-pointer">
+                Go back
+              </p>
+            </Link>
+          </div>
           <p className="text-gray-500 text-[13px]">
             These sections include all the information about you.
           </p>

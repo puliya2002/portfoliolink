@@ -84,7 +84,7 @@ const Register = () => {
     <div className="flex items-center justify-center min-h-screen p-5 ">
       <div className="max-w-[1200px] mx-auto w-full bg-white rounded-[30px] min-h-fit  ">
         <div className="flex flex-col md:flex-row">
-          <div className="w-1/2 bg-[url('../public/registercover.jpg')] rounded-l-[30px] min-h-fit bg-cover bg-center hidden md:block"></div>
+          <div className="w-1/2 bg-[url('/registercover.jpg')] rounded-l-[30px] min-h-fit bg-cover bg-center hidden md:block"></div>
           <div className="w-full md:w-1/2 flex items-center justify-center py-10 px-5">
             <form
               className="w-full max-w-[400px]"
