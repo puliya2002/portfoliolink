@@ -11,7 +11,7 @@ const plans = [
     link:
       process.env.NODE_ENV === "development"
         ? "https://buy.stripe.com/test_4gw9CZfLvfnn5I4dQR"
-        : "price_1NfNc0F2kVprice_1R7swtCROFDtLkqB4FJqcAhu",
+        : "https://buy.stripe.com/test_4gw9CZfLvfnn5I4dQR",
     price: 2,
     duration: "/month",
     features: [
