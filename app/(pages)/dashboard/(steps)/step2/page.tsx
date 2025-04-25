@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PortfolioSetupCard from "@/components/portfolioSetupCard";
+import { set } from "mongoose";
 
 export default function Step2() {
   const [error, setError] = useState("");
@@ -13,6 +14,8 @@ export default function Step2() {
   const [isSkills, setIsSkills] = useState<boolean | null>(null);
   const [isExperience, setIsExperience] = useState<boolean | null>(null);
   const [isEducation, setIsEducation] = useState<boolean | null>(null);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -36,6 +39,7 @@ export default function Step2() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post("/api/step2", {
         project: isProject,
@@ -43,12 +47,13 @@ export default function Step2() {
         experience: isExperience,
         education: isEducation,
       });
-
+      setLoading(false);
       router.push("/dashboard/step3");
     } catch (err) {
       const error = err as { response?: { data?: { error?: string } } };
       console.error("Error:", error.response?.data?.error);
       setError(error.response?.data?.error || "Something went wrong");
+      setLoading(false);
     }
   };
 
@@ -110,7 +115,7 @@ export default function Step2() {
         </div>
         <div className="flex justify-end mt-5">
           <Button type="back" text="Back" extraClass="px-[30px] mr-2" />
-          <Button type="submit" text="Next" extraClass="px-[60px]" />
+          <Button type="submit" text={loading ? "Loading..." : "Next"} extraClass="px-[60px]" />
         </div>
         {error && <p className="text-red-500 text-[13px]">{error}</p>}
       </form>

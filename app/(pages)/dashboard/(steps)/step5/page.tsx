@@ -6,10 +6,12 @@ import ThemeLight from "@/public/themelight.png";
 import ThemeDark from "@/public/themedark.png";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { set } from "mongoose";
 
 const Appearance = () => {
   const [selectedTheme, setSelectedTheme] = useState("dark");
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -24,16 +26,19 @@ const Appearance = () => {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setLoading(true);
     axios
       .post("/api/step5", {
         theme: selectedTheme,
       })
       .then((response) => {
         console.log("Response:", response.data);
+        setLoading(false);
         router.push("/dashboard/");
       })
       .catch((error) => {
         console.error("Error:", error.response?.data?.error);
+        setLoading(false);
       });
   }
 

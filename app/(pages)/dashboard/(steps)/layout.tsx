@@ -13,6 +13,7 @@ export default function SetupLayout({
   const [currentStep, setCurrentStep] = useState<number | null>(null);
   const pathname = usePathname(); // Using `usePathname` to get the current path
 
+
   useEffect(() => {
     if (pathname) {
       // Extract the step number from the URL

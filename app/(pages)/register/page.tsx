@@ -166,7 +166,7 @@ const Register = () => {
                 <p className="text-red-500 text-[13px]">{emailError}</p>
               )}
 
-              <Button text="Create Account" type="submit" />
+              <Button text={loading ? "Loading..." : "Create Account"} type="submit" />
 
               <div className="mt-4 text-center">
                 <p className="text-sm">

@@ -10,6 +10,7 @@ export default function Step1() {
   const [error, setError] = useState("");
   const [isChecking, setIsChecking] = useState(false);
   const [usernameAvailable, setUsernameAvailable] = useState(true);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   // Debounce live username checking
@@ -52,6 +53,7 @@ export default function Step1() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!usernameAvailable) {
       setError("Username is already taken");
@@ -69,10 +71,12 @@ export default function Step1() {
       });
       console.log("Response:", response.data);
       router.push("/dashboard/step2");
+      setLoading(false);
     } catch (err) {
       const error = err as { response?: { data?: { error?: string } } };
       console.error("Error:", error.response?.data);
       setError(error.response?.data?.error || "Something went wrong");
+      setLoading(false);
     }
   };
 
@@ -133,7 +137,7 @@ export default function Step1() {
 
         {/* Next Button */}
         <div className="flex justify-end mt-5">
-          <Button type="submit" text="Next" extraClass="px-[100px]" />
+          <Button type="submit" text={loading ? "Loading..." : "Next"} extraClass="px-[100px]" />
         </div>
       </form>
     </div>

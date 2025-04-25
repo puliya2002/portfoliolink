@@ -22,6 +22,7 @@ const UpdatePortfolio = () => {
   const [stat2Value, setStat2Value] = useState("");
   const [stat3Title, setStat3Title] = useState("");
   const [stat3Value, setStat3Value] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -57,6 +58,7 @@ const UpdatePortfolio = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       await axios.post("/api/step4", {
@@ -74,10 +76,13 @@ const UpdatePortfolio = () => {
         ],
       });
 
+      setLoading(false);
+
       router.push("/dashboard/step5");
     } catch (err: any) {
       console.error("Error:", err.response?.data?.error);
       setError(err.response?.data?.error || "Something went wrong");
+      setLoading(false);
     }
   };
 
@@ -215,7 +220,11 @@ const UpdatePortfolio = () => {
 
         <div className="flex justify-end mt-5">
           <Button type="back" text="Back" extraClass="px-[30px] mr-2" />
-          <Button type="submit" text="Next" extraClass="px-[60px]" />
+          <Button
+            type="submit"
+            text={loading ? "Loading..." : "Next"}
+            extraClass="px-[60px]"
+          />
         </div>
       </form>
     </div>
