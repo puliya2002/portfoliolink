@@ -31,6 +31,7 @@ const Register = () => {
   const password = watch("password");
   const email = watch("email");
   const [emailError, setEmailError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const { data: session } = useSession();
@@ -47,6 +48,7 @@ const Register = () => {
   }, [email]);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    setLoading(true);
     const { ...formData } = data; // Exclude confirmPassword
     const { email, password } = formData; // Extract email and password for login
 
@@ -70,6 +72,7 @@ const Register = () => {
       } else {
         router.push("/dashboard"); // Redirect on success
       }
+      setLoading(false);
     } catch (error: any) {
       console.error(error);
 
@@ -77,6 +80,8 @@ const Register = () => {
       if (error.response?.status === 400) {
         setEmailError("Email already exists");
       }
+
+      setLoading(false);
     }
   };
 

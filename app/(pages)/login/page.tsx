@@ -11,6 +11,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import LoginCover from "@/public/logincover.jpg";
+import { set } from "mongoose";
 
 interface IFormInput {
   email: string;
@@ -26,6 +27,7 @@ const Login = () => {
   } = useForm<IFormInput>();
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const password = watch("password");
   const email = watch("email");
   const router = useRouter();
@@ -44,6 +46,7 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     setError(""); // Reset error message
+    setLoading(true);
     const { email, password } = data;
 
     try {
@@ -57,12 +60,15 @@ const Login = () => {
 
       if (result?.error) {
         setError("Invalid email or password");
+        setLoading(false);
       } else {
         router.push("/dashboard"); // Redirect on success
+        setLoading(false);
       }
     } catch (err) {
       console.error("Login error:", err);
       setError("Something went wrong. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -116,7 +122,10 @@ const Login = () => {
                 {...register("password", { required: "Password is required" })}
               />
               {error && <p className="text-red-500 text-[13px]">{error}</p>}
-              <Button text="Login" type="submit" />
+              <Button
+                text={`${loading ? "Loading..." : "Sign In"}`}
+                type="submit"
+              />
 
               <div className="mt-4 text-center">
                 <p className="text-sm">
