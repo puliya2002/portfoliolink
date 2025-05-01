@@ -6,6 +6,7 @@ import WhoFor from "@/components/WhoFor";
 
 
 
+
 export default function Home() {
   return (
     <div>
@@ -13,8 +14,6 @@ export default function Home() {
       <Hero />
       <WhyUs />
       <WhoFor />
-
-      
     </div>
   );
 }
