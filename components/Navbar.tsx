@@ -29,7 +29,8 @@ const Navbar = () => {
 
         <div>
           <ul className="flex gap-6 items-center text-md hidden md:flex ">
-            {!pathname.includes("/dashboard") && (
+            {!(pathname.includes("/dashboard") ||
+              pathname.includes("/admin-dashboard")) && (
               <ul className="flex gap-6 items-center text-md hidden md:flex">
                 {NavbarLinks.map((link) => (
                   <li
@@ -48,11 +49,13 @@ const Navbar = () => {
                 {session ? "Dashboard" : "Sign Up"}
               </button>
             </Link>
-            {pathname.includes("/dashboard") && session && (
-              <button className="text-md" onClick={() => signOut()}>
-                Logout
-              </button>
-            )}
+            {(pathname.includes("/dashboard") ||
+              pathname.includes("/admin-dashboard")) &&
+              session && (
+                <button className="text-md" onClick={() => signOut()}>
+                  Logout
+                </button>
+              )}
           </ul>
 
           <div className="md:hidden pt-1">
