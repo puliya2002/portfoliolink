@@ -36,7 +36,11 @@ const Login = () => {
 
   useEffect(() => {
     if (session) {
-      router.push("/dashboard");
+      if (session.user.email === "admin@gmail.com") {
+        router.push("/dashboard/admin-dashboard");
+      } else {
+        router.push("/dashboard");
+      }
     }
   }, [session, router]);
 

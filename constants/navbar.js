@@ -6,7 +6,7 @@ const navbarLinks = [
     title: "Home",
   },
   {
-    id: "template",
+    id: "select-template",
     title: "Template",
   },
   {

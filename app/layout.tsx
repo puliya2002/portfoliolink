@@ -37,7 +37,14 @@ export default function RootLayout({
 
 
     // Check if the current path is '/login' or '/register'
-  const isPage = pathname === "/" || pathname.startsWith("/dashboard") || pathname === "/admin-dashboard" || pathname === "/pricing";
+  const isPage =
+    pathname === "/" ||
+    pathname.startsWith("/dashboard") ||
+    pathname === "/admin-dashboard" ||
+    pathname === "/pricing" ||
+    pathname === "/select-template" ||
+    pathname === "/about";
+  
   const isDashboardRestricted = pathname==="/dashboard/live-edit";
 
 
