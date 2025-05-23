@@ -13,11 +13,13 @@ function ProjectCard({
   image,
   username,
   discription,
+  ss
 }: {
   id: number;
   name: string;
   skills: string[];
   image: string;
+  ss: string;
   username: string;
   discription: string;
 }) {
@@ -30,7 +32,7 @@ function ProjectCard({
     // Store selected project details in localStorage
     localStorage.setItem(
       "selectedProject",
-      JSON.stringify({ id, name, image, skills, username, discription })
+      JSON.stringify({ id, name, image, ss, skills, username, discription })
     );
 
     // Redirect to the project details page with the username

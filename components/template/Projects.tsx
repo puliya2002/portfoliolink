@@ -49,6 +49,7 @@ const Projects = ({ project, user }: { project?: any; user?: any }) => {
               id={index}
               name={item.title}
               image={item.coverPhoto}
+              ss={item.screenshot}
               skills={item.technologies || []}
               username={user?.username}
               discription={item.description}

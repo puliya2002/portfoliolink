@@ -86,7 +86,7 @@ function Page() {
         </div>
         <div className="w-full lg:w-3/5">
           <iframe
-            src={`http://localhost:3000/${profile.username}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL}/${profile.username}`}
             key={refreshIframe ? Date.now() : ""}
             scrolling="yes"
             loading="lazy"

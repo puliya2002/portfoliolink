@@ -41,7 +41,7 @@ function ProjectDetails() {
             </p>
           </div>
           <Image
-            src={project.image || "/placeholder.png"}
+            src={project.ss || "/placeholder.png"}
             alt={project.name}
             className="rounded-lg w-full h-auto"
             width={1500}
